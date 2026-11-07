@@ -97,9 +97,8 @@
             min-width: 0;
         }
 
-        .auth-card { width: 100%; max-width: 450px; text-align: center; }
+        .auth-card { width: 100%; max-width: 460px; text-align: center; }
 
-        /* تب‌های صفحه ورود / ثبت‌نام */
         .auth-tabs {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -151,6 +150,30 @@
             box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
         }
 
+        /* استایل چک‌لیست قوانین رمز عبور */
+        .pass-rules-box {
+            background: rgba(3, 7, 18, 0.65);
+            border: 1px solid rgba(56, 189, 248, 0.18);
+            border-radius: 12px;
+            padding: 12px 14px;
+            margin-top: 10px;
+            text-align: right;
+            font-size: 0.8rem;
+        }
+
+        .pass-rule-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+            transition: color 0.25s ease;
+        }
+
+        .pass-rule-item:last-child { margin-bottom: 0; }
+        .pass-rule-item.valid { color: #34d399; font-weight: 600; }
+        .pass-rule-item i { font-size: 0.78rem; width: 14px; text-align: center; }
+
         .btn {
             display: inline-flex;
             align-items: center;
@@ -189,7 +212,6 @@
 
         .btn-outline:hover { border-color: var(--neon-blue); color: var(--neon-blue); }
 
-        /* ساختار ضد بیرون‌زدگی در موبایل و دسکتاپ */
         .dashboard-layout {
             max-width: 1320px;
             width: 100%;
@@ -282,7 +304,6 @@
         .color-instagram { color: #E1306C; text-shadow: 0 0 12px rgba(225, 48, 108, 0.5); }
         .color-display { color: #a855f7; text-shadow: 0 0 12px rgba(168, 85, 247, 0.5); }
 
-        /* اسکرول افقی استاندارد برای تمام جداول روی موبایل */
         .table-responsive {
             width: 100%;
             overflow-x: auto;
@@ -363,7 +384,6 @@
             gap: 16px;
         }
 
-        /* کارت‌های تیکت پشتیبانی */
         .ticket-item {
             background: rgba(3, 7, 18, 0.65);
             border: 1px solid rgba(56, 189, 248, 0.22);
@@ -382,7 +402,6 @@
             color: #e2e8f0;
         }
 
-        /* بهینه‌سازی اختصاصی برای صفحه موبایل و تبلت */
         @media (max-width: 960px) {
             .dashboard-layout {
                 grid-template-columns: minmax(0, 1fr);
@@ -401,7 +420,6 @@
                 border-radius: 16px;
             }
 
-            /* تبدیل منوی کناری به نوار تب افقی اسکرول‌پذیر در موبایل */
             .sidebar-menu {
                 display: flex;
                 overflow-x: auto;
@@ -410,9 +428,7 @@
                 padding-bottom: 6px;
             }
 
-            .sidebar-menu li {
-                flex: 0 0 auto;
-            }
+            .sidebar-menu li { flex: 0 0 auto; }
 
             .tab-btn {
                 width: auto;
@@ -427,18 +443,10 @@
                 text-align: center;
             }
 
-            .budget-summary-bar .btn {
-                width: 100%;
-            }
+            .budget-summary-bar .btn { width: 100%; }
 
-            .nav-wrapper {
-                padding: 0 14px;
-                height: 64px;
-            }
-
-            .brand-logo {
-                font-size: 0.95rem;
-            }
+            .nav-wrapper { padding: 0 14px; height: 64px; }
+            .brand-logo { font-size: 0.95rem; }
         }
     </style>
 </head>
@@ -491,7 +499,7 @@
                 </button>
             </form>
 
-            <!-- فرم ثبت‌نام مستقیم با ایمیل (بدون نیاز به تایید ایمیل) -->
+            <!-- فرم ثبت‌نام مستقیم با ایمیل + قوانین سخت‌گیرانه رمز عبور -->
             <form id="form-register" class="hidden" onsubmit="handleUserRegister(event)">
                 <div class="form-group">
                     <label>نام کاربری دلخواه (انگلیسی)</label>
@@ -502,11 +510,27 @@
                     <input type="email" id="reg-email" class="form-input" placeholder="you@example.com" required dir="ltr">
                 </div>
                 <div class="form-group">
-                    <label>رمز عبور</label>
-                    <input type="password" id="reg-password" class="form-input" minlength="5" placeholder="حداقل ۵ کاراکتر" required dir="ltr">
+                    <label>رمز عبور امن</label>
+                    <input type="password" id="reg-password" class="form-input" oninput="checkPasswordStrength()" placeholder="حداقل ۱۰ کاراکتر (حروف بزرگ، کوچک و علامت)" required dir="ltr">
+                    
+                    <!-- چک‌لیست زنده قوانین رمز عبور -->
+                    <div class="pass-rules-box">
+                        <div id="rule-len" class="pass-rule-item">
+                            <i class="fa-regular fa-circle"></i> حداقل ۱۰ کاراکتر
+                        </div>
+                        <div id="rule-upper" class="pass-rule-item">
+                            <i class="fa-regular fa-circle"></i> شامل حداقل یک حرف بزرگ انگلیسی (A-Z)
+                        </div>
+                        <div id="rule-lower" class="pass-rule-item">
+                            <i class="fa-regular fa-circle"></i> شامل حداقل یک حرف کوچک انگلیسی (a-z)
+                        </div>
+                        <div id="rule-symbol" class="pass-rule-item">
+                            <i class="fa-regular fa-circle"></i> شامل حداقل یک علامت خاص (!@#$%^&*...)
+                        </div>
+                    </div>
                 </div>
                 <div id="reg-err" style="color: #f87171; font-size: 0.85rem; margin-bottom: 14px;" class="hidden"></div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                <button type="submit" id="reg-submit-btn" class="btn btn-primary" style="width: 100%;" disabled>
                     <i class="fa-solid fa-user-plus"></i> ثبت‌نام و ورود مستقیم
                 </button>
             </form>
@@ -839,7 +863,7 @@
                 </div>
             </div>
 
-            <!-- تب ۵: تیکت پشتیبانی (جدید) -->
+            <!-- تب ۵: تیکت پشتیبانی -->
             <div id="content-tickets" class="tab-section hidden">
                 <div class="glass-card">
                     <div style="margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 14px;">
@@ -895,6 +919,36 @@
             }
         }
 
+        // بررسی زنده قدرت رمز عبور هنگام تایپ در فرم ثبت‌نام
+        function updateRuleUI(elementId, isValid) {
+            const el = document.getElementById(elementId);
+            const icon = el.querySelector('i');
+            if (isValid) {
+                el.classList.add('valid');
+                icon.className = 'fa-solid fa-circle-check';
+            } else {
+                el.classList.remove('valid');
+                icon.className = 'fa-regular fa-circle';
+            }
+        }
+
+        function checkPasswordStrength() {
+            const pass = document.getElementById('reg-password').value;
+            const hasMinLen = pass.length >= 10;
+            const hasUpper = /[A-Z]/.test(pass);
+            const hasLower = /[a-z]/.test(pass);
+            const hasSymbol = /[^A-Za-z0-9]/.test(pass);
+
+            updateRuleUI('rule-len', hasMinLen);
+            updateRuleUI('rule-upper', hasUpper);
+            updateRuleUI('rule-lower', hasLower);
+            updateRuleUI('rule-symbol', hasSymbol);
+
+            const allValid = hasMinLen && hasUpper && hasLower && hasSymbol;
+            document.getElementById('reg-submit-btn').disabled = !allValid;
+            return allValid;
+        }
+
         function checkSession() {
             if (currentUser) {
                 document.getElementById('login-view').classList.add('hidden');
@@ -936,6 +990,12 @@
             const password = document.getElementById('reg-password').value.trim();
             const errEl = document.getElementById('reg-err');
             errEl.classList.add('hidden');
+
+            if (!checkPasswordStrength()) {
+                errEl.innerText = 'لطفاً تمامی موارد امنیتی رمز عبور را رعایت فرمایید.';
+                errEl.classList.remove('hidden');
+                return;
+            }
 
             const res = await fetch('/api/register', {
                 method: 'POST',
