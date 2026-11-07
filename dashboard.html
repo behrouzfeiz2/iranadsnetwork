@@ -3,10 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>پنل مدیریت و داشبورد | شبکه تبلیغات ایران</title>
+    <title>پنل کاربری و داشبورد | شبکه تبلیغات ایران</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
     <!-- Google Fonts: Vazirmatn -->
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-    <!-- FontAwesome -->
+    <!-- FontAwesome 6.5.2 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <style>
@@ -38,7 +40,6 @@
                 radial-gradient(ellipse at 20% 60%, rgba(6, 182, 212, 0.12), transparent 50%);
         }
 
-        /* Hidden Utility */
         .hidden { display: none !important; }
 
         /* Login Screen */
@@ -114,6 +115,11 @@
             cursor: pointer;
             transition: all 0.3s;
             font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
         }
 
         .btn-primary {
@@ -127,6 +133,16 @@
             transform: translateY(-2px);
         }
 
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
         .login-hint {
             margin-top: 16px;
             font-size: 0.8rem;
@@ -135,9 +151,10 @@
             padding: 10px;
             border-radius: 8px;
             line-height: 1.6;
+            text-align: right;
         }
 
-        /* Main Dashboard Layout */
+        /* App Layout */
         #app-container {
             display: flex;
             min-height: 100vh;
@@ -153,13 +170,14 @@
         }
 
         .brand-title {
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 800;
             color: #fff;
             margin-bottom: 36px;
             display: flex;
             align-items: center;
             gap: 10px;
+            text-decoration: none;
         }
 
         .brand-title span {
@@ -205,7 +223,6 @@
             background: rgba(239, 68, 68, 0.2);
         }
 
-        /* Content Area */
         main {
             flex-grow: 1;
             padding: 40px;
@@ -218,7 +235,6 @@
             margin-bottom: 24px;
         }
 
-        /* Cards Grid */
         .dashboard-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -252,7 +268,6 @@
             text-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
         }
 
-        /* Recharge Options */
         .recharge-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
@@ -288,7 +303,6 @@
             margin-top: 4px;
         }
 
-        /* Payment Gateway Box */
         .gateway-box {
             background: rgba(15, 23, 42, 0.9);
             border: 1px solid var(--neon-cyan);
@@ -310,7 +324,6 @@
             word-break: break-all;
         }
 
-        /* Campaign Form */
         .campaign-form {
             display: grid;
             gap: 16px;
@@ -341,7 +354,6 @@
             box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
         }
 
-        /* Admin Table */
         .admin-table {
             width: 100%;
             border-collapse: collapse;
@@ -380,12 +392,12 @@
     <!-- صفحه ورود (Login Screen) -->
     <div id="login-screen">
         <div class="login-card">
-            <h2>ورود به پنل کاربری</h2>
+            <h2>ورود به داشبورد</h2>
             <p>شبکه تبلیغات ایران</p>
             <form id="login-form">
                 <div class="form-group">
                     <label>نام کاربری</label>
-                    <input type="text" id="username" class="form-control" placeholder="مثلا: user01" required>
+                    <input type="text" id="username" class="form-control" placeholder="نام کاربری" required>
                 </div>
                 <div class="form-group">
                     <label>رمز عبور</label>
@@ -394,20 +406,22 @@
                 <button type="submit" class="btn btn-primary">ورود به سیستم</button>
             </form>
             <div class="login-hint">
-                <strong>اطلاعات ورود تستی:</strong><br>
-                کاربر عادی: نام کاربری <code>user</code> | رمز <code>1234</code><br>
-                مدیر سیستم: نام کاربری <code>admin</code> | رمز <code>admin123</code>
+                <strong>راهنمای ورود ادمین:</strong><br>
+                نام کاربری: <code>behrouzfeiz</code><br>
+                رمز عبور: متغیر <code>admin_pass</code> (پیش‌فرض کُد: <code>admin123</code>)
+            </div>
+            <div style="margin-top: 15px;">
+                <a href="index.html" class="btn btn-secondary" style="font-size: 0.85rem; padding: 8px;"><i class="fa-solid fa-arrow-right"></i> بازگشت به صفحه اصلی</a>
             </div>
         </div>
     </div>
 
-    <!-- بدنه اصلی داشبورد (پس از لاگین) -->
+    <!-- بدنه اصلی داشبورد -->
     <div id="app-container" class="hidden">
-        <!-- منوی کناری -->
         <aside>
-            <div class="brand-title">
+            <a href="index.html" class="brand-title">
                 <span></span> شبکه تبلیغات ایران
-            </div>
+            </a>
             <ul class="sidebar-menu">
                 <li><a href="#" class="nav-link active" data-target="tab-dashboard"><i class="fa-solid fa-house"></i> داشبورد اصلی</a></li>
                 <li><a href="#" class="nav-link" data-target="tab-financial"><i class="fa-solid fa-wallet"></i> امور مالی و شارژ</a></li>
@@ -417,7 +431,6 @@
             </ul>
         </aside>
 
-        <!-- بخش محتوای داینامیک -->
         <main>
             <!-- تب ۱: داشبورد اصلی -->
             <div id="tab-dashboard" class="content-section">
@@ -433,9 +446,9 @@
                     </div>
                 </div>
                 <div class="card">
-                    <h3 style="margin-bottom: 16px;">گزارش سریع فعالیت‌ها</h3>
+                    <h3 style="margin-bottom: 16px;">خوش آمدید</h3>
                     <p style="color: var(--text-muted); line-height: 1.8;">
-                        به پنل مدیریت و اجرای کمپین‌های هوشمند خوش آمدید. از منوی سمت راست می‌توانید حساب خود را به دلار شارژ کرده یا کمپین‌های جدید در پلتفرم‌های اینستاگرام، شبکه اجتماعی X و گوگل ادز راه‌اندازی کنید.
+                        از منوی کناری می‌توانید موجودی کیف پول خود را از طریق تتر (USDT) یا ترون (TRX) شارژ نمایید یا کمپین‌های هدفمند خود را در اینستاگرام، شبکه اجتماعی X و گوگل ادز راهبری کنید.
                     </p>
                 </div>
             </div>
@@ -445,44 +458,44 @@
                 <h1 class="section-title">شارژ کیف پول حساب</h1>
                 <div class="card">
                     <h3>موجودی فعلی: <span id="wallet-balance-num" style="color: var(--neon-cyan); direction: ltr; display: inline-block;">125.00</span> دلار</h3>
-                    <p style="color: var(--text-muted); margin-top: 8px;">مبلغ دلخواه جهت شارژ حساب را انتخاب کنید (با انتخاب هر بسته، ۱۰ درصد هدیه/مبلغ اضافی اعمال می‌شود):</p>
+                    <p style="color: var(--text-muted); margin-top: 8px;">مبلغ مدنظر جهت شارژ را انتخاب کنید (با انتخاب هر بسته، ۱۰٪ به مبلغ نهایی اضافه می‌شود):</p>
                     
                     <div class="recharge-grid">
                         <div class="recharge-option" data-price="50">
                             <div class="amount">50 $</div>
-                            <div class="bonus">+ 10% (5$ شارژ هدیه)</div>
+                            <div class="bonus">+ 10% شارژ</div>
                         </div>
                         <div class="recharge-option" data-price="100">
                             <div class="amount">100 $</div>
-                            <div class="bonus">+ 10% (10$ شارژ هدیه)</div>
+                            <div class="bonus">+ 10% شارژ</div>
                         </div>
                         <div class="recharge-option selected" data-price="500">
                             <div class="amount">500 $</div>
-                            <div class="bonus">+ 10% (50$ شارژ هدیه)</div>
+                            <div class="bonus">+ 10% شارژ</div>
                         </div>
                         <div class="recharge-option" data-price="1000">
                             <div class="amount">1000 $</div>
-                            <div class="bonus">+ 10% (100$ شارژ هدیه)</div>
+                            <div class="bonus">+ 10% شارژ</div>
                         </div>
                         <div class="recharge-option" data-price="2500">
                             <div class="amount">2500 $</div>
-                            <div class="bonus">+ 10% (250$ شارژ هدیه)</div>
+                            <div class="bonus">+ 10% شارژ</div>
                         </div>
                     </div>
 
                     <div class="gateway-box">
-                        <h4 style="margin-bottom: 10px; color: #fff;"><i class="fa-solid fa-coins" style="color: var(--neon-cyan);"></i> پرداخت از طریق رمز ارز (ترون و USDT)</h4>
+                        <h4 style="margin-bottom: 10px; color: #fff;"><i class="fa-solid fa-coins" style="color: var(--neon-cyan);"></i> پرداخت با ارز دیجیتال (ترون و USDT)</h4>
                         <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px;">
-                            مبلغ قابل پرداخت با احتساب ۱۰ درصد افزایش: <strong id="final-payable-amount" style="color: #fff; font-size: 1.1rem;">550.00 $</strong>
+                            مبلغ قابل پرداخت با احتساب ۱۰٪ اضافه: <strong id="final-payable-amount" style="color: #fff; font-size: 1.1rem;">550.00 $</strong>
                         </p>
                         
-                        <div style="margin-bottom: 8px; font-size: 0.85rem; color: var(--text-muted);">آدرس کیف پول تتر (USDT - شبکه TRC20):</div>
-                        <div class="wallet-address-box">USDT_WALLET_ADDRESS_PLACEHOLDER_XYZ123</div>
+                        <div style="margin-bottom: 6px; font-size: 0.85rem; color: var(--text-muted);">آدرس کیف پول تتر (USDT - TRC20):</div>
+                        <div class="wallet-address-box">YOUR_USDT_TRC20_WALLET_ADDRESS_HERE</div>
 
-                        <div style="margin-top: 12px; margin-bottom: 8px; font-size: 0.85rem; color: var(--text-muted);">آدرس کیف پول ترون (TRX):</div>
-                        <div class="wallet-address-box">TRON_WALLET_ADDRESS_PLACEHOLDER_ABC789</div>
+                        <div style="margin-top: 12px; margin-bottom: 6px; font-size: 0.85rem; color: var(--text-muted);">آدرس کیف پول ترون (TRX):</div>
+                        <div class="wallet-address-box">YOUR_TRON_TRX_WALLET_ADDRESS_HERE</div>
 
-                        <button class="btn btn-primary" id="confirm-payment-btn" style="margin-top: 16px;">تایید و ثبت رسید واریز</button>
+                        <button class="btn btn-primary" id="confirm-payment-btn" style="margin-top: 16px;">ثبت و اعلام واریز به ادمین</button>
                     </div>
                 </div>
             </div>
@@ -501,7 +514,6 @@
                             </div>
                         </div>
 
-                        <!-- فیلد دینامیک بر اساس پلتفرم -->
                         <div class="form-group" id="target-input-group">
                             <label id="target-label">لینک پست اینستاگرام</label>
                             <input type="text" id="target-url" class="form-control" placeholder="https://instagram.com/p/..." required>
@@ -517,34 +529,23 @@
                 </div>
             </div>
 
-            <!-- تب ۴: پنل ادمین (مخصوص ادمین سیستم) -->
+            <!-- تب ۴: پنل ادمین -->
             <div id="tab-admin" class="content-section hidden">
                 <h1 class="section-title">پنل مدیریت ادمین کل</h1>
                 <div class="card">
-                    <h3>لیست کاربران سیستم و وضعیت حساب‌ها</h3>
+                    <h3>لیست دسترسی‌های سیستم</h3>
                     <table class="admin-table">
                         <thead>
                             <tr>
                                 <th>نام کاربری</th>
                                 <th>نقش</th>
-                                <th>موجودی کیف پول</th>
-                                <th>تعداد کمپین‌ها</th>
                                 <th>وضعیت</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>user01 (کاربر نمونه)</td>
-                                <td>مشتری</td>
-                                <td>125.00 $</td>
-                                <td>3 کمپین</td>
-                                <td><span class="badge-status">فعال</span></td>
-                            </tr>
-                            <tr>
-                                <td>admin (مدیر کل)</td>
-                                <td>ادمین سیستم</td>
-                                <td>-</td>
-                                <td>مدیریت کل</td>
+                                <td>behrouzfeiz</td>
+                                <td>مدیر کل سیستم (Admin)</td>
                                 <td><span class="badge-status">دسترسی کامل</span></td>
                             </tr>
                         </tbody>
@@ -554,14 +555,15 @@
         </main>
     </div>
 
-    <!-- کدهای جاوا اسکریپت کنترل پنل -->
+    <!-- اسکریپت کنترلر و متغیر رمز عبور ادمین -->
     <script>
-        // مدیریت لاگین و تعویض صفحات
+        // تعریف متغیر رمز ادمین در اینجا قابل تغییر است
+        const admin_pass = "admin123"; 
+
         const loginScreen = document.getElementById('login-screen');
         const appContainer = document.getElementById('app-container');
         const loginForm = document.getElementById('login-form');
         
-        let currentUser = null;
         let walletBalance = 125.00;
         let selectedPackagePrice = 500;
 
@@ -570,22 +572,16 @@
             const u = document.getElementById('username').value.trim();
             const p = document.getElementById('password').value.trim();
 
-            if ((u === 'user' && p === '1234') || (u === 'admin' && p === 'admin123')) {
-                currentUser = u;
+            // بررسی نام کاربری behrouzfeiz و تطابق رمز با متغیر admin_pass
+            if (u === 'behrouzfeiz' && p === admin_pass) {
                 loginScreen.classList.add('hidden');
                 appContainer.classList.remove('hidden');
-
-                if (u === 'admin') {
-                    document.getElementById('admin-menu-item').classList.remove('hidden');
-                } else {
-                    document.getElementById('admin-menu-item').classList.add('hidden');
-                }
+                document.getElementById('admin-menu-item').classList.remove('hidden');
             } else {
                 alert('نام کاربری یا رمز عبور اشتباه است!');
             }
         });
 
-        // خروج از حساب
         document.getElementById('logout-btn').addEventListener('click', (e) => {
             e.preventDefault();
             appContainer.classList.add('hidden');
@@ -594,7 +590,6 @@
             document.getElementById('password').value = '';
         });
 
-        // سوییچ بین تب‌های منو
         const navLinks = document.querySelectorAll('.nav-link');
         const sections = document.querySelectorAll('.content-section');
 
@@ -616,7 +611,6 @@
             });
         });
 
-        // انتخاب پکیج شارژ مالی
         const rechargeOptions = document.querySelectorAll('.recharge-option');
         const finalPayableAmount = document.getElementById('final-payable-amount');
 
@@ -625,21 +619,19 @@
                 rechargeOptions.forEach(o => o.classList.remove('selected'));
                 opt.classList.add('selected');
                 selectedPackagePrice = parseInt(opt.getAttribute('data-price'));
-                let withBonus = selectedPackagePrice * 1.1; // اعمال ۱۰ درصد افزایش
+                let withBonus = selectedPackagePrice * 1.1; 
                 finalPayableAmount.textContent = withBonus.toFixed(2) + ' $';
             });
         });
 
-        // شبیه‌سازی تایید شارژ
         document.getElementById('confirm-payment-btn').addEventListener('click', () => {
             let addedAmount = selectedPackagePrice * 1.1;
             walletBalance += addedAmount;
             document.getElementById('current-balance').textContent = walletBalance.toFixed(2) + ' $';
             document.getElementById('wallet-balance-num').textContent = walletBalance.toFixed(2);
-            alert(`پرداخت واریز معادل ${selectedPackagePrice}$ با موفقیت ثبت شد!\nمبلغ ${addedAmount}$ (شامل ۱۰٪ افزایش) به موجودی شما اضافه شد.`);
+            alert(`پرداخت مبلغ ${selectedPackagePrice}$ با موفقیت ثبت شد!\nمبلغ ${addedAmount}$ (با احتساب ۱۰٪ افزایش) به موجودی شما اضافه گردید.`);
         });
 
-        // مدیریت انتخاب پلتفرم کمپین
         const platformBtns = document.querySelectorAll('.platform-btn');
         const targetLabel = document.getElementById('target-label');
         const targetUrlInput = document.getElementById('target-url');
@@ -676,20 +668,19 @@
             });
         });
 
-        // ثبت کمپین جدید
         document.getElementById('campaign-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const budgetVal = parseFloat(campaignBudgetInput.value);
 
             if (walletBalance < budgetVal) {
-                alert('موجودی کیف پول شما برای این کمپین کافی نیست! لطفا ابتدا حساب خود را شارژ کنید.');
+                alert('موجودی کیف پول شما کافی نیست! لطفا ابتدا حساب خود را شارژ کنید.');
                 return;
             }
 
             walletBalance -= budgetVal;
             document.getElementById('current-balance').textContent = walletBalance.toFixed(2) + ' $';
             document.getElementById('wallet-balance-num').textContent = walletBalance.toFixed(2);
-            alert(`کمپین شما در پلتفرم [${currentPlatform.toUpperCase}] با موفقیت ایجاد و فعال شد!\nمبلغ ${budgetVal}$ از کیف پول شما کسر گردید.`);
+            alert(`کمپین شما در پلتفرم [${currentPlatform.toUpperCase}] با موفقیت ایجاد و فعال شد!\nمبلغ ${budgetVal}$ از حساب کسر گردید.`);
         });
     </script>
 </body>
