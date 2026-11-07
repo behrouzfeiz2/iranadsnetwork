@@ -43,7 +43,7 @@
         }
 
         .container {
-            max-width: 1280px;
+            max-width: 1340px;
             margin: 0 auto;
             padding: 0 24px;
         }
@@ -108,9 +108,20 @@
             gap: 24px;
         }
 
-        table { width: 100%; border-collapse: collapse; text-align: right; font-size: 0.9rem; }
+        table { width: 100%; border-collapse: collapse; text-align: right; font-size: 0.88rem; }
         th { color: var(--text-muted); padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
-        td { padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        td { padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); vertical-align: middle; }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .st-pending { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+        .st-active { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+        .st-rejected { background: rgba(239, 68, 68, 0.15); color: #f87171; }
 
         @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
     </style>
@@ -157,7 +168,7 @@
 
         <!-- ۱. تنظیمات آدرس کیف پول کریپتو -->
         <div class="glass-card">
-            <h2 style="font-size: 1.25rem; margin-bottom: 16px;">
+            <h2 style="font-size: 1.2rem; margin-bottom: 16px;">
                 <i class="fa-solid fa-wallet" style="color: var(--neon-cyan);"></i> تنظیمات آدرس کیف پول‌های کریپتو (نمایش در پنل کاربران)
             </h2>
             <form onsubmit="saveWallets(event)" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; align-items: end;">
@@ -242,6 +253,54 @@
             </div>
         </div>
 
+        <!-- ۴. لیست درخواست‌های کمپین گوگل ادز -->
+        <div class="glass-card">
+            <h2 style="font-size: 1.25rem; margin-bottom: 16px;">
+                <i class="fa-brands fa-google" style="color: #4285F4;"></i> درخواست‌های کمپین گوگل ادز مشتریان
+            </h2>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>کاربر</th>
+                            <th>آدرس وب‌سایت</th>
+                            <th>معرفی محصول</th>
+                            <th>کلمات کلیدی پیشنهادی</th>
+                            <th>تفکیک بودجه (Search / GDN / YT)</th>
+                            <th>کل بودجه</th>
+                            <th>وضعیت</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-google-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ۵. لیست درخواست‌های کمپین تلگرام -->
+        <div class="glass-card">
+            <h2 style="font-size: 1.25rem; margin-bottom: 16px;">
+                <i class="fa-brands fa-telegram" style="color: #229ED9;"></i> درخواست‌های کمپین تلگرام مشتریان
+            </h2>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>کاربر</th>
+                            <th>آدرس کانال تلگرام</th>
+                            <th>بودجه اختصاصی</th>
+                            <th>توضیحات کمپین</th>
+                            <th>وضعیت</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-telegram-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -292,6 +351,12 @@
             };
         }
 
+        function formatStatusBadge(st) {
+            if (st === 'active' || st === 'approved') return `<span class="status-badge st-active">تایید و در حال اجرا</span>`;
+            if (st === 'rejected') return `<span class="status-badge st-rejected">رد شده</span>`;
+            return `<span class="status-badge st-pending">در انتظار تایید</span>`;
+        }
+
         async function fetchAdminOverview() {
             const res = await fetch('/api/admin/overview', { headers: getAdminHeaders() });
             if (res.status === 403) {
@@ -303,7 +368,7 @@
             document.getElementById('set-usdt').value = data.wallets.usdt || '';
             document.getElementById('set-trx').value = data.wallets.trx || '';
 
-            // جدول کاربران
+            // ۱. جدول کاربران
             document.getElementById('admin-users-tbody').innerHTML = data.users.map(u => `
                 <tr>
                     <td>#${u.id}</td>
@@ -314,8 +379,8 @@
                 </tr>
             `).join('');
 
-            // جدول واریزی‌ها
-            document.getElementById('admin-deposits-tbody').innerHTML = data.deposits.map(d => {
+            // ۲. جدول واریزی‌ها
+            document.getElementById('admin-deposits-tbody').innerHTML = data.deposits.length ? data.deposits.map(d => {
                 let btns = '-';
                 if (d.status === 'pending') {
                     btns = `
@@ -332,11 +397,63 @@
                         <td>${d.crypto_type}</td>
                         <td style="font-weight: 800; color: #34d399;">$${d.amount_usd}</td>
                         <td dir="ltr" style="font-family: monospace; font-size: 0.82rem;">${d.tx_hash}</td>
-                        <td>${d.status}</td>
+                        <td>${formatStatusBadge(d.status)}</td>
                         <td>${btns}</td>
                     </tr>
                 `;
-            }).join('');
+            }).join('') : `<tr><td colspan="7" style="text-align:center; color:var(--text-muted);">فیش واریزی ثبت نشده است</td></tr>`;
+
+            // ۳. جدول کمپین‌های گوگل
+            const gList = data.google_campaigns || [];
+            document.getElementById('admin-google-tbody').innerHTML = gList.length ? gList.map(c => {
+                let btns = '-';
+                if (c.status === 'pending') {
+                    btns = `
+                        <div style="display: flex; gap: 6px;">
+                            <button onclick="VerifyCampaign('google', ${c.id}, 'approve')" class="btn btn-success" style="padding: 5px 10px; font-size: 0.75rem;">تایید و شروع</button>
+                            <button onclick="VerifyCampaign('google', ${c.id}, 'reject')" class="btn btn-danger" style="padding: 5px 10px; font-size: 0.75rem;">رد و عودت</button>
+                        </div>
+                    `;
+                }
+                return `
+                    <tr>
+                        <td>#${c.id}</td>
+                        <td style="color: var(--neon-blue); font-weight: 700;">${c.username}</td>
+                        <td dir="ltr" style="font-family: monospace;">${c.website_url}</td>
+                        <td style="max-width: 200px;">${c.product_info || '-'}</td>
+                        <td style="max-width: 200px; color: #cbd5e1;">${c.keywords || '-'}</td>
+                        <td dir="ltr">$${c.budget_search} / $${c.budget_display} / $${c.budget_youtube}</td>
+                        <td style="font-weight: 800; color: #34d399;">$${c.total_budget}</td>
+                        <td>${formatStatusBadge(c.status)}</td>
+                        <td>${btns}</td>
+                    </tr>
+                `;
+            }).join('') : `<tr><td colspan="9" style="text-align:center; color:var(--text-muted);">درخواست کمپین گوگل ثبت نشده است</td></tr>`;
+
+            // ۴. جدول کمپین‌های تلگرام
+            const tgList = data.telegram_campaigns || [];
+            document.getElementById('admin-telegram-tbody').innerHTML = tgList.length ? tgList.map(t => {
+                let btns = '-';
+                if (t.status === 'pending') {
+                    btns = `
+                        <div style="display: flex; gap: 6px;">
+                            <button onclick="VerifyCampaign('telegram', ${t.id}, 'approve')" class="btn btn-success" style="padding: 5px 10px; font-size: 0.75rem;">تایید و شروع</button>
+                            <button onclick="VerifyCampaign('telegram', ${t.id}, 'reject')" class="btn btn-danger" style="padding: 5px 10px; font-size: 0.75rem;">رد و عودت</button>
+                        </div>
+                    `;
+                }
+                return `
+                    <tr>
+                        <td>#${t.id}</td>
+                        <td style="color: var(--neon-blue); font-weight: 700;">${t.username}</td>
+                        <td dir="ltr" style="font-family: monospace;">${t.channel_url}</td>
+                        <td style="font-weight: 800; color: #34d399;">$${t.budget}</td>
+                        <td style="max-width: 300px;">${t.description}</td>
+                        <td>${formatStatusBadge(t.status)}</td>
+                        <td>${btns}</td>
+                    </tr>
+                `;
+            }).join('') : `<tr><td colspan="7" style="text-align:center; color:var(--text-muted);">درخواست کمپین تلگرام ثبت نشده است</td></tr>`;
         }
 
         async function saveWallets(e) {
@@ -349,7 +466,7 @@
                 headers: getAdminHeaders(),
                 body: JSON.stringify({ wallet_usdt, wallet_trx })
             });
-            if (res.ok) alert('آدرس کیف پول‌ها با موفقیت ذخیره شد و در پنل مشتریان قابل مشاهده است.');
+            if (res.ok) alert('آدرس کیف پول‌ها با موفقیت ذخیره شد.');
         }
 
         async function createNewUser(e) {
@@ -380,6 +497,25 @@
                 body: JSON.stringify({ deposit_id, action })
             });
             if (res.ok) fetchAdminOverview();
+        }
+
+        async function VerifyCampaign(campaign_type, campaign_id, action) {
+            const msg = action === 'approve' 
+                ? 'آیا از تایید و شروع این کمپین مطمئن هستید؟' 
+                : 'آیا از رد کردن این کمپین و بازگشت بودجه به کیف پول کاربر مطمئن هستید؟';
+            if (!confirm(msg)) return;
+
+            const res = await fetch('/api/admin/campaigns/action', {
+                method: 'POST',
+                headers: getAdminHeaders(),
+                body: JSON.stringify({ campaign_type, campaign_id, action })
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                alert(data.error);
+                return;
+            }
+            fetchAdminOverview();
         }
 
         initAdmin();
