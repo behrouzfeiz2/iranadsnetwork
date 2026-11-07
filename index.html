@@ -86,7 +86,6 @@
             gap: 12px;
         }
 
-        /* favicon in header (استفاده از آیکون در هدر) */
         .brand-logo img {
             width: 32px;
             height: 32px;
@@ -97,7 +96,8 @@
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 28px;
+            gap: 24px;
+            align-items: center;
         }
 
         .nav-links a {
@@ -110,6 +110,15 @@
 
         .nav-links a:hover {
             color: var(--neon-blue);
+        }
+
+        .nav-dashboard-btn {
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            padding: 6px 14px;
+            border-radius: 8px;
+            color: var(--neon-cyan) !important;
+            font-weight: 600 !important;
         }
 
         .menu-toggle {
@@ -188,7 +197,6 @@
             font-size: 1.15rem;
         }
 
-        /* Agentic AI message */
         .agentic-banner {
             max-width: 900px;
             margin: 0 auto 28px;
@@ -205,18 +213,6 @@
             box-shadow: 0 0 28px rgba(6, 182, 212, 0.08), inset 0 0 22px rgba(6, 182, 212, 0.04);
         }
 
-        .agentic-banner::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            width: 35%;
-            right: -45%;
-            background: linear-gradient(90deg, transparent, rgba(103, 232, 249, 0.13), transparent);
-            transform: skewX(-18deg);
-            animation: ai-scan 5s ease-in-out infinite;
-        }
-
         .agentic-icon {
             flex: 0 0 42px;
             width: 42px;
@@ -227,7 +223,6 @@
             color: #67e8f9;
             background: rgba(6, 182, 212, 0.13);
             box-shadow: 0 0 18px rgba(6, 182, 212, 0.18);
-            animation: ai-pulse 2.4s ease-in-out infinite;
         }
 
         .agentic-copy {
@@ -238,16 +233,6 @@
         }
 
         .agentic-copy strong { color: #67e8f9; }
-
-        @keyframes ai-scan {
-            0%, 20% { right: -45%; }
-            75%, 100% { right: 115%; }
-        }
-
-        @keyframes ai-pulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 12px rgba(6,182,212,.12); }
-            50% { transform: scale(1.07); box-shadow: 0 0 23px rgba(6,182,212,.32); }
-        }
 
         .pricing-fee-note {
             margin: -20px 0 32px;
@@ -301,10 +286,7 @@
             border-color: rgba(255, 255, 255, 0.3);
         }
 
-        /* Section Global */
-        section {
-            padding: 80px 0;
-        }
+        section { padding: 80px 0; }
 
         .section-header {
             text-align: center;
@@ -322,7 +304,6 @@
             font-size: 1rem;
         }
 
-        /* Services Grid */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -348,7 +329,6 @@
             box-shadow: 0 8px 30px rgba(6, 182, 212, 0.15);
         }
 
-        /* 3D Glass Icon styling */
         .threed-icon-container {
             width: 70px;
             height: 70px;
@@ -382,7 +362,6 @@
             transform: scale(1.15) rotate(5deg);
         }
 
-        /* Brand 3D Specific Glow effects */
         .color-google { color: #4285F4; text-shadow: 0 0 15px rgba(66, 133, 244, 0.5); }
         .color-youtube { color: #FF0000; text-shadow: 0 0 15px rgba(255, 0, 0, 0.5); }
         .color-telegram { color: #229ED9; text-shadow: 0 0 15px rgba(34, 158, 217, 0.5); }
@@ -401,7 +380,6 @@
             text-align: justify;
         }
 
-        /* Pricing & Tariffs Section */
         .pricing-meta {
             background: rgba(15, 23, 42, 0.7);
             border: 1px solid var(--border-glow);
@@ -424,12 +402,6 @@
             color: #e2e8f0;
         }
 
-        .pricing-meta-text i {
-            font-size: 1.5rem;
-            color: var(--neon-cyan);
-            filter: drop-shadow(0 0 8px rgba(6, 182, 212, 0.5));
-        }
-
         .payment-badges {
             display: flex;
             flex-wrap: wrap;
@@ -447,10 +419,6 @@
             font-size: 0.85rem;
             font-weight: 600;
             color: #fff;
-        }
-
-        .pay-badge i {
-            color: var(--neon-blue);
         }
 
         .pricing-grid {
@@ -513,13 +481,6 @@
             color: #fff;
             margin-bottom: 8px;
             direction: ltr;
-            text-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
-        }
-
-        .plan-price span {
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--neon-blue);
         }
 
         .plan-duration {
@@ -551,20 +512,12 @@
             gap: 10px;
         }
 
-        .plan-features li i {
-            color: var(--neon-cyan);
-            font-size: 0.85rem;
-        }
-
-        /* About Section */
         .about-box {
             background: linear-gradient(180deg, rgba(15, 23, 42, 0.8), rgba(10, 22, 44, 0.8));
             border: 1px solid var(--border-glow);
             border-radius: 20px;
             padding: 48px;
-            width: 100%;
             max-width: none;
-            margin: 0 auto;
         }
 
         .about-box p {
@@ -575,16 +528,13 @@
             text-align: justify;
         }
 
-        /* Contact Section */
         .contact-card {
             background: linear-gradient(135deg, rgba(10, 22, 44, 0.95), rgba(3, 7, 18, 0.95));
             border: 1.5px solid var(--neon-cyan);
             box-shadow: 0 0 35px rgba(6, 182, 212, 0.12);
             border-radius: 24px;
             padding: 48px;
-            width: 100%;
             max-width: none;
-            margin: 0 auto;
             text-align: center;
         }
 
@@ -624,16 +574,9 @@
 
         .contact-item strong {
             font-size: 1.1rem;
-            letter-spacing: 0.5px;
             direction: ltr;
         }
 
-        .contact-icon-3d {
-            font-size: 2.2rem;
-            filter: drop-shadow(0px 8px 16px rgba(0,0,0,0.5));
-        }
-
-        /* Footer */
         footer {
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             padding: 32px 0;
@@ -652,8 +595,6 @@
             .about-box, .contact-card { padding: 28px; }
             .contact-channels { flex-direction: column; }
             .pricing-meta { flex-direction: column; text-align: center; }
-            .pricing-meta-text { flex-direction: column; }
-            .payment-badges { justify-content: center; }
         }
     </style>
 </head>
@@ -671,9 +612,9 @@
                 <li><a href="#pricing">تعرفه‌ها</a></li>
                 <li><a href="#about">درباره ما</a></li>
                 <li><a href="#contact">تماس با ما</a></li>
+                <li><a href="dashboard.html" class="nav-dashboard-btn"><i class="fa-solid fa-gauge"></i> ورود به پنل</a></li>
             </ul>
-            <button class="menu-toggle" type="button" aria-label="باز کردن منو"
-                    aria-expanded="false" aria-controls="mobile-menu">
+            <button class="menu-toggle" type="button" aria-label="باز کردن منو" aria-expanded="false" aria-controls="mobile-menu">
                 <i class="fa-solid fa-bars"></i>
             </button>
         </div>
@@ -683,6 +624,7 @@
                 <li><a href="#pricing">تعرفه‌ها</a></li>
                 <li><a href="#about">درباره ما</a></li>
                 <li><a href="#contact">تماس با ما</a></li>
+                <li><a href="dashboard.html" style="color: var(--neon-cyan);"><i class="fa-solid fa-gauge"></i> ورود به پنل مدیریت</a></li>
             </ul>
         </nav>
     </header>
@@ -721,51 +663,38 @@
                 </div>
 
                 <div class="services-grid">
-                    <!-- Google -->
                     <div class="service-card">
                         <div class="threed-icon-container">
                             <i class="fa-brands fa-google threed-icon color-google"></i>
                         </div>
                         <h3>تبلیغات در موتور جستجوی گوگل</h3>
-                        <p>
-                            تبلیغات گوگل (Google Ads) ابزاری کارآمد است که کسب‌وکار شما را دقیقاً در لحظه‌ای که کاربران به دنبال محصولات، راهکارها یا خدمات مرتبط هستند، در صدر نتایج صفحه نخست نمایش می‌دهد. در این شیوه تبلیغاتی، هزینه‌ها بر مبنای کلیک‌های واقعی (PPC) پرداخت می‌شود و با کلمه‌کلیدی‌های هدفمند، بالاترین نرخ تبدیل را برای فروشگاه‌ها و برندهای تجاری فراهم می‌آورد.
-                        </p>
+                        <p>تبلیغات گوگل (Google Ads) ابزاری کارآمد است که کسب‌وکار شما را دقیقاً در لحظه‌ای که کاربران به دنبال محصولات، راهکارها یا خدمات مرتبط هستند، در صدر نتایج صفحه نخست نمایش می‌دهد. در این شیوه تبلیغاتی، هزینه‌ها بر مبنای کلیک‌های واقعی (PPC) پرداخت می‌شود و با کلمه‌کلیدی‌های هدفمند، بالاترین نرخ تبدیل را برای فروشگاه‌ها و برندهای تجاری فراهم می‌آورد.</p>
                     </div>
 
-                    <!-- YouTube -->
                     <div class="service-card">
                         <div class="threed-icon-container">
                             <i class="fa-brands fa-youtube threed-icon color-youtube"></i>
                         </div>
                         <h3>تبلیغات در ویدئوهای یوتیوب</h3>
-                        <p>
-                            یوتیوب بزرگ‌ترین پایگاه ویدئویی جهان است که از قالب‌های متنوعی چون تبلیغات قابل رد شدن (Skippable)، تبلیغات پیش‌پرده کوتاه (Bumper ads) و معرفی‌های درون‌صفحه‌ای بهره می‌برد. از طریق نمایش تیزرها به مخاطبان بر پایه علایق، عادات تماشا و دسته‌بندی موضوعی، تصویر برند در ذهن جامعه هدف به شکلی جذاب، تصویری و عمیق تثبیت می‌شود.
-                        </p>
+                        <p>یوتیوب بزرگ‌ترین پایگاه ویدئویی جهان است که از قالب‌های متنوعی چون تبلیغات قابل رد شدن (Skippable)، تبلیغات پیش‌پرده کوتاه (Bumper ads) و معرفی‌های درون‌صفحه‌ای بهره می‌برد. از طریق نمایش تیزرها به مخاطبان بر پایه علایق، عادات تماشا و دسته‌بندی موضوعی، تصویر برند در ذهن جامعه هدف به شکلی جذاب، تصویری و عمیق تثبیت می‌شود.</p>
                     </div>
 
-                    <!-- Telegram -->
                     <div class="service-card">
                         <div class="threed-icon-container">
                             <i class="fa-brands fa-telegram threed-icon color-telegram"></i>
                         </div>
                         <h3>تبلیغات در کانال‌های تلگرام</h3>
-                        <p>
-                            سیستم تبلیغاتی تلگرام، امکان انتشار اطلاعیه‌ها و پیام‌های برند را در کانال‌های بزرگ، تخصصی و پرمخاطب فراهم می‌سازد. این روش با تکیه بر بازدهی بی‌درنگ پیام‌رسان‌ها، دسترسی به گروه‌های هدف مشخص، کمپین‌های متنی و تصویری هماهنگ، آگاهی برند و جذب ورودی باکیفیت را در سریع‌ترین زمان ممکن حاصل می‌کند.
-                        </p>
+                        <p>سیستم تبلیغاتی تلگرام، امکان انتشار اطلاعیه‌ها و پیام‌های برند را در کانال‌های بزرگ، تخصصی و پرمخاطب فراهم می‌سازد. این روش با تکیه بر بازدهی بی‌درنگ پیام‌رسان‌ها، دسترسی به گروه‌های هدف مشخص، کمپین‌های متنی و تصویری هماهنگ، آگاهی برند و جذب ورودی باکیفیت را در سریع‌ترین زمان ممکن حاصل می‌کند.</p>
                     </div>
 
-                    <!-- Instagram -->
                     <div class="service-card">
                         <div class="threed-icon-container">
                             <i class="fa-brands fa-instagram threed-icon color-instagram"></i>
                         </div>
                         <h3>تبلیغات در اینستاگرام</h3>
-                        <p>
-                            اینستاگرام با محوریت جلوه‌های دیداری، بستری عالی برای نمایش محصول در بخش استوری‌ها، پست‌های فید و ریلز محسوب می‌شود. طراحی محتواهای ویدیویی گیرا و تدوین استراتژی‌های پروموشن هدفمند متناسب با جامعه دموگرافیک کاربران ایرانی، تعامل، فالوور واقعی و نرخ خرید مستقیم کالا را ارتقا می‌دهد.
-                        </p>
+                        <p>اینستاگرام با محوریت جلوه‌های دیداری، بستری عالی برای نمایش محصول در بخش استوری‌ها، پست‌های فید و ریلز محسوب می‌شود. طراحی محتواهای ویدیویی گیرا و تدوین استراتژی‌های پروموشن هدفمند متناسب با جامعه دموگرافیک کاربران ایرانی، تعامل، فالوور واقعی و نرخ خرید مستقیم کالا را ارتقا می‌دهد.</p>
                     </div>
 
-                    <!-- X (Twitter) -->
                     <div class="service-card">
                         <div class="threed-icon-container" style="background: radial-gradient(circle, rgba(255,255,255,0.18) 0%, rgba(3,7,18,0) 70%); border-color: rgba(255,255,255,0.2);">
                             <svg class="x-svg-icon" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
@@ -773,9 +702,7 @@
                             </svg>
                         </div>
                         <h3>تبلیغات در شبکه اجتماعی X</h3>
-                        <p>
-                            شبکه اجتماعی X بستری گفتگومحور، اثرگذار و جریان‌ساز است که برای مطرح شدن در ترندها، مدیریت بحران و تثبیت اقتدار برند در حوزه‌های تخصصی، مالی، فناوری و بازرگانی عمل می‌کند. تدوین کمپین‌های موضوعی هوشمندانه در این فضا، تعامل عمیق با جامعه فعال و تصمیم‌گیرندگان کلیدی را میسر می‌سازد.
-                        </p>
+                        <p>شبکه اجتماعی X بستری گفتگومحور، اثرگذار و جریان‌ساز است که برای مطرح شدن در ترندها، مدیریت بحران و تثبیت اقتدار برند در حوزه‌های تخصصی، مالی، فناوری و بازرگانی عمل می‌کند. تدوین کمپین‌های موضوعی هوشمندانه در این فضا، تعامل عمیق با جامعه فعال و تصمیم‌گیرندگان کلیدی را میسر می‌سازد.</p>
                     </div>
                 </div>
             </div>
@@ -789,7 +716,6 @@
                     <p>تعرفه‌های شفاف و انعطاف‌پذیر بر اساس میزان بازدهی و اهداف کمپین شما</p>
                 </div>
 
-                <!-- Billing & Payment Info Bar -->
                 <div class="pricing-meta">
                     <div class="pricing-meta-text">
                         <i class="fa-solid fa-chart-line"></i>
@@ -806,9 +732,7 @@
                     هزینه مدیریت و اجرای کمپین، معادل ۱۰٪ به هزینه کل اشتراک و بودجه تبلیغاتی اضافه می‌شود.
                 </div>
 
-                <!-- Pricing Cards -->
                 <div class="pricing-grid">
-                    <!-- Plan 1: 100$ -->
                     <div class="pricing-card">
                         <div>
                             <div class="plan-title">پکیج استارتر</div>
@@ -821,10 +745,9 @@
                                 <li><i class="fa-solid fa-check"></i> پشتیبانی و مشاوره در تلگرام</li>
                             </ul>
                         </div>
-                        <a href="order.html" class="btn btn-secondary">مشاهده جزئیات و ثبت سفارش</a>
+                        <a href="dashboard.html" class="btn btn-secondary">ورود به پنل و شارژ</a>
                     </div>
 
-                    <!-- Plan 2: 500$ -->
                     <div class="pricing-card">
                         <div>
                             <div class="plan-title">پکیج رشد تجاری</div>
@@ -837,10 +760,9 @@
                                 <li><i class="fa-solid fa-check"></i> گزارش‌دهی دوره‌ای عملکرد کمپین</li>
                             </ul>
                         </div>
-                        <a href="order.html" class="btn btn-secondary">مشاهده جزئیات و ثبت سفارش</a>
+                        <a href="dashboard.html" class="btn btn-secondary">ورود به پنل و شارژ</a>
                     </div>
 
-                    <!-- Plan 3: 1000$ (Featured) -->
                     <div class="pricing-card featured">
                         <span class="popular-tag">پیشنهاد ویژه برندها</span>
                         <div>
@@ -854,10 +776,9 @@
                                 <li><i class="fa-solid fa-check"></i> پشتیبانی اختصاصی و بهینه‌سازی نرخ کلیک</li>
                             </ul>
                         </div>
-                        <a href="order.html" class="btn btn-primary">مشاهده جزئیات و ثبت سفارش</a>
+                        <a href="dashboard.html" class="btn btn-primary">ورود به پنل و شارژ</a>
                     </div>
 
-                    <!-- Plan 4: 2000$ -->
                     <div class="pricing-card">
                         <div>
                             <div class="plan-title">پکیج سازمانی VIP</div>
@@ -870,7 +791,7 @@
                                 <li><i class="fa-solid fa-check"></i> مدیریت VIP و اولویت در پشتیبانی مستقیم</li>
                             </ul>
                         </div>
-                        <a href="order.html" class="btn btn-secondary">مشاهده جزئیات و ثبت سفارش</a>
+                        <a href="dashboard.html" class="btn btn-secondary">ورود به پنل و شارژ</a>
                     </div>
                 </div>
             </div>
@@ -884,12 +805,8 @@
                     <p>هویت و مأموریت شبکه تبلیغات ایران</p>
                 </div>
                 <div class="about-box">
-                    <p>
-                        <strong>شبکه تبلیغات ایران</strong> با تمرکز بر گسترش سهم بازار برندهای داخلی، راهکارهای جامع و یکپارچه بازاریابی دیجیتال را در پلتفرم‌های بین‌المللی ارائه می‌کند. تیم تخصصی ما با شناخت عمیق از رفتار کاربران ایرانی در فضای مجازی و بهره‌گیری از آخرین ابزارهای تحلیل رفتار کاربر، ترافیک بالقوه را به خریداران پایدار تبدیل می‌سازد.
-                    </p>
-                    <p>
-                        ما کمپین‌های تبلیغاتی را با حساسیت در انتخاب کلمات کلیدی، سنجه‌های دقیق نرخ بازگشت سرمایه (ROI) و پایش مداوم نرخ تعامل بهینه‌سازی می‌کنیم تا بودجه‌های تبلیغاتی سازمان‌ها در اثربخش‌ترین گلوگاه‌های بازاریابی خرج شود.
-                    </p>
+                    <p><strong>شبکه تبلیغات ایران</strong> با تمرکز بر گسترش سهم بازار برندهای داخلی، راهکارهای جامع و یکپارچه بازاریابی دیجیتال را در پلتفرم‌های بین‌المللی ارائه می‌کند. تیم تخصصی ما با شناخت عمیق از رفتار کاربران ایرانی در فضای مجازی و بهره‌گیری از آخرین ابزارهای تحلیل رفتار کاربر، ترافیک بالقوه را به خریداران پایدار تبدیل می‌سازد.</p>
+                    <p>ما کمپین‌های تبلیغاتی را با حساسیت در انتخاب کلمات کلیدی، سنجه‌های دقیق نرخ بازگشت سرمایه (ROI) و پایش مداوم نرخ تعامل بهینه‌سازی می‌کنیم تا بودجه‌های تبلیغاتی سازمان‌ها در اثربخش‌ترین گلوگاه‌های بازاریابی خرج شود.</p>
                 </div>
             </div>
         </section>
