@@ -175,7 +175,6 @@
             font-size: 1.1rem;
         }
 
-        /* محفظه بیرونی هوشمند برای حفظ فاصله دقیق دکمه‌ها در دسکتاپ و موبایل */
         .scene-outer-wrapper {
             width: 100%;
             max-width: 640px;
@@ -205,7 +204,6 @@
             transition: transform 0.12s ease-out;
         }
 
-        /* مانیتور در پس‌زمینه (Dark Google) */
         .monitor-wrapper-pos {
             position: absolute;
             top: 0;
@@ -261,7 +259,6 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
         }
 
-        /* آیفون در جلو و سمت چپ مانیتور (Dark Instagram) */
         .iphone-frame {
             width: 215px;
             height: 385px;
@@ -362,102 +359,183 @@
 
         section { padding: 70px 0; }
 
-        .section-header { text-align: center; margin-bottom: 40px; }
+        .section-header { text-align: center; margin-bottom: 45px; }
         .section-header h2 { font-size: 2rem; font-weight: 800; margin-bottom: 10px; }
         .section-header p { color: var(--text-muted); font-size: 1rem; }
 
-        /* بخش چرا تبلیغات در موتور جستجو و سوشال مدیا؟ */
+        /* =========================================================
+           بخش سه‌بعدی (3D): چرا تبلیغات در موتور جستجو و سوشال مدیا؟
+           ========================================================= */
         .why-ads-section {
-            background: linear-gradient(180deg, rgba(3, 7, 18, 0.5), rgba(10, 22, 44, 0.4));
-            border-top: 1px solid rgba(56, 189, 248, 0.15);
-            border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+            position: relative;
+            background: radial-gradient(circle at 50% 50%, rgba(2, 132, 199, 0.12), rgba(3, 7, 18, 0.9) 80%);
+            border-top: 1px solid rgba(56, 189, 248, 0.2);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+            overflow: hidden;
+        }
+
+        .why-ads-section::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            transform: perspective(600px) rotateX(45deg) scale(1.5);
+            transform-origin: center top;
+            pointer-events: none;
         }
 
         .why-ads-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 24px;
+            gap: 28px;
+            perspective: 1200px;
+            position: relative;
+            z-index: 2;
         }
 
-        .why-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glow);
-            border-radius: 18px;
-            padding: 30px;
-            backdrop-filter: blur(12px);
-            transition: all 0.35s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+        .why-card-3d {
+            background: linear-gradient(145deg, rgba(15, 30, 58, 0.85), rgba(8, 16, 34, 0.92));
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-bottom: 4px solid var(--neon-cyan);
+            border-radius: 22px;
+            padding: 32px 26px;
+            transform-style: preserve-3d;
+            transition: transform 0.2s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
+            box-shadow: 
+                0 20px 40px -15px rgba(0, 0, 0, 0.85),
+                0 0 25px rgba(6, 182, 212, 0.08),
+                inset 0 1px 1px rgba(255, 255, 255, 0.15);
+            position: relative;
         }
 
-        .why-card:hover {
-            border-color: var(--neon-cyan);
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.15);
+        .why-card-3d:hover {
+            border-color: var(--neon-blue);
+            box-shadow: 
+                0 30px 55px -12px rgba(0, 0, 0, 0.95),
+                0 0 35px rgba(6, 182, 212, 0.28),
+                inset 0 1px 2px rgba(255, 255, 255, 0.25);
         }
 
-        .why-icon-box {
-            width: 60px;
-            height: 60px;
-            background: radial-gradient(circle, rgba(6,182,212,0.2) 0%, rgba(3,7,18,0) 70%);
+        /* لایه درخشش سه‌بعدی روی کارت */
+        .card-3d-inner {
+            transform: translateZ(35px);
+            transform-style: preserve-3d;
+        }
+
+        /* آیکون مکعبی سه‌بعدی معلق */
+        .why-icon-3d {
+            width: 72px;
+            height: 72px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.22), rgba(3, 7, 18, 0.9));
+            border: 1.5px solid rgba(56, 189, 248, 0.45);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 20px;
-            border-radius: 16px;
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            font-size: 1.6rem;
+            margin-bottom: 24px;
+            font-size: 2rem;
             color: var(--neon-cyan);
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+            transform: translateZ(50px);
+            box-shadow: 
+                0 14px 24px rgba(0, 0, 0, 0.65),
+                0 0 20px rgba(6, 182, 212, 0.3),
+                inset 0 2px 4px rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
         }
 
-        .why-card h3 {
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin-bottom: 12px;
+        .why-card-3d:hover .why-icon-3d {
+            transform: translateZ(65px) scale(1.08) rotate(-4deg);
+        }
+
+        .why-card-3d h3 {
+            font-size: 1.18rem;
+            font-weight: 800;
+            margin-bottom: 14px;
             color: #fff;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
         }
 
-        .why-card p {
-            color: var(--text-muted);
-            font-size: 0.9rem;
+        .why-card-3d p {
+            color: #cbd5e1;
+            font-size: 0.92rem;
             text-align: justify;
-            line-height: 1.8;
+            line-height: 1.85;
         }
 
-        .stats-banner-card {
+        /* بنر سه‌بعدی آمار جهانی گوگل و ایپسوس */
+        .stats-banner-3d {
             grid-column: 1 / -1;
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(2, 132, 199, 0.06));
-            border: 1.5px solid rgba(6, 182, 212, 0.35);
-            border-radius: 20px;
-            padding: 32px;
+            background: linear-gradient(135deg, rgba(14, 38, 72, 0.9), rgba(6, 18, 38, 0.95));
+            border: 1.5px solid rgba(6, 182, 212, 0.5);
+            border-bottom: 5px solid var(--neon-blue);
+            border-radius: 24px;
+            padding: 36px 40px;
             display: flex;
             align-items: center;
-            gap: 24px;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 0 30px rgba(6, 182, 212, 0.1);
+            gap: 32px;
+            transform-style: preserve-3d;
+            transition: transform 0.2s ease-out, box-shadow 0.3s ease;
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.9),
+                0 0 40px rgba(6, 182, 212, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.15);
+            margin-top: 8px;
         }
 
-        .stats-icon-large {
-            font-size: 3rem;
-            color: var(--neon-cyan);
+        .stats-orb-3d {
+            width: 110px;
+            height: 110px;
             flex-shrink: 0;
-            text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #38bdf8, #0284c7 60%, #030712 100%);
+            border: 2px solid rgba(103, 232, 249, 0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transform: translateZ(55px);
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.8),
+                0 0 30px rgba(56, 189, 248, 0.55),
+                inset 0 4px 10px rgba(255, 255, 255, 0.45);
         }
 
-        .stats-content h4 {
-            font-size: 1.15rem;
+        .stats-orb-3d strong {
+            font-size: 1.8rem;
+            font-weight: 900;
             color: #fff;
-            margin-bottom: 8px;
+            line-height: 1.1;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+        }
+
+        .stats-orb-3d span {
+            font-size: 0.72rem;
+            color: #e0f2fe;
             font-weight: 700;
         }
 
-        .stats-content p {
-            color: #cbd5e1;
-            font-size: 0.98rem;
+        .stats-content-3d {
+            transform: translateZ(35px);
+        }
+
+        .stats-content-3d h4 {
+            font-size: 1.25rem;
+            color: #67e8f9;
+            margin-bottom: 10px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stats-content-3d p {
+            color: #f1f5f9;
+            font-size: 1rem;
             text-align: justify;
-            line-height: 1.9;
+            line-height: 1.95;
         }
 
         /* Services */
@@ -564,7 +642,8 @@
             .hero h1 { font-size: 2rem; }
             .nav-links { display: none; }
             .menu-toggle { display: inline-flex; }
-            .stats-banner-card { flex-direction: column; text-align: center; }
+            .stats-banner-3d { flex-direction: column; text-align: center; padding: 28px 22px; }
+            .stats-content-3d h4 { justify-content: center; }
             .about-box, .contact-card { padding: 26px; }
         }
     </style>
@@ -658,7 +737,6 @@
                                         
                                         <div class="insta-ad-card">
                                             <div class="leather-bag-mockup">
-                                                <!-- تصویر گرافیکی کیف چرم -->
                                                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 6px 10px rgba(0,0,0,0.6)); margin-bottom: 6px;">
                                                     <path d="M22 20V16C22 10.4772 26.4772 6 32 6C37.5228 6 42 10.4772 42 16V20" stroke="#F59E0B" stroke-width="4" stroke-linecap="round"/>
                                                     <rect x="10" y="20" width="44" height="36" rx="7" fill="#92400E" stroke="#F59E0B" stroke-width="2.5"/>
@@ -698,7 +776,7 @@
             </div>
         </section>
 
-        <!-- بخش چرا تبلیغات در موتور جستجو و سوشال مدیا؟ -->
+        <!-- بخش سه‌بعدی: چرا تبلیغات در موتور جستجو و سوشال مدیا؟ -->
         <section class="why-ads-section">
             <div class="container">
                 <div class="section-header">
@@ -707,48 +785,59 @@
                 </div>
 
                 <div class="why-ads-grid">
-                    <!-- کارت ۱: گوگل سرچ -->
-                    <div class="why-card">
-                        <div>
-                            <div class="why-icon-box"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                    <!-- کارت سه‌بعدی ۱: گوگل سرچ -->
+                    <div class="why-card-3d tilt-card">
+                        <div class="card-3d-inner">
+                            <div class="why-icon-3d">
+                                <i class="fa-solid fa-magnifying-glass-chart" style="color: #38bdf8;"></i>
+                            </div>
                             <h3>تبلیغات هدفمند در موتور جستجوی گوگل (Google Search)</h3>
                             <p>با تبلیغات در موتور جستجوی گوگل، درست در لحظه‌ای با مخاطب ارتباط برقرار کنید که به دنبال محصول یا خدمات شماست. امکان هدف‌گذاری بر اساس کلمات کلیدی، موقعیت جغرافیایی و رفتار کاربران باعث می‌شود بودجه تبلیغاتی صرف جذب مخاطبان مرتبط و مشتریان بالقوه شود. اندازه‌گیری دقیق کلیک‌ها، نرخ تبدیل و بازگشت سرمایه نیز مدیریت و بهینه‌سازی کمپین‌ها را امکان‌پذیر می‌کند.</p>
                         </div>
                     </div>
 
-                    <!-- کارت ۲: یوتیوب -->
-                    <div class="why-card">
-                        <div>
-                            <div class="why-icon-box"><i class="fa-brands fa-youtube" style="color: #ff4d4d;"></i></div>
+                    <!-- کارت سه‌بعدی ۲: یوتیوب -->
+                    <div class="why-card-3d tilt-card" style="border-bottom-color: #ef4444;">
+                        <div class="card-3d-inner">
+                            <div class="why-icon-3d" style="border-color: rgba(239, 68, 68, 0.45); box-shadow: 0 14px 24px rgba(0,0,0,0.65), 0 0 20px rgba(239, 68, 68, 0.25);">
+                                <i class="fa-brands fa-youtube" style="color: #ff4d4d;"></i>
+                            </div>
                             <h3>بازاریابی و تبلیغات ویدئویی در یوتیوب (YouTube Ads)</h3>
                             <p>یوتیوب یکی از قدرتمندترین بسترهای جهان برای معرفی برند، محصولات و خدمات از طریق محتوای ویدئویی است. تبلیغات در این پلتفرم با استفاده از تصویر، صدا و پیام‌های خلاقانه، فرصت ایجاد ارتباط عمیق‌تر با مخاطبان و افزایش آگاهی از برند را فراهم می‌کند. هدف‌گذاری بر اساس علایق، موضوعات مورد توجه و ویژگی‌های مخاطبان، امکان نمایش تبلیغات به جامعه هدف را فراهم می‌سازد.</p>
                         </div>
                     </div>
 
-                    <!-- کارت ۳: گوگل دیسپلی -->
-                    <div class="why-card">
-                        <div>
-                            <div class="why-icon-box"><i class="fa-solid fa-globe" style="color: #38bdf8;"></i></div>
+                    <!-- کارت سه‌بعدی ۳: گوگل دیسپلی -->
+                    <div class="why-card-3d tilt-card" style="border-bottom-color: #a855f7;">
+                        <div class="card-3d-inner">
+                            <div class="why-icon-3d" style="border-color: rgba(168, 85, 247, 0.45); box-shadow: 0 14px 24px rgba(0,0,0,0.65), 0 0 20px rgba(168, 85, 247, 0.25);">
+                                <i class="fa-solid fa-globe" style="color: #c084fc;"></i>
+                            </div>
                             <h3>تبلیغات در وب‌سایت‌های همکار گوگل (Google Display Network)</h3>
                             <p>شبکه نمایش تبلیغاتی گوگل به کسب‌وکارها امکان می‌دهد بنرها و تبلیغات تصویری خود را در میلیون‌ها وب‌سایت، اپلیکیشن و فضای محتوایی همکار گوگل منتشر کنند. این روش برای افزایش دیده‌شدن برند، معرفی محصولات و بازاریابی مجدد (Remarketing) بسیار کاربردی است. با شناسایی علایق و رفتار کاربران و هدف‌گذاری هوشمندانه، می‌توان مخاطبان جدیدی جذب کرد و افرادی را که قبلاً با برند تعامل داشته‌اند، دوباره هدف قرار داد.</p>
                         </div>
                     </div>
 
-                    <!-- کارت ۴: اینستاگرام -->
-                    <div class="why-card">
-                        <div>
-                            <div class="why-icon-box"><i class="fa-brands fa-instagram" style="color: #ec4899;"></i></div>
+                    <!-- کارت سه‌بعدی ۴: اینستاگرام -->
+                    <div class="why-card-3d tilt-card" style="border-bottom-color: #ec4899;">
+                        <div class="card-3d-inner">
+                            <div class="why-icon-3d" style="border-color: rgba(236, 72, 153, 0.45); box-shadow: 0 14px 24px rgba(0,0,0,0.65), 0 0 20px rgba(236, 72, 153, 0.25);">
+                                <i class="fa-brands fa-instagram" style="color: #f472b6;"></i>
+                            </div>
                             <h3>تبلیغ و پروموت محتوا در اینستاگرام (Instagram Promotion)</h3>
                             <p>با پروموت پست‌ها و محتوای منتخب اینستاگرام، پیام برند خود را فراتر از دنبال‌کنندگان فعلی منتشر کنید. این روش امکان افزایش بازدید پست‌ها، جذب دنبال‌کننده، معرفی محصولات و افزایش تعامل با مخاطبان را فراهم می‌کند. هدف‌گذاری بر اساس سن، موقعیت جغرافیایی، علایق و ویژگی‌های کاربران به کسب‌وکارها کمک می‌کند محتوای خود را به مخاطبان مرتبط نمایش دهند و از ظرفیت اینستاگرام برای توسعه بازار و افزایش آگاهی از برند بهره ببرند.</p>
                         </div>
                     </div>
 
-                    <!-- کارت آمار قابل توجه (تمام عرض) -->
-                    <div class="stats-banner-card">
-                        <div class="stats-icon-large"><i class="fa-solid fa-chart-pie"></i></div>
-                        <div class="stats-content">
-                            <h4>آمار قابل توجه جهانی</h4>
-                            <p>طبق نظرسنجی Google و Ipsos، <strong>۸۳٪ مصرف‌کنندگان</strong> در سطح جهان اعلام کرده‌اند که روزانه از گوگل و/یا یوتیوب استفاده می‌کنند؛ آماری که نشان‌دهنده ظرفیت بالای این دو پلتفرم برای دسترسی به مخاطبان جهانی است.</p>
+                    <!-- بنر سه‌بعدی آمار قابل توجه (گوگل و ایپسوس) -->
+                    <div class="stats-banner-3d tilt-card">
+                        <div class="stats-orb-3d">
+                            <strong>۸۳٪</strong>
+                            <span>کاربران جهان</span>
+                        </div>
+                        <div class="stats-content-3d">
+                            <h4><i class="fa-solid fa-chart-pie"></i> آمار قابل توجه جهانی</h4>
+                            <p>طبق نظرسنجی گوگل و <strong>ایپسوس</strong>، ۸۳٪ مصرف‌کنندگان در سطح جهان اعلام کرده‌اند که روزانه از گوگل و/یا یوتیوب استفاده می‌کنند؛ آماری که نشان‌دهنده ظرفیت بالای این دو پلتفرم برای دسترسی به مخاطبان جهانی است.</p>
                         </div>
                     </div>
                 </div>
@@ -952,7 +1041,7 @@
         const sceneStage = document.getElementById('scene-stage');
         const group = document.getElementById('device-group');
 
-        // تنظیم خودکار مقیاس (Scale) در موبایل و دسکتاپ بدون بهم ریختن جای دکمه‌ها
+        // تنظیم مقیاس (Scale) مانیتور و آیفون در موبایل و دسکتاپ
         function updateSceneScale() {
             if (!sceneOuter || !sceneStage) return;
             const availableWidth = sceneOuter.clientWidth;
@@ -968,7 +1057,7 @@
         window.addEventListener('DOMContentLoaded', updateSceneScale);
         updateSceneScale();
 
-        // حرکت سه‌بعدی با ماوس
+        // حرکت سه‌بعدی مانیتور و آیفون با ماوس
         if (sceneOuter && group) {
             sceneOuter.addEventListener('mousemove', (e) => {
                 const rect = sceneOuter.getBoundingClientRect();
@@ -986,6 +1075,27 @@
                 group.style.transition = 'transform 0.1s ease-out';
             });
         }
+
+        // افکت سه‌بعدی تعاملی (3D Tilt) روی کارت‌های بخش "چرا تبلیغات در موتور جستجو و سوشال مدیا؟"
+        document.querySelectorAll('.tilt-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                const rotateX = (-y / (rect.height / 2)) * 7;
+                const rotateY = (x / (rect.width / 2)) * 7;
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transition = 'transform 0.45s ease, box-shadow 0.3s ease';
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+            });
+
+            card.addEventListener('mouseenter', () => {
+                card.style.transition = 'transform 0.1s ease-out, box-shadow 0.3s ease';
+            });
+        });
 
         // دکمه مشاهده بیشتر در درباره ما
         function toggleAboutText() {
