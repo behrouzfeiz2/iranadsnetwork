@@ -19,28 +19,66 @@ export async function onRequest(context) {
     const ADMIN_PASS = env.ADMIN_PASS || "admin123456";
 
     try {
-        // ۱. ورود مشتری
+        // ۱. ثبت‌نام مستقیم کاربر با ایمیل و نام کاربری (بدون نیاز به تایید ایمیل)
+        if (path === 'register' && method === 'POST') {
+            const { username, email, password } = await request.json();
+            if (!username || !email || !password) {
+                return new Response(JSON.stringify({ error: 'لطفاً نام کاربری، ایمیل و رمز عبور را کامل وارد کنید' }), { status: 400, headers: corsHeaders });
+            }
+
+            const cleanUser = username.trim();
+            const cleanEmail = email.trim().toLowerCase();
+            const cleanPass = password.trim();
+
+            const existing = await env.DB.prepare(
+                'SELECT id FROM users WHERE username = ? OR email = ?'
+            ).bind(cleanUser, cleanEmail).first();
+
+            if (existing) {
+                return new Response(JSON.stringify({ error: 'این نام کاربری یا ایمیل قبلاً ثبت شده است' }), { status: 400, headers: corsHeaders });
+            }
+
+            const result = await env.DB.prepare(
+                'INSERT INTO users (username, email, password, balance) VALUES (?, ?, ?, 0.0)'
+            ).bind(cleanUser, cleanEmail, cleanPass).run();
+
+            const newUser = await env.DB.prepare(
+                'SELECT id, username, email, balance FROM users WHERE id = ?'
+            ).bind(result.meta.last_row_id).first();
+
+            return new Response(JSON.stringify({ user: newUser }), { headers: corsHeaders });
+        }
+
+        // ۲. ورود مشتری (با ایمیل یا نام کاربری)
         if (path === 'login' && method === 'POST') {
-            const { username, password } = await request.json();
+            const { identifier, password } = await request.json();
+            if (!identifier || !password) {
+                return new Response(JSON.stringify({ error: 'لطفاً اطلاعات ورود را کامل وارد کنید' }), { status: 400, headers: corsHeaders });
+            }
+
+            const cleanId = identifier.trim();
+            const cleanEmail = cleanId.toLowerCase();
+
             const user = await env.DB.prepare(
-                'SELECT id, username, balance FROM users WHERE username = ? AND password = ?'
-            ).bind(username, password).first();
+                'SELECT id, username, email, balance FROM users WHERE (username = ? OR email = ?) AND password = ?'
+            ).bind(cleanId, cleanEmail, password.trim()).first();
 
             if (!user) {
-                return new Response(JSON.stringify({ error: 'نام کاربری یا رمز عبور اشتباه است' }), { status: 401, headers: corsHeaders });
+                return new Response(JSON.stringify({ error: 'ایمیل/نام کاربری یا رمز عبور اشتباه است' }), { status: 401, headers: corsHeaders });
             }
             return new Response(JSON.stringify({ user }), { headers: corsHeaders });
         }
 
-        // ۲. دریافت اطلاعات داشبورد مشتری
+        // ۳. دریافت اطلاعات داشبورد مشتری (شامل تیکت‌ها)
         if (path === 'user/data' && method === 'GET') {
             const userId = url.searchParams.get('user_id');
-            const user = await env.DB.prepare('SELECT id, username, balance FROM users WHERE id = ?').bind(userId).first();
+            const user = await env.DB.prepare('SELECT id, username, email, balance FROM users WHERE id = ?').bind(userId).first();
             if (!user) return new Response(JSON.stringify({ error: 'کاربر یافت نشد' }), { status: 404, headers: corsHeaders });
 
             const deposits = await env.DB.prepare('SELECT * FROM deposits WHERE user_id = ? ORDER BY id DESC').bind(userId).all();
             const googleCampaigns = await env.DB.prepare('SELECT * FROM google_campaigns WHERE user_id = ? ORDER BY id DESC').bind(userId).all();
             const telegramCampaigns = await env.DB.prepare('SELECT * FROM telegram_campaigns WHERE user_id = ? ORDER BY id DESC').bind(userId).all();
+            const tickets = await env.DB.prepare('SELECT * FROM tickets WHERE user_id = ? ORDER BY id DESC').bind(userId).all();
             const settingsRows = await env.DB.prepare('SELECT * FROM settings').all();
 
             const wallets = { usdt: '', trx: '' };
@@ -54,11 +92,12 @@ export async function onRequest(context) {
                 deposits: deposits.results,
                 google_campaigns: googleCampaigns.results,
                 telegram_campaigns: telegramCampaigns.results,
+                tickets: tickets.results,
                 wallets
             }), { headers: corsHeaders });
         }
 
-        // ۳. ثبت فیش واریزی کریپتو
+        // ۴. ثبت فیش واریزی کریپتو
         if (path === 'user/deposit' && method === 'POST') {
             const { user_id, amount_usd, crypto_type, tx_hash } = await request.json();
             if (!amount_usd || amount_usd <= 0 || !tx_hash) {
@@ -71,7 +110,7 @@ export async function onRequest(context) {
             return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
         }
 
-        // ۴. ثبت کمپین گوگل (همراه با معرفی محصول و کلمات کلیدی + بررسی موجودی)
+        // ۵. ثبت کمپین گوگل
         if (path === 'user/campaign/google' && method === 'POST') {
             const { user_id, website_url, product_info, keywords, budget_search, budget_display, budget_youtube } = await request.json();
             const s = parseFloat(budget_search) || 0;
@@ -80,12 +119,12 @@ export async function onRequest(context) {
             const total = s + d + y;
 
             if (total <= 0 || !website_url || !product_info || !keywords) {
-                return new Response(JSON.stringify({ error: 'لطفاً تمام فیلدها (آدرس سایت، معرفی محصول، کلمات کلیدی) و حداقل یکی از بودجه‌ها را وارد کنید' }), { status: 400, headers: corsHeaders });
+                return new Response(JSON.stringify({ error: 'لطفاً تمام فیلدها و حداقل یکی از بودجه‌ها را وارد کنید' }), { status: 400, headers: corsHeaders });
             }
 
             const user = await env.DB.prepare('SELECT balance FROM users WHERE id = ?').bind(user_id).first();
             if (!user || user.balance < total) {
-                return new Response(JSON.stringify({ error: 'مجموع بودجه انتخابی از موجودی کیف پول شما بیشتر است. لطفاً ابتدا حساب خود را شارژ کنید.' }), { status: 400, headers: corsHeaders });
+                return new Response(JSON.stringify({ error: 'مجموع بودجه انتخابی از موجودی کیف پول شما بیشتر است.' }), { status: 400, headers: corsHeaders });
             }
 
             await env.DB.batch([
@@ -98,7 +137,7 @@ export async function onRequest(context) {
             return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
         }
 
-        // ۵. ثبت کمپین تلگرام + بررسی موجودی
+        // ۶. ثبت کمپین تلگرام
         if (path === 'user/campaign/telegram' && method === 'POST') {
             const { user_id, channel_url, budget, description } = await request.json();
             const total = parseFloat(budget) || 0;
@@ -109,7 +148,7 @@ export async function onRequest(context) {
 
             const user = await env.DB.prepare('SELECT balance FROM users WHERE id = ?').bind(user_id).first();
             if (!user || user.balance < total) {
-                return new Response(JSON.stringify({ error: 'بودجه وارد شده از موجودی کیف پول شما بیشتر است. لطفاً ابتدا کیف پول را شارژ کنید.' }), { status: 400, headers: corsHeaders });
+                return new Response(JSON.stringify({ error: 'بودجه وارد شده از موجودی کیف پول شما بیشتر است.' }), { status: 400, headers: corsHeaders });
             }
 
             await env.DB.batch([
@@ -122,8 +161,22 @@ export async function onRequest(context) {
             return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
         }
 
+        // ۷. ارسال تیکت پشتیبانی توسط کاربر
+        if (path === 'user/ticket' && method === 'POST') {
+            const { user_id, subject, message } = await request.json();
+            if (!subject || !message) {
+                return new Response(JSON.stringify({ error: 'لطفاً موضوع و متن پیام تیکت را وارد کنید' }), { status: 400, headers: corsHeaders });
+            }
+
+            await env.DB.prepare(
+                'INSERT INTO tickets (user_id, subject, message, status) VALUES (?, ?, ?, ?)'
+            ).bind(user_id, subject.trim(), message.trim(), 'open').run();
+
+            return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
+        }
+
         // ==========================================
-        // ۶. مسیرهای پنل ادمین (admin.html)
+        // ۸. مسیرهای پنل ادمین (admin.html)
         // ==========================================
         if (path === 'admin/login' && method === 'POST') {
             const { username, password } = await request.json();
@@ -143,9 +196,9 @@ export async function onRequest(context) {
 
             // دریافت کل اطلاعات در پنل ادمین
             if (path === 'admin/overview' && method === 'GET') {
-                const users = await env.DB.prepare('SELECT id, username, password, balance, created_at FROM users ORDER BY id DESC').all();
+                const users = await env.DB.prepare('SELECT id, username, email, password, balance, created_at FROM users ORDER BY id DESC').all();
                 const deposits = await env.DB.prepare(`
-                    SELECT deposits.*, users.username 
+                    SELECT deposits.*, users.username, users.email 
                     FROM deposits JOIN users ON deposits.user_id = users.id 
                     ORDER BY deposits.id DESC
                 `).all();
@@ -158,6 +211,11 @@ export async function onRequest(context) {
                     SELECT telegram_campaigns.*, users.username 
                     FROM telegram_campaigns JOIN users ON telegram_campaigns.user_id = users.id 
                     ORDER BY telegram_campaigns.id DESC
+                `).all();
+                const tickets = await env.DB.prepare(`
+                    SELECT tickets.*, users.username, users.email 
+                    FROM tickets JOIN users ON tickets.user_id = users.id 
+                    ORDER BY tickets.id DESC
                 `).all();
                 const settingsRows = await env.DB.prepare('SELECT * FROM settings').all();
 
@@ -172,6 +230,7 @@ export async function onRequest(context) {
                     deposits: deposits.results,
                     google_campaigns: googleCampaigns.results,
                     telegram_campaigns: telegramCampaigns.results,
+                    tickets: tickets.results,
                     wallets
                 }), { headers: corsHeaders });
             }
@@ -186,12 +245,12 @@ export async function onRequest(context) {
                 return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
             }
 
-            // ساخت کاربر جدید
+            // ساخت کاربر جدید توسط ادمین
             if (path === 'admin/users' && method === 'POST') {
-                const { username, password, initial_balance } = await request.json();
+                const { username, email, password, initial_balance } = await request.json();
                 await env.DB.prepare(
-                    'INSERT INTO users (username, password, balance) VALUES (?, ?, ?)'
-                ).bind(username.trim(), password.trim(), parseFloat(initial_balance) || 0).run();
+                    'INSERT INTO users (username, email, password, balance) VALUES (?, ?, ?, ?)'
+                ).bind(username.trim(), email.trim().toLowerCase(), password.trim(), parseFloat(initial_balance) || 0).run();
                 return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
             }
 
@@ -214,19 +273,18 @@ export async function onRequest(context) {
                 return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
             }
 
-            // تایید و شروع یا رد کمپین‌ها (گوگل و تلگرام)
+            // تایید یا رد کمپین‌ها
             if (path === 'admin/campaigns/action' && method === 'POST') {
-                const { campaign_type, campaign_id, action } = await request.json(); // action: 'approve' | 'reject'
+                const { campaign_type, campaign_id, action } = await request.json();
 
                 if (campaign_type === 'google') {
                     const camp = await env.DB.prepare('SELECT * FROM google_campaigns WHERE id = ?').bind(campaign_id).first();
                     if (!camp || camp.status !== 'pending') {
-                        return new Response(JSON.stringify({ error: 'این کمپین قبلاً تعیین وضعیت شده است' }), { status: 400, headers: corsHeaders });
+                        return new Response(JSON.stringify({ error: 'این کمپین قبلاً بررسی شده است' }), { status: 400, headers: corsHeaders });
                     }
                     if (action === 'approve') {
                         await env.DB.prepare("UPDATE google_campaigns SET status = 'active' WHERE id = ?").bind(campaign_id).run();
                     } else {
-                        // در صورت رد شدن توسط ادمین، بودجه به کیف پول کاربر برمی‌گردد
                         await env.DB.batch([
                             env.DB.prepare("UPDATE google_campaigns SET status = 'rejected' WHERE id = ?").bind(campaign_id),
                             env.DB.prepare("UPDATE users SET balance = balance + ? WHERE id = ?").bind(camp.total_budget, camp.user_id)
@@ -235,7 +293,7 @@ export async function onRequest(context) {
                 } else if (campaign_type === 'telegram') {
                     const camp = await env.DB.prepare('SELECT * FROM telegram_campaigns WHERE id = ?').bind(campaign_id).first();
                     if (!camp || camp.status !== 'pending') {
-                        return new Response(JSON.stringify({ error: 'این کمپین قبلاً تعیین وضعیت شده است' }), { status: 400, headers: corsHeaders });
+                        return new Response(JSON.stringify({ error: 'این کمپین قبلاً بررسی شده است' }), { status: 400, headers: corsHeaders });
                     }
                     if (action === 'approve') {
                         await env.DB.prepare("UPDATE telegram_campaigns SET status = 'active' WHERE id = ?").bind(campaign_id).run();
@@ -246,6 +304,20 @@ export async function onRequest(context) {
                         ]);
                     }
                 }
+
+                return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
+            }
+
+            // پاسخ ادمین به تیکت پشتیبانی
+            if (path === 'admin/tickets/reply' && method === 'POST') {
+                const { ticket_id, admin_reply } = await request.json();
+                if (!ticket_id || !admin_reply) {
+                    return new Response(JSON.stringify({ error: 'متن پاسخ نمی‌تواند خالی باشد' }), { status: 400, headers: corsHeaders });
+                }
+
+                await env.DB.prepare(
+                    "UPDATE tickets SET admin_reply = ?, status = 'answered' WHERE id = ?"
+                ).bind(admin_reply.trim(), ticket_id).run();
 
                 return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
             }
