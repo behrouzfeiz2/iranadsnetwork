@@ -139,9 +139,9 @@
         .mobile-menu ul { list-style: none; display: grid; gap: 6px; }
         .mobile-menu a { display: block; padding: 11px 14px; border-radius: 10px; color: var(--text-muted); text-decoration: none; }
 
-        /* Hero & 3D Showcase */
+        /* Hero & 3D Devices Showcase */
         .hero {
-            padding: 80px 0 60px;
+            padding: 60px 0 40px;
             text-align: center;
             position: relative;
         }
@@ -155,13 +155,13 @@
             color: var(--neon-blue);
             font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
         }
 
         .hero h1 {
             font-size: 2.6rem;
             font-weight: 900;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             background: linear-gradient(135deg, #ffffff 30%, var(--neon-cyan) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -169,104 +169,135 @@
 
         .hero p {
             max-width: 680px;
-            margin: 0 auto 32px;
+            margin: 0 auto 24px;
             color: var(--text-muted);
             font-size: 1.1rem;
         }
 
-        /* 3D Devices Showcase Container */
-        .devices-container {
-            perspective: 1200px;
-            margin: 40px auto 50px;
+        /* کامپوننت سه‌بعدی جدید (مانیتور و آیفون جلوتر از آن) */
+        .scene-container {
+            perspective: 1400px;
+            margin: 30px auto 40px;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 30px;
-            flex-wrap: wrap;
-            padding: 20px;
-        }
-
-        .device-wrapper {
-            transition: transform 0.1s ease-out;
-            transform-style: preserve-3d;
-        }
-
-        /* Monitor (Google Search Ad Mockup) */
-        .monitor {
-            width: 520px;
-            max-width: 100%;
-            height: 310px;
-            background: #0f172a;
-            border: 3px solid #334155;
-            border-radius: 16px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(6, 182, 212, 0.2);
             position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-        .monitor-screen {
-            background: #ffffff;
-            color: #1e293b;
-            flex: 1;
-            padding: 16px;
-            text-align: right;
-            font-size: 0.8rem;
-            overflow: hidden;
-        }
-        .monitor-stand {
-            width: 120px;
-            height: 35px;
-            background: #1e293b;
-            margin: 0 auto;
-            clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
-        }
-        .monitor-base {
-            width: 200px;
-            height: 10px;
-            background: #334155;
-            margin: 0 auto;
-            border-radius: 5px;
+            width: 100%;
+            max-width: 700px;
+            height: 380px;
         }
 
-        /* Phone (Instagram Ad Mockup) */
-        .phone {
-            width: 220px;
-            height: 400px;
+        .device-3d-group {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+        }
+
+        /* مانیتور در پس‌زمینه (Dark Google) */
+        .monitor-frame {
+            width: 580px;
+            height: 330px;
             background: #0f172a;
             border: 4px solid #334155;
-            border-radius: 32px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7), 0 0 30px rgba(225, 48, 108, 0.2);
-            position: relative;
-            overflow: hidden;
+            border-radius: 18px;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8), 0 0 40px rgba(6, 182, 212, 0.25);
+            position: absolute;
             display: flex;
             flex-direction: column;
+            overflow: hidden;
+            transform: translateZ(-30px);
         }
-        .phone-notch {
+
+        .monitor-screen {
+            background: #090d16;
+            color: #f8fafc;
+            flex: 1;
+            padding: 18px;
+            text-align: right;
+            border-bottom: 2px solid #1e293b;
+        }
+
+        .google-dark-box {
+            background: #111827;
+            border: 1px solid #374151;
+            border-radius: 12px;
+            padding: 14px;
+            margin-top: 8px;
+        }
+
+        /* آیفون در جلو (Dark Instagram) */
+        .iphone-frame {
+            width: 210px;
+            height: 380px;
+            background: #000000;
+            border: 5px solid #27272a;
+            border-radius: 38px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9), 0 0 35px rgba(225, 48, 108, 0.3);
+            position: absolute;
+            left: 55px;
+            top: 15px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transform: translateZ(60px);
+            z-index: 10;
+        }
+
+        .iphone-notch {
             width: 90px;
-            height: 16px;
-            background: #1e293b;
+            height: 18px;
+            background: #27272a;
             position: absolute;
             top: 6px;
             left: 50%;
             transform: translateX(-50%);
-            border-radius: 10px;
-            z-index: 10;
+            border-radius: 12px;
+            z-index: 20;
         }
-        .phone-screen {
-            background: linear-gradient(135deg, #1e1b4b, #31103f);
+
+        .iphone-screen {
+            background: #0f172a;
             color: #fff;
             flex: 1;
-            padding: 30px 12px 12px;
-            text-align: center;
-            font-size: 0.78rem;
+            padding: 32px 10px 12px;
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .insta-ad-card {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .leather-bag-mockup {
+            width: 100%;
+            height: 110px;
+            background: linear-gradient(135deg, #78350f, #451a03);
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #b45309;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
         }
 
         .cta-group {
             display: flex;
             justify-content: center;
             gap: 16px;
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .btn {
@@ -296,19 +327,16 @@
         }
         .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); }
 
-        section { padding: 80px 0; }
+        section { padding: 70px 0; }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        .section-header h2 { font-size: 2rem; font-weight: 800; margin-bottom: 12px; }
+        .section-header { text-align: center; margin-bottom: 40px; }
+        .section-header h2 { font-size: 2rem; font-weight: 800; margin-bottom: 10px; }
         .section-header p { color: var(--text-muted); font-size: 1rem; }
 
         /* Services */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 24px;
         }
 
@@ -316,175 +344,107 @@
             background: var(--bg-card);
             border: 1px solid var(--border-glow);
             border-radius: 16px;
-            padding: 32px;
+            padding: 30px;
             backdrop-filter: blur(12px);
             transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
         }
-        .service-card:hover {
-            border-color: var(--neon-cyan);
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(6, 182, 212, 0.15);
-        }
+        .service-card:hover { border-color: var(--neon-cyan); transform: translateY(-4px); }
 
         .threed-icon-container {
-            width: 70px;
-            height: 70px;
-            background: radial-gradient(circle, rgba(6,182,212,0.15) 0%, rgba(3,7,18,0) 70%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 22px;
-            border-radius: 18px;
+            width: 65px; height: 65px; background: radial-gradient(circle, rgba(6,182,212,0.15) 0%, rgba(3,7,18,0) 70%);
+            display: flex; align-items: center; justify-content: center; margin-bottom: 20px; border-radius: 16px;
             border: 1.5px solid rgba(255,255,255,0.08);
         }
-        .threed-icon { font-size: 2.2rem; filter: drop-shadow(0px 8px 16px rgba(0,0,0,0.4)); }
-        .service-card h3 { font-size: 1.25rem; margin-bottom: 14px; color: #fff; }
-        .service-card p { color: var(--text-muted); font-size: 0.95rem; text-align: justify; }
+        .threed-icon { font-size: 2rem; }
+        .service-card h3 { font-size: 1.2rem; margin-bottom: 12px; color: #fff; }
+        .service-card p { color: var(--text-muted); font-size: 0.92rem; text-align: justify; }
 
         /* Pricing */
         .pricing-meta {
-            background: rgba(15, 23, 42, 0.7);
-            border: 1px solid var(--border-glow);
-            border-radius: 16px;
-            padding: 24px 32px;
-            margin-bottom: 40px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 20px;
+            background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border-glow); border-radius: 16px;
+            padding: 22px 30px; margin-bottom: 30px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px;
         }
-        .payment-badges { display: flex; flex-wrap: wrap; gap: 10px; }
+        .payment-badges { display: flex; gap: 10px; }
         .pay-badge {
             display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 10px;
             background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); font-size: 0.85rem; font-weight: 600; color: #fff;
         }
         .pricing-fee-note {
-            margin: -20px 0 32px; padding: 13px 18px; border: 1px solid rgba(251, 191, 36, 0.28);
-            border-radius: 12px; background: rgba(245, 158, 11, 0.07); color: #fde68a; font-size: 0.9rem; text-align: center;
+            margin: -15px 0 30px; padding: 12px 16px; border: 1px solid rgba(251, 191, 36, 0.28);
+            border-radius: 12px; background: rgba(245, 158, 11, 0.07); color: #fde68a; font-size: 0.88rem; text-align: center;
         }
 
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 24px;
-        }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
         .pricing-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glow);
-            border-radius: 20px;
-            padding: 36px 28px;
-            backdrop-filter: blur(12px);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            text-align: center;
-            position: relative;
-            transition: all 0.35s ease;
+            background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: 20px;
+            padding: 32px 24px; display: flex; flex-direction: column; justify-content: space-between; text-align: center; position: relative;
         }
-        .pricing-card:hover { border-color: var(--neon-cyan); transform: translateY(-6px); box-shadow: 0 12px 35px rgba(6, 182, 212, 0.18); }
-        .pricing-card.featured {
-            background: linear-gradient(180deg, rgba(14, 34, 68, 0.85), rgba(10, 22, 44, 0.85));
-            border-color: var(--neon-cyan);
-        }
+        .pricing-card.featured { background: linear-gradient(180deg, rgba(14, 34, 68, 0.85), rgba(10, 22, 44, 0.85)); border-color: var(--neon-cyan); }
         .popular-tag {
             position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
             background: linear-gradient(135deg, var(--primary-accent), var(--neon-cyan)); color: #030712;
-            font-size: 0.78rem; font-weight: 800; padding: 4px 16px; border-radius: 999px; white-space: nowrap;
+            font-size: 0.75rem; font-weight: 800; padding: 4px 14px; border-radius: 999px; white-space: nowrap;
         }
-        .plan-title { font-size: 1.15rem; font-weight: 700; color: var(--text-muted); margin-bottom: 16px; }
-        .plan-price { font-size: 2.3rem; font-weight: 900; color: #fff; margin-bottom: 8px; direction: ltr; }
-        .plan-fee-text { font-size: 0.78rem; color: #34d399; margin-bottom: 12px; font-weight: 600; }
+        .plan-title { font-size: 1.1rem; font-weight: 700; color: var(--text-muted); margin-bottom: 14px; }
+        .plan-price { font-size: 2.2rem; font-weight: 900; color: #fff; margin-bottom: 6px; direction: ltr; }
+        .plan-fee-text { font-size: 0.76rem; color: #34d399; margin-bottom: 10px; font-weight: 600; }
         .plan-duration {
-            display: inline-block; margin: 8px auto 20px; padding: 6px 16px; border-radius: 8px;
-            background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.25); color: var(--neon-cyan); font-size: 0.85rem;
+            display: inline-block; margin: 6px auto 18px; padding: 5px 14px; border-radius: 8px;
+            background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.25); color: var(--neon-cyan); font-size: 0.82rem;
         }
-        .plan-features { list-style: none; margin-bottom: 28px; text-align: right; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 20px; }
-        .plan-features li { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+        .plan-features { list-style: none; margin-bottom: 24px; text-align: right; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 16px; }
+        .plan-features li { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
 
-        /* About Us with Read More */
-        .about-box {
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.8), rgba(10, 22, 44, 0.8));
-            border: 1px solid var(--border-glow);
-            border-radius: 20px;
-            padding: 48px;
-        }
-        .about-box p {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            line-height: 2;
-            margin-bottom: 20px;
-            text-align: justify;
-        }
+        /* About Us */
+        .about-box { background: linear-gradient(180deg, rgba(15, 23, 42, 0.8), rgba(10, 22, 44, 0.8)); border: 1px solid var(--border-glow); border-radius: 20px; padding: 42px; }
+        .about-box p { color: var(--text-muted); font-size: 1.02rem; line-height: 1.9; margin-bottom: 18px; text-align: justify; }
         .about-more-content { display: none; }
         .about-more-content.expanded { display: block; }
         .read-more-btn {
             background: transparent; border: 1px solid var(--neon-cyan); color: var(--neon-cyan);
-            padding: 10px 24px; border-radius: 10px; font-family: 'Vazirmatn', sans-serif; font-weight: 600;
-            cursor: pointer; margin-top: 16px; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 22px; border-radius: 10px; font-family: 'Vazirmatn', sans-serif; font-weight: 600;
+            cursor: pointer; margin-top: 14px; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s;
         }
         .read-more-btn:hover { background: rgba(6, 182, 212, 0.15); }
 
         /* Contact Us */
         .contact-card {
             background: linear-gradient(135deg, rgba(10, 22, 44, 0.95), rgba(3, 7, 18, 0.95));
-            border: 1.5px solid var(--neon-cyan);
-            box-shadow: 0 0 35px rgba(6, 182, 212, 0.12);
-            border-radius: 24px;
-            padding: 48px;
-            text-align: center;
+            border: 1.5px solid var(--neon-cyan); border-radius: 24px; padding: 42px; text-align: center;
         }
-        .contact-channels {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 36px;
-        }
+        .contact-channels { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 30px; }
         .contact-item {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 20px 24px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            text-decoration: none;
-            color: #fff;
-            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px;
+            padding: 18px 22px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: #fff; transition: 0.3s;
         }
-        .contact-item:hover { border-color: var(--neon-blue); background: rgba(56, 189, 248, 0.08); transform: translateY(-2px); }
+        .contact-item:hover { border-color: var(--neon-blue); background: rgba(56, 189, 248, 0.08); }
         .contact-icon-box {
-            width: 50px; height: 50px; flex-shrink: 0; border-radius: 14px;
+            width: 45px; height: 45px; flex-shrink: 0; border-radius: 12px;
             background: rgba(6, 182, 212, 0.12); border: 1px solid rgba(6, 182, 212, 0.25);
-            display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: var(--neon-cyan);
+            display: flex; align-items: center; justify-content: center; font-size: 1.25rem; color: var(--neon-cyan);
         }
-        .contact-item span { display: block; font-size: 0.8rem; color: var(--text-muted); text-align: right; margin-bottom: 2px; }
-        .contact-item strong { display: block; font-size: 1.02rem; direction: ltr; text-align: right; }
+        .contact-item span { display: block; font-size: 0.78rem; color: var(--text-muted); text-align: right; margin-bottom: 2px; }
+        .contact-item strong { display: block; font-size: 0.98rem; direction: ltr; text-align: right; }
 
-        .map-wrapper {
-            margin-top: 28px; border-radius: 18px; overflow: hidden;
-            border: 1px solid var(--border-glow); background: rgba(3, 7, 18, 0.9);
-        }
-        .map-wrapper iframe {
-            width: 100%; height: 320px; border: 0; display: block;
-            filter: invert(90%) hue-rotate(180deg) brightness(95%) contrast(90%);
-        }
+        .map-wrapper { margin-top: 24px; border-radius: 16px; overflow: hidden; border: 1px solid var(--border-glow); background: rgba(3, 7, 18, 0.9); }
+        .map-wrapper iframe { width: 100%; height: 300px; border: 0; display: block; filter: invert(90%) hue-rotate(180deg) brightness(95%) contrast(90%); }
 
-        footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 32px 0; text-align: center; color: #64748b; font-size: 0.88rem;
-        }
-        .branex-link { color: var(--neon-cyan); text-decoration: none; font-weight: 700; transition: color 0.3s ease; }
+        footer { border-top: 1px solid rgba(255, 255, 255, 0.08); padding: 30px 0; text-align: center; color: #64748b; font-size: 0.85rem; }
+        .branex-link { color: var(--neon-cyan); text-decoration: none; font-weight: 700; }
         .branex-link:hover { color: var(--neon-blue); }
 
+        /* واکنش‌گرایی برای موبایل */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2rem; }
             .nav-links { display: none; }
             .menu-toggle { display: inline-flex; }
-            .devices-container { transform: scale(0.85); margin: 10px auto; }
-            .contact-card, .about-box { padding: 28px; }
+            
+            /* مقیاس کوچک‌تر برای حفظ ساختار در موبایل */
+            .scene-container {
+                height: 300px;
+                transform: scale(0.72);
+                margin: -20px auto -10px;
+            }
         }
     </style>
 </head>
@@ -519,7 +479,7 @@
         </nav>
     </header>
 
-    <!-- Hero & 3D Interactive Devices -->
+    <!-- Hero & 3D Interactive Devices (Dark Mode Monitor & iPhone Overlay) -->
     <main>
         <section class="hero">
             <div class="container">
@@ -527,38 +487,55 @@
                 <h1>شبکه تبلیغات ایران</h1>
                 <p>انجام تبلیغات هدفمند در شبکه های اجتماعی برای برندهای ایرانی با به‌کارگیری دقیق‌ترین ابزارهای بازاریابی داده‌محور و هدف‌گیری مخاطبان بالقوه.</p>
 
-                <!-- نمای سه بعدی واکنش‌گرا به حرکت ماوس (مانیتور و گوشی) -->
-                <div class="devices-container" id="devices-container">
-                    <!-- مانیتور (گوگل ادز) -->
-                    <div class="device-wrapper" id="monitor-wrapper">
-                        <div class="monitor">
+                <!-- بخش سه‌بعدی جدید: مانیتور و گوشی آیفون با تم تاریک -->
+                <div class="scene-container" id="scene-container">
+                    <div class="device-3d-group" id="device-group">
+                        
+                        <!-- مانیتور در پس‌زمینه (تبلیغ در جستجوی گوگل - حالت شب) -->
+                        <div class="monitor-frame">
+                            <div style="background: #1e293b; padding: 8px 14px; display: flex; align-items: center; gap: 8px;">
+                                <div style="display: flex; gap: 5px;">
+                                    <span style="width: 10px; height: 10px; background: #ef4444; border-radius: 50%; display: inline-block;"></span>
+                                    <span style="width: 10px; height: 10px; background: #f59e0b; border-radius: 50%; display: inline-block;"></span>
+                                    <span style="width: 10px; height: 10px; background: #10b981; border-radius: 50%; display: inline-block;"></span>
+                                </div>
+                                <div style="background: #0f172a; border-radius: 6px; padding: 2px 12px; font-size: 0.72rem; color: #94a3b8; flex: 1; text-align: center;" dir="ltr">google.com/search?q=خرید+کیف+چرم</div>
+                            </div>
                             <div class="monitor-screen">
-                                <div style="display: flex; align-items: center; gap: 6px; border-bottom: 1px solid #e2e8f0; padding-bottom: 6px; margin-bottom: 8px;">
-                                    <span style="color: #4285F4; font-weight: bold;">Google</span>
-                                    <div style="background: #f1f5f9; border-radius: 12px; padding: 2px 10px; font-size: 0.72rem; color: #64748b; flex: 1;">جستجوی محصولات شما در صدر نتایج</div>
+                                <div style="font-size: 0.75rem; color: #60a5fa; margin-bottom: 4px;">Google Ads (Search Result)</div>
+                                <div class="google-dark-box">
+                                    <div style="font-size: 0.72rem; color: #34d399; font-weight: bold; margin-bottom: 2px;">آگهی • yourbrand.ir/leather-bag</div>
+                                    <div style="font-size: 0.9rem; font-weight: 800; color: #f8fafc; margin-bottom: 4px;">خرید کیف چرم - رتبه 1 گوگل</div>
+                                    <div style="font-size: 0.75rem; color: #94a3b8; line-height: 1.5;">مشاهده جدیدترین مدل‌های کیف چرم طبیعی مردانه و زنانه با ارسال رایگان و تخفیف ویژه. کلیک کنید!</div>
                                 </div>
-                                <div style="font-size: 0.72rem; color: #2563eb; font-weight: bold;">آگهی • yourbrand.ir/ads</div>
-                                <div style="font-size: 0.85rem; font-weight: bold; color: #1e293b; margin: 2px 0;">افزایش فروش و جذب مشتریان واقعی با گوگل ادز</div>
-                                <div style="font-size: 0.72rem; color: #475569;">تبلیغات هدفمند در موتور جستجوی گوگل برای برندهای ایرانی با بالاترین نرخ تبدیل و بازدهی...</div>
                             </div>
-                            <div class="monitor-stand"></div>
-                            <div class="monitor-base"></div>
                         </div>
-                    </div>
 
-                    <!-- گوشی موبایل (اینستاگرام) -->
-                    <div class="device-wrapper" id="phone-wrapper">
-                        <div class="phone">
-                            <div class="phone-notch"></div>
-                            <div class="phone-screen">
-                                <div style="font-size: 0.75rem; color: #cbd5e1; margin-bottom: 6px;"><i class="fa-brands fa-instagram" style="color: #E1306C;"></i> Instagram Sponsored</div>
-                                <div style="background: rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; text-align: right; margin-top: 10px;">
-                                    <div style="font-weight: bold; font-size: 0.75rem; margin-bottom: 4px;">کمپین پروموشن اینستاگرام</div>
-                                    <div style="font-size: 0.68rem; color: #94a3b8;">نمایش ویدیو و استوری در جامعه هدفمند ایرانی با نرخ تعامل بالا...</div>
+                        <!-- آیفون در جلو، روی مانیتور (تبلیغ اینستاگرام - حالت شب) -->
+                        <div class="iphone-frame">
+                            <div class="iphone-notch"></div>
+                            <div class="iphone-screen">
+                                <div>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; font-size: 0.7rem;">
+                                        <span style="font-weight: bold;"><i class="fa-brands fa-instagram" style="color: #ec4899;"></i> Instagram</span>
+                                        <span style="color: #94a3b8; font-size: 0.65rem;">Sponsored</span>
+                                    </div>
+                                    
+                                    <div class="insta-ad-card">
+                                        <div class="leather-bag-mockup">
+                                            <i class="fa-solid fa-bag-shopping" style="font-size: 2rem; color: #d97706; margin-bottom: 4px;"></i>
+                                            <span style="font-size: 0.68rem; font-weight: bold; color: #fef3c7;">کیف چرم دستدوز کلاسیک</span>
+                                        </div>
+                                        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 8px;">
+                                            <span style="font-size: 0.65rem; color: #cbd5e1;">تخفیف ویژه تابستانه</span>
+                                            <span style="background: #2563eb; color: #fff; font-size: 0.6rem; padding: 2px 6px; border-radius: 4px; font-weight: bold;">خرید کنید</span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div style="margin-top: 16px; background: #E1306C; color: #fff; padding: 6px; border-radius: 8px; font-size: 0.72rem; font-weight: bold;">خرید کنید</div>
+                                <div style="text-align: center; font-size: 0.62rem; color: #64748b; padding-bottom: 4px;">موس را حرکت دهید تا افکت ۳بعدی را ببینید</div>
                             </div>
                         </div>
+
                     </div>
                 </div>
 
@@ -609,7 +586,7 @@
             </div>
         </section>
 
-        <!-- Pricing & Tariffs Section (با احتساب ۱۰٪ کارمزد) -->
+        <!-- Pricing & Tariffs Section -->
         <section id="pricing">
             <div class="container">
                 <div class="section-header">
@@ -618,9 +595,9 @@
                 </div>
 
                 <div class="pricing-meta">
-                    <div style="font-size: 0.95rem; color: #e2e8f0;">
+                    <div style="font-size: 0.92rem; color: #e2e8f0;">
                         <i class="fa-solid fa-bolt" style="color: var(--neon-cyan);"></i>
-                        <strong>تضمین بهترین قیمت:</strong> ما پایین‌ترین و اقتصادی‌ترین تعرفه اجرای کمپین‌های بین‌المللی را برای برندهای ایرانی ارائه می‌دهیم.
+                        <strong>تضمین بهترین قیمت:</strong> پایین‌ترین و اقتصادی‌ترین تعرفه اجرای کمپین‌های بین‌المللی برای برندهای ایرانی.
                     </div>
                     <div class="payment-badges">
                         <span class="pay-badge"><i class="fa-solid fa-coins"></i> تتر و ترون (USDT / TRX)</span>
@@ -628,11 +605,10 @@
                 </div>
                 <div class="pricing-fee-note">
                     <i class="fa-solid fa-circle-info"></i>
-                    مبلغ کل شامل شارژ حساب به‌اضافه ۱۰٪ هزینه کارمزد مدیریت و اجرای کمپین است. (مثلاً ۵۰ دلار شارژ + ۵ دلار کارمزد = ۵۵ دلار نهایی). ذکر این نکته ضروری است که این مجموعه <strong>کمترین نرخ هزینه تبلیغات در فضای مجازی</strong> را ارائه می‌دهد.
+                    مبلغ کل شامل شارژ حساب به‌اضافه ۱۰٪ هزینه کارمزد مدیریت و اجرای کمپین است. (مثلاً ۵۰ دلار شارژ + ۵ دلار کارمزد = ۵۵ دلار نهایی). این مجموعه <strong>کمترین نرخ هزینه تبلیغات در فضای مجازی</strong> را ارائه می‌دهد.
                 </div>
 
                 <div class="pricing-grid">
-                    <!-- پکیج ۱ -->
                     <div class="pricing-card">
                         <div>
                             <div class="plan-title">پکیج استارتر</div>
@@ -648,7 +624,6 @@
                         <a href="dashboard.html" class="btn btn-secondary">ورود به پنل و شارژ</a>
                     </div>
 
-                    <!-- پکیج ۲ -->
                     <div class="pricing-card">
                         <div>
                             <div class="plan-title">پکیج رشد تجاری</div>
@@ -664,7 +639,6 @@
                         <a href="dashboard.html" class="btn btn-secondary">ورود به پنل و شارژ</a>
                     </div>
 
-                    <!-- پکیج ۳ (ویژه) -->
                     <div class="pricing-card featured">
                         <span class="popular-tag">پیشنهاد ویژه برندها</span>
                         <div>
@@ -681,7 +655,6 @@
                         <a href="dashboard.html" class="btn btn-primary">ورود به پنل و شارژ</a>
                     </div>
 
-                    <!-- پکیج ۴ -->
                     <div class="pricing-card">
                         <div>
                             <div class="plan-title">پکیج سازمانی VIP</div>
@@ -700,7 +673,7 @@
             </div>
         </section>
 
-        <!-- About Us (با قابلیت نمایش بیشتر/کمتر) -->
+        <!-- About Us -->
         <section id="about">
             <div class="container">
                 <div class="section-header">
@@ -766,37 +739,31 @@
         </div>
     </footer>
 
-    <!-- Scripts (3D Mouse tilt & Read More logic) -->
+    <!-- Scripts -->
     <script>
-        // اسکریپت حرکت سه‌بعدی دیوایس‌ها با حرکت ماوس
-        const container = document.getElementById('devices-container');
-        const monitor = document.getElementById('monitor-wrapper');
-        const phone = document.getElementById('phone-wrapper');
+        // افکت چرخش سه‌بعدی با حرکت ماوس روی بخش مانیتور و گوشی
+        const scene = document.getElementById('scene-container');
+        const group = document.getElementById('device-group');
 
-        if (container && monitor && phone) {
-            container.addEventListener('mousemove', (e) => {
-                const rect = container.getBoundingClientRect();
+        if (scene && group) {
+            scene.addEventListener('mousemove', (e) => {
+                const rect = scene.getBoundingClientRect();
                 const x = e.clientX - rect.left - rect.width / 2;
                 const y = e.clientY - rect.top - rect.height / 2;
-
-                monitor.style.transform = `rotateY(${x / 25}deg) rotateX(${-y / 25}deg) translateZ(20px)`;
-                phone.style.transform = `rotateY(${x / 20}deg) rotateX(${-y / 20}deg) translateZ(40px)`;
+                group.style.transform = `rotateY(${x / 20}deg) rotateX(${-y / 20}deg)`;
             });
 
-            container.addEventListener('mouseleave', () => {
-                monitor.style.transform = `rotateY(0deg) rotateX(0deg) translateZ(0px)`;
-                phone.style.transform = `rotateY(0deg) rotateX(0deg) translateZ(0px)`;
-                monitor.style.transition = 'transform 0.5s ease';
-                phone.style.transition = 'transform 0.5s ease';
+            scene.addEventListener('mouseleave', () => {
+                group.style.transform = `rotateY(0deg) rotateX(0deg)`;
+                group.style.transition = 'transform 0.5s ease';
             });
 
-            container.addEventListener('mouseenter', () => {
-                monitor.style.transition = 'none';
-                phone.style.transition = 'none';
+            scene.addEventListener('mouseenter', () => {
+                group.style.transition = 'none';
             });
         }
 
-        // اسکریپت دکمه نمایش بیشتر در درباره ما
+        // دکمه مشاهده بیشتر در درباره ما
         function toggleAboutText() {
             const moreContent = document.getElementById('about-more');
             const btnText = document.querySelector('#read-more-toggle span');
@@ -816,9 +783,7 @@
         const toggle = document.querySelector('.menu-toggle');
         const menu = document.getElementById('mobile-menu');
         if (toggle && menu) {
-            toggle.addEventListener('click', () => {
-                menu.classList.toggle('is-open');
-            });
+            toggle.addEventListener('click', () => menu.classList.toggle('is-open'));
             menu.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => menu.classList.remove('is-open'));
             });
