@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>مدیریت کل | شبکه تبلیغات ایران</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
@@ -31,6 +31,7 @@
                 radial-gradient(ellipse at 80% 10%, rgba(2, 132, 199, 0.15), transparent 50%),
                 radial-gradient(ellipse at 20% 60%, rgba(6, 182, 212, 0.12), transparent 50%);
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .hidden { display: none !important; }
@@ -39,22 +40,25 @@
             backdrop-filter: blur(16px);
             background: rgba(3, 7, 18, 0.85);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 18px 24px;
+            padding: 16px 20px;
         }
 
         .container {
             max-width: 1340px;
+            width: 100%;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 20px;
         }
 
         .glass-card {
             background: var(--bg-card);
             border: 1px solid var(--border-glow);
             border-radius: 20px;
-            padding: 28px;
+            padding: 24px;
             backdrop-filter: blur(12px);
-            margin-bottom: 28px;
+            margin-bottom: 24px;
+            width: 100%;
+            min-width: 0;
         }
 
         .auth-wrapper {
@@ -62,19 +66,20 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 24px;
+            padding: 20px;
         }
 
-        .form-group { margin-bottom: 16px; text-align: right; }
+        .form-group { margin-bottom: 14px; text-align: right; }
         .form-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; }
         .form-input {
             width: 100%;
             background: rgba(3, 7, 18, 0.85);
             border: 1px solid rgba(56, 189, 248, 0.28);
             border-radius: 12px;
-            padding: 11px 14px;
+            padding: 10px 14px;
             color: #fff;
             font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.9rem;
         }
 
         .form-input:focus { outline: none; border-color: var(--neon-cyan); }
@@ -83,15 +88,16 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            padding: 10px 22px;
+            padding: 10px 20px;
             border-radius: 12px;
             border: none;
             cursor: pointer;
             font-family: 'Vazirmatn', sans-serif;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             gap: 8px;
             transition: all 0.25s ease;
+            white-space: nowrap;
         }
 
         .btn-primary {
@@ -104,35 +110,49 @@
 
         .grid-2 {
             display: grid;
-            grid-template-columns: 1fr 2fr;
+            grid-template-columns: 340px minmax(0, 1fr);
             gap: 24px;
         }
 
-        table { width: 100%; border-collapse: collapse; text-align: right; font-size: 0.88rem; }
-        th { color: var(--text-muted); padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1); }
+        /* اسکرول افقی استاندارد برای جداول در موبایل */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        table { width: 100%; min-width: 700px; border-collapse: collapse; text-align: right; font-size: 0.86rem; }
+        th { color: var(--text-muted); padding: 12px; background: rgba(3, 7, 18, 0.5); border-bottom: 1px solid rgba(255, 255, 255, 0.1); white-space: nowrap; }
         td { padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); vertical-align: middle; }
 
         .status-badge {
             display: inline-block;
             padding: 3px 10px;
             border-radius: 999px;
-            font-size: 0.75rem;
+            font-size: 0.74rem;
             font-weight: 700;
+            white-space: nowrap;
         }
         .st-pending { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
         .st-active { background: rgba(16, 185, 129, 0.15); color: #34d399; }
         .st-rejected { background: rgba(239, 68, 68, 0.15); color: #f87171; }
 
-        @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
+        @media (max-width: 960px) {
+            .grid-2 { grid-template-columns: minmax(0, 1fr); }
+            .container { padding: 0 14px; }
+            .glass-card { padding: 18px; }
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
-            <div style="font-size: 1.25rem; font-weight: 800; color: #fff;">
-                <i class="fa-solid fa-user-tie" style="color: var(--neon-cyan); margin-left: 8px;"></i>
-                پنل مدیریت ادمین | شبکه تبلیغات ایران
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+            <div style="font-size: 1.1rem; font-weight: 800; color: #fff;">
+                <i class="fa-solid fa-user-tie" style="color: var(--neon-cyan); margin-left: 6px;"></i>
+                پنل مدیریت ادمین
             </div>
             <button id="admin-logout-btn" onclick="adminLogout()" class="btn btn-danger hidden" style="padding: 6px 14px; font-size: 0.8rem;">
                 <i class="fa-solid fa-power-off"></i> خروج ادمین
@@ -140,14 +160,14 @@
         </div>
     </header>
 
-    <!-- صفحه لاگین مجزای ادمین -->
+    <!-- صفحه لاگین ادمین -->
     <div id="admin-login-view" class="auth-wrapper">
         <div class="glass-card" style="width: 100%; max-width: 420px; text-align: center;">
             <div style="font-size: 2.5rem; color: var(--neon-cyan); margin-bottom: 10px;">
                 <i class="fa-solid fa-lock"></i>
             </div>
-            <h1 style="font-size: 1.4rem; margin-bottom: 8px;">ورود به مدیریت کل</h1>
-            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 24px;">اطلاعات تعریف‌شده در متغیرهای کلودفلر را وارد کنید</p>
+            <h1 style="font-size: 1.35rem; margin-bottom: 8px;">ورود به مدیریت کل</h1>
+            <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 22px;">اطلاعات تعریف‌شده در متغیرهای کلودفلر را وارد کنید</p>
             <form onsubmit="handleAdminLogin(event)">
                 <div class="form-group">
                     <label>نام کاربری ادمین (ADMIN_USER)</label>
@@ -164,14 +184,14 @@
     </div>
 
     <!-- محتوای اصلی پنل ادمین -->
-    <div id="admin-panel-view" class="container hidden" style="margin-top: 32px;">
+    <div id="admin-panel-view" class="container hidden" style="margin-top: 24px;">
 
         <!-- ۱. تنظیمات آدرس کیف پول کریپتو -->
         <div class="glass-card">
-            <h2 style="font-size: 1.2rem; margin-bottom: 16px;">
-                <i class="fa-solid fa-wallet" style="color: var(--neon-cyan);"></i> تنظیمات آدرس کیف پول‌های کریپتو (نمایش در پنل کاربران)
+            <h2 style="font-size: 1.15rem; margin-bottom: 16px;">
+                <i class="fa-solid fa-wallet" style="color: var(--neon-cyan);"></i> تنظیمات آدرس کیف پول‌های کریپتو
             </h2>
-            <form onsubmit="saveWallets(event)" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; align-items: end;">
+            <form onsubmit="saveWallets(event)" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; align-items: end;">
                 <div class="form-group" style="margin-bottom: 0;">
                     <label>آدرس کیف پول تتر (USDT - TRC20)</label>
                     <input type="text" id="set-usdt" class="form-input" required dir="ltr" placeholder="T...">
@@ -189,13 +209,17 @@
         <!-- ۲. مدیریت کاربران -->
         <div class="grid-2">
             <div class="glass-card">
-                <h2 style="font-size: 1.2rem; margin-bottom: 16px;">
-                    <i class="fa-solid fa-user-plus" style="color: var(--neon-cyan);"></i> تعریف کاربر جدید
+                <h2 style="font-size: 1.15rem; margin-bottom: 16px;">
+                    <i class="fa-solid fa-user-plus" style="color: var(--neon-cyan);"></i> تعریف کاربر دستی
                 </h2>
                 <form onsubmit="createNewUser(event)">
                     <div class="form-group">
                         <label>نام کاربری مشتری</label>
                         <input type="text" id="new-u-name" class="form-input" required dir="ltr">
+                    </div>
+                    <div class="form-group">
+                        <label>ایمیل مشتری</label>
+                        <input type="email" id="new-u-email" class="form-input" required dir="ltr">
                     </div>
                     <div class="form-group">
                         <label>رمز عبور مشتری</label>
@@ -210,15 +234,16 @@
             </div>
 
             <div class="glass-card">
-                <h2 style="font-size: 1.2rem; margin-bottom: 16px;">
-                    <i class="fa-solid fa-users" style="color: var(--neon-cyan);"></i> لیست کاربران تعریف‌شده
+                <h2 style="font-size: 1.15rem; margin-bottom: 16px;">
+                    <i class="fa-solid fa-users" style="color: var(--neon-cyan);"></i> لیست کاربران سیستم
                 </h2>
-                <div style="overflow-x: auto;">
+                <div class="table-responsive">
                     <table>
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>نام کاربری</th>
+                                <th>ایمیل</th>
                                 <th>رمز عبور</th>
                                 <th>موجودی فعلی</th>
                                 <th>تاریخ ثبت</th>
@@ -232,10 +257,10 @@
 
         <!-- ۳. تایید سفارشات شارژ کیف پول -->
         <div class="glass-card">
-            <h2 style="font-size: 1.25rem; margin-bottom: 16px;">
+            <h2 style="font-size: 1.15rem; margin-bottom: 16px;">
                 <i class="fa-solid fa-money-bill-transfer" style="color: var(--neon-cyan);"></i> لیست فیش‌های واریزی کریپتو (منتظر تایید شما)
             </h2>
-            <div style="overflow-x: auto;">
+            <div class="table-responsive">
                 <table>
                     <thead>
                         <tr>
@@ -255,10 +280,10 @@
 
         <!-- ۴. لیست درخواست‌های کمپین گوگل ادز -->
         <div class="glass-card">
-            <h2 style="font-size: 1.25rem; margin-bottom: 16px;">
+            <h2 style="font-size: 1.15rem; margin-bottom: 16px;">
                 <i class="fa-brands fa-google" style="color: #4285F4;"></i> درخواست‌های کمپین گوگل ادز مشتریان
             </h2>
-            <div style="overflow-x: auto;">
+            <div class="table-responsive">
                 <table>
                     <thead>
                         <tr>
@@ -280,10 +305,10 @@
 
         <!-- ۵. لیست درخواست‌های کمپین تلگرام -->
         <div class="glass-card">
-            <h2 style="font-size: 1.25rem; margin-bottom: 16px;">
+            <h2 style="font-size: 1.15rem; margin-bottom: 16px;">
                 <i class="fa-brands fa-telegram" style="color: #229ED9;"></i> درخواست‌های کمپین تلگرام مشتریان
             </h2>
-            <div style="overflow-x: auto;">
+            <div class="table-responsive">
                 <table>
                     <thead>
                         <tr>
@@ -297,6 +322,27 @@
                         </tr>
                     </thead>
                     <tbody id="admin-telegram-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ۶. مدیریت و پاسخگویی به تیکت‌های پشتیبانی (جدید) -->
+        <div class="glass-card">
+            <h2 style="font-size: 1.15rem; margin-bottom: 16px;">
+                <i class="fa-solid fa-headset" style="color: #34d399;"></i> تیکت‌های پشتیبانی مشتریان و ارسال پاسخ
+            </h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>کاربر / ایمیل</th>
+                            <th>موضوع و پیام مشتری</th>
+                            <th>وضعیت</th>
+                            <th>ثبت یا ویرایش پاسخ مدیریت</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-tickets-tbody"></tbody>
                 </table>
             </div>
         </div>
@@ -352,9 +398,9 @@
         }
 
         function formatStatusBadge(st) {
-            if (st === 'active' || st === 'approved') return `<span class="status-badge st-active">تایید و در حال اجرا</span>`;
+            if (st === 'active' || st === 'approved' || st === 'answered') return `<span class="status-badge st-active">تایید / پاسخ داده شده</span>`;
             if (st === 'rejected') return `<span class="status-badge st-rejected">رد شده</span>`;
-            return `<span class="status-badge st-pending">در انتظار تایید</span>`;
+            return `<span class="status-badge st-pending">در انتظار بررسی</span>`;
         }
 
         async function fetchAdminOverview() {
@@ -369,24 +415,25 @@
             document.getElementById('set-trx').value = data.wallets.trx || '';
 
             // ۱. جدول کاربران
-            document.getElementById('admin-users-tbody').innerHTML = data.users.map(u => `
+            document.getElementById('admin-users-tbody').innerHTML = data.users.length ? data.users.map(u => `
                 <tr>
                     <td>#${u.id}</td>
                     <td dir="ltr" style="font-weight: 700;">${u.username}</td>
+                    <td dir="ltr" style="color: var(--neon-blue);">${u.email || '-'}</td>
                     <td dir="ltr" style="font-family: monospace; color: #fbbf24;">${u.password}</td>
                     <td style="font-weight: 800; color: #34d399;">$${Number(u.balance).toFixed(2)}</td>
-                    <td dir="ltr" style="font-size: 0.8rem; color: var(--text-muted);">${u.created_at}</td>
+                    <td dir="ltr" style="font-size: 0.8rem; color: var(--text-muted); white-space: nowrap;">${u.created_at}</td>
                 </tr>
-            `).join('');
+            `).join('') : `<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">کاربری ثبت نشده است</td></tr>`;
 
             // ۲. جدول واریزی‌ها
             document.getElementById('admin-deposits-tbody').innerHTML = data.deposits.length ? data.deposits.map(d => {
                 let btns = '-';
                 if (d.status === 'pending') {
                     btns = `
-                        <div style="display: flex; gap: 8px;">
-                            <button onclick="VerifyDeposit(${d.id}, 'approve')" class="btn btn-success" style="padding: 5px 12px; font-size: 0.78rem;">تایید و شارژ</button>
-                            <button onclick="VerifyDeposit(${d.id}, 'reject')" class="btn btn-danger" style="padding: 5px 12px; font-size: 0.78rem;">رد</button>
+                        <div style="display: flex; gap: 6px;">
+                            <button onclick="VerifyDeposit(${d.id}, 'approve')" class="btn btn-success" style="padding: 5px 10px; font-size: 0.75rem;">تایید و شارژ</button>
+                            <button onclick="VerifyDeposit(${d.id}, 'reject')" class="btn btn-danger" style="padding: 5px 10px; font-size: 0.75rem;">رد</button>
                         </div>
                     `;
                 }
@@ -394,9 +441,9 @@
                     <tr>
                         <td>#${d.id}</td>
                         <td style="color: var(--neon-blue); font-weight: 700;">${d.username}</td>
-                        <td>${d.crypto_type}</td>
+                        <td style="white-space: nowrap;">${d.crypto_type}</td>
                         <td style="font-weight: 800; color: #34d399;">$${d.amount_usd}</td>
-                        <td dir="ltr" style="font-family: monospace; font-size: 0.82rem;">${d.tx_hash}</td>
+                        <td dir="ltr" style="font-family: monospace; font-size: 0.8rem;">${d.tx_hash}</td>
                         <td>${formatStatusBadge(d.status)}</td>
                         <td>${btns}</td>
                     </tr>
@@ -419,10 +466,10 @@
                     <tr>
                         <td>#${c.id}</td>
                         <td style="color: var(--neon-blue); font-weight: 700;">${c.username}</td>
-                        <td dir="ltr" style="font-family: monospace;">${c.website_url}</td>
-                        <td style="max-width: 200px;">${c.product_info || '-'}</td>
-                        <td style="max-width: 200px; color: #cbd5e1;">${c.keywords || '-'}</td>
-                        <td dir="ltr">$${c.budget_search} / $${c.budget_display} / $${c.budget_youtube}</td>
+                        <td dir="ltr" style="font-family: monospace; white-space: nowrap;">${c.website_url}</td>
+                        <td style="min-width: 180px;">${c.product_info || '-'}</td>
+                        <td style="min-width: 180px; color: #cbd5e1;">${c.keywords || '-'}</td>
+                        <td dir="ltr" style="white-space: nowrap;">$${c.budget_search} / $${c.budget_display} / $${c.budget_youtube}</td>
                         <td style="font-weight: 800; color: #34d399;">$${c.total_budget}</td>
                         <td>${formatStatusBadge(c.status)}</td>
                         <td>${btns}</td>
@@ -446,14 +493,39 @@
                     <tr>
                         <td>#${t.id}</td>
                         <td style="color: var(--neon-blue); font-weight: 700;">${t.username}</td>
-                        <td dir="ltr" style="font-family: monospace;">${t.channel_url}</td>
+                        <td dir="ltr" style="font-family: monospace; white-space: nowrap;">${t.channel_url}</td>
                         <td style="font-weight: 800; color: #34d399;">$${t.budget}</td>
-                        <td style="max-width: 300px;">${t.description}</td>
+                        <td style="min-width: 220px;">${t.description}</td>
                         <td>${formatStatusBadge(t.status)}</td>
                         <td>${btns}</td>
                     </tr>
                 `;
             }).join('') : `<tr><td colspan="7" style="text-align:center; color:var(--text-muted);">درخواست کمپین تلگرام ثبت نشده است</td></tr>`;
+
+            // ۵. جدول تیکت‌های پشتیبانی
+            const tkList = data.tickets || [];
+            document.getElementById('admin-tickets-tbody').innerHTML = tkList.length ? tkList.map(tk => `
+                <tr>
+                    <td>#${tk.id}</td>
+                    <td>
+                        <div style="font-weight: 700; color: #fff;">${tk.username}</div>
+                        <div dir="ltr" style="font-size: 0.75rem; color: var(--neon-blue);">${tk.email || ''}</div>
+                    </td>
+                    <td style="min-width: 240px;">
+                        <div style="font-weight: 700; color: #fde68a; margin-bottom: 4px;">${tk.subject}</div>
+                        <div style="color: #cbd5e1; white-space: pre-wrap; font-size: 0.82rem;">${tk.message}</div>
+                    </td>
+                    <td>${formatStatusBadge(tk.status)}</td>
+                    <td style="min-width: 280px;">
+                        <div style="display: flex; gap: 8px; align-items: center;">
+                            <input type="text" id="reply-input-${tk.id}" class="form-input" style="padding: 8px 10px; font-size: 0.82rem;" placeholder="پاسخ خود را بنویسید..." value="${tk.admin_reply || ''}">
+                            <button onclick="sendTicketReply(${tk.id})" class="btn btn-primary" style="padding: 8px 14px; font-size: 0.78rem;">
+                                <i class="fa-solid fa-paper-plane"></i> ارسال پاسخ
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('') : `<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">تیکتی دریافت نشده است</td></tr>`;
         }
 
         async function saveWallets(e) {
@@ -472,13 +544,14 @@
         async function createNewUser(e) {
             e.preventDefault();
             const username = document.getElementById('new-u-name').value;
+            const email = document.getElementById('new-u-email').value;
             const password = document.getElementById('new-u-pass').value;
             const initial_balance = document.getElementById('new-u-bal').value;
 
             const res = await fetch('/api/admin/users', {
                 method: 'POST',
                 headers: getAdminHeaders(),
-                body: JSON.stringify({ username, password, initial_balance })
+                body: JSON.stringify({ username, email, password, initial_balance })
             });
             const data = await res.json();
             if (!res.ok) {
@@ -515,6 +588,28 @@
                 alert(data.error);
                 return;
             }
+            fetchAdminOverview();
+        }
+
+        async function sendTicketReply(ticket_id) {
+            const inputEl = document.getElementById(`reply-input-${ticket_id}`);
+            const admin_reply = inputEl.value.trim();
+            if (!admin_reply) {
+                alert('لطفاً متن پاسخ را وارد کنید.');
+                return;
+            }
+
+            const res = await fetch('/api/admin/tickets/reply', {
+                method: 'POST',
+                headers: getAdminHeaders(),
+                body: JSON.stringify({ ticket_id, admin_reply })
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                alert(data.error);
+                return;
+            }
+            alert('پاسخ شما ثبت شد و در پنل کاربر قابل مشاهده است.');
             fetchAdminOverview();
         }
 
