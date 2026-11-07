@@ -139,7 +139,7 @@
         .mobile-menu ul { list-style: none; display: grid; gap: 6px; }
         .mobile-menu a { display: block; padding: 11px 14px; border-radius: 10px; color: var(--text-muted); text-decoration: none; }
 
-        /* Hero & 3D Devices Showcase */
+        /* Hero & 3D Interactive Devices */
         .hero {
             padding: 60px 0 40px;
             text-align: center;
@@ -174,7 +174,7 @@
             font-size: 1.1rem;
         }
 
-        /* کامپوننت سه‌بعدی جدید (مانیتور و آیفون جلوتر از آن) */
+        /* بخش ۳بعدی (مانیتور و آیفون) */
         .scene-container {
             perspective: 1400px;
             margin: 30px auto 40px;
@@ -198,7 +198,6 @@
             transition: transform 0.1s ease-out;
         }
 
-        /* مانیتور در پس‌زمینه (Dark Google) */
         .monitor-frame {
             width: 580px;
             height: 330px;
@@ -230,7 +229,6 @@
             margin-top: 8px;
         }
 
-        /* آیفون در جلو (Dark Instagram) */
         .iphone-frame {
             width: 210px;
             height: 380px;
@@ -333,6 +331,101 @@
         .section-header h2 { font-size: 2rem; font-weight: 800; margin-bottom: 10px; }
         .section-header p { color: var(--text-muted); font-size: 1rem; }
 
+        /* بخش جدید: چرا تبلیغات در موتور جستجو و سوشال مدیا؟ */
+        .why-ads-section {
+            background: linear-gradient(180deg, rgba(3, 7, 18, 0.5), rgba(10, 22, 44, 0.4));
+            border-top: 1px solid rgba(56, 189, 248, 0.15);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+        }
+
+        .why-ads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .why-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 18px;
+            padding: 30px;
+            backdrop-filter: blur(12px);
+            transition: all 0.35s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .why-card:hover {
+            border-color: var(--neon-cyan);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(6, 182, 212, 0.15);
+        }
+
+        .why-icon-box {
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(6,182,212,0.2) 0%, rgba(3,7,18,0) 70%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            font-size: 1.6rem;
+            color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(6, 182, 212, 0.2);
+        }
+
+        .why-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #fff;
+        }
+
+        .why-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-align: justify;
+            line-height: 1.8;
+        }
+
+        /* کارت آمار برجسته */
+        .stats-banner-card {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(2, 132, 199, 0.06));
+            border: 1.5px solid rgba(6, 182, 212, 0.35);
+            border-radius: 20px;
+            padding: 32px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.1);
+        }
+
+        .stats-icon-large {
+            font-size: 3rem;
+            color: var(--neon-cyan);
+            flex-shrink: 0;
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+        }
+
+        .stats-content h4 {
+            font-size: 1.15rem;
+            color: #fff;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .stats-content p {
+            color: #cbd5e1;
+            font-size: 0.98rem;
+            text-align: justify;
+            line-height: 1.9;
+        }
+
         /* Services */
         .services-grid {
             display: grid;
@@ -433,18 +526,12 @@
         .branex-link { color: var(--neon-cyan); text-decoration: none; font-weight: 700; }
         .branex-link:hover { color: var(--neon-blue); }
 
-        /* واکنش‌گرایی برای موبایل */
         @media (max-width: 768px) {
             .hero h1 { font-size: 2rem; }
             .nav-links { display: none; }
             .menu-toggle { display: inline-flex; }
-            
-            /* مقیاس کوچک‌تر برای حفظ ساختار در موبایل */
-            .scene-container {
-                height: 300px;
-                transform: scale(0.72);
-                margin: -20px auto -10px;
-            }
+            .scene-container { height: 300px; transform: scale(0.72); margin: -20px auto -10px; }
+            .stats-banner-card { flex-direction: column; text-align: center; }
         }
     </style>
 </head>
@@ -479,19 +566,17 @@
         </nav>
     </header>
 
-    <!-- Hero & 3D Interactive Devices (Dark Mode Monitor & iPhone Overlay) -->
     <main>
+        <!-- Hero & 3D Interactive Devices -->
         <section class="hero">
             <div class="container">
                 <span class="badge">نسل آینده تبلیغات دیجیتال</span>
                 <h1>شبکه تبلیغات ایران</h1>
                 <p>انجام تبلیغات هدفمند در شبکه های اجتماعی برای برندهای ایرانی با به‌کارگیری دقیق‌ترین ابزارهای بازاریابی داده‌محور و هدف‌گیری مخاطبان بالقوه.</p>
 
-                <!-- بخش سه‌بعدی جدید: مانیتور و گوشی آیفون با تم تاریک -->
                 <div class="scene-container" id="scene-container">
                     <div class="device-3d-group" id="device-group">
-                        
-                        <!-- مانیتور در پس‌زمینه (تبلیغ در جستجوی گوگل - حالت شب) -->
+                        <!-- مانیتور (گوگل) -->
                         <div class="monitor-frame">
                             <div style="background: #1e293b; padding: 8px 14px; display: flex; align-items: center; gap: 8px;">
                                 <div style="display: flex; gap: 5px;">
@@ -511,7 +596,7 @@
                             </div>
                         </div>
 
-                        <!-- آیفون در جلو، روی مانیتور (تبلیغ اینستاگرام - حالت شب) -->
+                        <!-- آیفون (اینستاگرام) -->
                         <div class="iphone-frame">
                             <div class="iphone-notch"></div>
                             <div class="iphone-screen">
@@ -532,10 +617,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div style="text-align: center; font-size: 0.62rem; color: #64748b; padding-bottom: 4px;">موس را حرکت دهید تا افکت ۳بعدی را ببینید</div>
+                                <div style="text-align: center; font-size: 0.62rem; color: #64748b; padding-bottom: 4px;">حرکت ۳بعدی با ماوس</div>
                             </div>
                         </div>
-
                     </div>
                 </div>
 
@@ -544,6 +628,63 @@
                         <i class="fa-solid fa-paper-plane"></i> شروع همکاری
                     </a>
                     <a href="#pricing" class="btn btn-secondary">مشاهده تعرفه‌ها</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- بخش جدید: چرا تبلیغات در موتور جستجو و سوشال مدیا؟ -->
+        <section class="why-ads-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>چرا تبلیغات در موتور جستجو و سوشال مدیا؟</h2>
+                    <p>مزایای استراتژیک کمپین‌های دیجیتال برای رشد و توسعه پایدار کسب‌وکار شما</p>
+                </div>
+
+                <div class="why-ads-grid">
+                    <!-- کارت ۱: گوگل سرچ -->
+                    <div class="why-card">
+                        <div>
+                            <div class="why-icon-box"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                            <h3>تبلیغات هدفمند در موتور جستجوی گوگل (Google Search)</h3>
+                            <p>با تبلیغات در موتور جستجوی گوگل، درست در لحظه‌ای با مخاطب ارتباط برقرار کنید که به دنبال محصول یا خدمات شماست. امکان هدف‌گذاری بر اساس کلمات کلیدی، موقعیت جغرافیایی و رفتار کاربران باعث می‌شود بودجه تبلیغاتی صرف جذب مخاطبان مرتبط و مشتریان بالقوه شود. اندازه‌گیری دقیق کلیک‌ها، نرخ تبدیل و بازگشت سرمایه نیز مدیریت و بهینه‌سازی کمپین‌ها را امکان‌پذیر می‌کند.</p>
+                        </div>
+                    </div>
+
+                    <!-- کارت ۲: یوتیوب -->
+                    <div class="why-card">
+                        <div>
+                            <div class="why-icon-box"><i class="fa-brands fa-youtube" style="color: #ff4d4d;"></i></div>
+                            <h3>بازاریابی و تبلیغات ویدئویی در یوتیوب (YouTube Ads)</h3>
+                            <p>یوتیوب یکی از قدرتمندترین بسترهای جهان برای معرفی برند، محصولات و خدمات از طریق محتوای ویدئویی است. تبلیغات در این پلتفرم با استفاده از تصویر، صدا و پیام‌های خلاقانه، فرصت ایجاد ارتباط عمیق‌تر با مخاطبان و افزایش آگاهی از برند را فراهم می‌کند. هدف‌گذاری بر اساس علایق، موضوعات مورد توجه و ویژگی‌های مخاطبان، امکان نمایش تبلیغات به جامعه هدف را فراهم می‌سازد.</p>
+                        </div>
+                    </div>
+
+                    <!-- کارت ۳: گوگل دیسپلی -->
+                    <div class="why-card">
+                        <div>
+                            <div class="why-icon-box"><i class="fa-solid fa-globe" style="color: #38bdf8;"></i></div>
+                            <h3>تبلیغات در وب‌سایت‌های همکار گوگل (Google Display Network)</h3>
+                            <p>شبکه نمایش تبلیغاتی گوگل به کسب‌وکارها امکان می‌دهد بنرها و تبلیغات تصویری خود را در میلیون‌ها وب‌سایت، اپلیکیشن و فضای محتوایی همکار گوگل منتشر کنند. این روش برای افزایش دیده‌شدن برند، معرفی محصولات و بازاریابی مجدد (Remarketing) بسیار کاربردی است. با شناسایی علایق و رفتار کاربران و هدف‌گذاری هوشمندانه، می‌توان مخاطبان جدیدی جذب کرد و افرادی را که قبلاً با برند تعامل داشته‌اند، دوباره هدف قرار داد.</p>
+                        </div>
+                    </div>
+
+                    <!-- کارت ۴: اینستاگرام -->
+                    <div class="why-card">
+                        <div>
+                            <div class="why-icon-box"><i class="fa-brands fa-instagram" style="color: #ec4899;"></i></div>
+                            <h3>تبلیغ و پروموت محتوا در اینستاگرام (Instagram Promotion)</h3>
+                            <p>با پروموت پست‌ها و محتوای منتخب اینستاگرام، پیام برند خود را فراتر از دنبال‌کنندگان فعلی منتشر کنید. این روش امکان افزایش بازدید پست‌ها، جذب دنبال‌کننده، معرفی محصولات و افزایش تعامل با مخاطبان را فراهم می‌کند. هدف‌گذاری بر اساس سن، موقعیت جغرافیایی، علایق و ویژگی‌های کاربران به کسب‌وکارها کمک می‌کند محتوای خود را به مخاطبان مرتبط نمایش دهند و از ظرفیت اینستاگرام برای توسعه بازار و افزایش آگاهی از برند بهره ببرند.</p>
+                        </div>
+                    </div>
+
+                    <!-- کارت آمار قابل توجه (تمام عرض) -->
+                    <div class="stats-banner-card">
+                        <div class="stats-icon-large"><i class="fa-solid fa-chart-pie"></i></div>
+                        <div class="stats-content">
+                            <h4>آمار قابل توجه جهانی</h4>
+                            <p>طبق نظرسنجی Google و Ipsos، <strong>۸۳٪ مصرف‌کنندگان</strong> در سطح جهان اعلام کرده‌اند که روزانه از گوگل و/یا یوتیوب استفاده می‌کنند؛ آماری که نشان‌دهنده ظرفیت بالای این دو پلتفرم برای دسترسی به مخاطبان جهانی است.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -741,7 +882,6 @@
 
     <!-- Scripts -->
     <script>
-        // افکت چرخش سه‌بعدی با حرکت ماوس روی بخش مانیتور و گوشی
         const scene = document.getElementById('scene-container');
         const group = document.getElementById('device-group');
 
@@ -763,7 +903,6 @@
             });
         }
 
-        // دکمه مشاهده بیشتر در درباره ما
         function toggleAboutText() {
             const moreContent = document.getElementById('about-more');
             const btnText = document.querySelector('#read-more-toggle span');
@@ -779,7 +918,6 @@
             }
         }
 
-        // منوی موبایل
         const toggle = document.querySelector('.menu-toggle');
         const menu = document.getElementById('mobile-menu');
         if (toggle && menu) {
