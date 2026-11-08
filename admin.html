@@ -106,6 +106,7 @@
         }
 
         .btn-success { background: #10b981; color: #030712; }
+        .btn-warning { background: #f59e0b; color: #030712; }
         .btn-danger { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
         .btn-danger:hover { background: rgba(239, 68, 68, 0.35); color: #fff; }
 
@@ -138,6 +139,28 @@
         .st-pending { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
         .st-active { background: rgba(16, 185, 129, 0.15); color: #34d399; }
         .st-rejected { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+
+        /* پاپ‌آپ ویرایش موجودی */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-box {
+            background: var(--bg-card);
+            border: 1px solid var(--neon-cyan);
+            border-radius: 20px;
+            padding: 24px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+        }
 
         @media (max-width: 960px) {
             .grid-2 { grid-template-columns: minmax(0, 1fr); }
@@ -279,7 +302,30 @@
             </div>
         </div>
 
-        <!-- ۴. لیست درخواست‌های کمپین گوگل ادز -->
+        <!-- ۴. لیست درخواست‌های کمپین اینستاگرام -->
+        <div class="glass-card">
+            <h2 style="font-size: 1.15rem; margin-bottom: 16px;">
+                <i class="fa-brands fa-instagram" style="color: #E1306C;"></i> درخواست‌های کمپین اینستاگرام مشتریان
+            </h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>کاربر</th>
+                            <th>لینک پست اینستاگرام</th>
+                            <th>بودجه خالص</th>
+                            <th>کل هزینه (بودجه + کارمزد)</th>
+                            <th>وضعیت</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-instagram-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ۵. لیست درخواست‌های کمپین گوگل ادز -->
         <div class="glass-card">
             <h2 style="font-size: 1.15rem; margin-bottom: 16px;">
                 <i class="fa-brands fa-google" style="color: #4285F4;"></i> درخواست‌های کمپین گوگل ادز مشتریان
@@ -304,7 +350,7 @@
             </div>
         </div>
 
-        <!-- ۵. لیست درخواست‌های کمپین تلگرام -->
+        <!-- ۶. لیست درخواست‌های کمپین تلگرام -->
         <div class="glass-card">
             <h2 style="font-size: 1.15rem; margin-bottom: 16px;">
                 <i class="fa-brands fa-telegram" style="color: #229ED9;"></i> درخواست‌های کمپین تلگرام مشتریان
@@ -327,7 +373,7 @@
             </div>
         </div>
 
-        <!-- ۶. مدیریت و پاسخگویی به تیکت‌های پشتیبانی -->
+        <!-- ۷. مدیریت و پاسخگویی به تیکت‌های پشتیبانی -->
         <div class="glass-card">
             <h2 style="font-size: 1.15rem; margin-bottom: 16px;">
                 <i class="fa-solid fa-headset" style="color: #34d399;"></i> تیکت‌های پشتیبانی مشتریان و ارسال پاسخ
@@ -348,6 +394,24 @@
             </div>
         </div>
 
+    </div>
+
+    <!-- Modal ویرایش موجودی کاربر -->
+    <div id="balance-modal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <h3 style="font-size: 1.15rem; margin-bottom: 16px; color: #fff;">ویرایش موجودی کاربر</h3>
+            <div style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px;">
+                موجودی جدید را برای کاربر <strong id="edit-balance-user" style="color: var(--neon-cyan);"></strong> وارد کنید.
+            </div>
+            <input type="hidden" id="edit-balance-id">
+            <div class="form-group">
+                <input type="number" step="0.01" id="edit-balance-input" class="form-input" dir="ltr" placeholder="مبلغ موجودی به دلار">
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <button onclick="submitEditBalance()" class="btn btn-success" style="flex: 1;">ذخیره تغییرات</button>
+                <button onclick="closeBalanceModal()" class="btn btn-danger" style="flex: 1;">انصراف</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -415,7 +479,7 @@
             document.getElementById('set-usdt').value = data.wallets.usdt || '';
             document.getElementById('set-trx').value = data.wallets.trx || '';
 
-            // ۱. جدول کاربران (همراه با دکمه حذف کاربر)
+            // ۱. جدول کاربران (همراه با دکمه حذف کاربر و ویرایش موجودی)
             document.getElementById('admin-users-tbody').innerHTML = data.users.length ? data.users.map(u => `
                 <tr>
                     <td>#${u.id}</td>
@@ -425,9 +489,14 @@
                     <td style="font-weight: 800; color: #34d399;">$${Number(u.balance).toFixed(2)}</td>
                     <td dir="ltr" style="font-size: 0.8rem; color: var(--text-muted); white-space: nowrap;">${u.created_at}</td>
                     <td>
-                        <button onclick="deleteUser(${u.id}, '${u.username}')" class="btn btn-danger" style="padding: 5px 12px; font-size: 0.75rem;">
-                            <i class="fa-solid fa-trash-can"></i> حذف
-                        </button>
+                        <div style="display: flex; gap: 6px;">
+                            <button onclick="openBalanceModal(${u.id}, '${u.username}', ${u.balance})" class="btn btn-warning" style="padding: 5px 12px; font-size: 0.75rem;">
+                                <i class="fa-solid fa-pen"></i> موجودی
+                            </button>
+                            <button onclick="deleteUser(${u.id}, '${u.username}')" class="btn btn-danger" style="padding: 5px 12px; font-size: 0.75rem;">
+                                <i class="fa-solid fa-trash-can"></i> حذف
+                            </button>
+                        </div>
                     </td>
                 </tr>
             `).join('') : `<tr><td colspan="7" style="text-align:center; color:var(--text-muted);">کاربری ثبت نشده است</td></tr>`;
@@ -456,7 +525,32 @@
                 `;
             }).join('') : `<tr><td colspan="7" style="text-align:center; color:var(--text-muted);">فیش واریزی ثبت نشده است</td></tr>`;
 
-            // ۳. جدول کمپین‌های گوگل
+            // ۳. جدول اینستاگرام
+            const igList = data.instagram_campaigns || [];
+            document.getElementById('admin-instagram-tbody').innerHTML = igList.length ? igList.map(i => {
+                let btns = '-';
+                if (i.status === 'pending') {
+                    btns = `
+                        <div style="display: flex; gap: 6px;">
+                            <button onclick="VerifyCampaign('instagram', ${i.id}, 'approve')" class="btn btn-success" style="padding: 5px 10px; font-size: 0.75rem;">تایید و شروع</button>
+                            <button onclick="VerifyCampaign('instagram', ${i.id}, 'reject')" class="btn btn-danger" style="padding: 5px 10px; font-size: 0.75rem;">رد و عودت</button>
+                        </div>
+                    `;
+                }
+                return `
+                    <tr>
+                        <td>#${i.id}</td>
+                        <td style="color: var(--neon-blue); font-weight: 700;">${i.username}</td>
+                        <td dir="ltr" style="font-family: monospace; white-space: nowrap; max-width: 200px; overflow: hidden; text-overflow: ellipsis;">${i.post_link}</td>
+                        <td>$${i.budget}</td>
+                        <td style="font-weight: 800; color: #f472b6;">$${i.total_cost}</td>
+                        <td>${formatStatusBadge(i.status)}</td>
+                        <td>${btns}</td>
+                    </tr>
+                `;
+            }).join('') : `<tr><td colspan="7" style="text-align:center; color:var(--text-muted);">درخواست کمپین اینستاگرام ثبت نشده است</td></tr>`;
+
+            // ۴. جدول کمپین‌های گوگل
             const gList = data.google_campaigns || [];
             document.getElementById('admin-google-tbody').innerHTML = gList.length ? gList.map(c => {
                 let btns = '-';
@@ -483,7 +577,7 @@
                 `;
             }).join('') : `<tr><td colspan="9" style="text-align:center; color:var(--text-muted);">درخواست کمپین گوگل ثبت نشده است</td></tr>`;
 
-            // ۴. جدول کمپین‌های تلگرام
+            // ۵. جدول کمپین‌های تلگرام
             const tgList = data.telegram_campaigns || [];
             document.getElementById('admin-telegram-tbody').innerHTML = tgList.length ? tgList.map(t => {
                 let btns = '-';
@@ -508,7 +602,7 @@
                 `;
             }).join('') : `<tr><td colspan="7" style="text-align:center; color:var(--text-muted);">درخواست کمپین تلگرام ثبت نشده است</td></tr>`;
 
-            // ۵. جدول تیکت‌های پشتیبانی
+            // ۶. جدول تیکت‌های پشتیبانی
             const tkList = data.tickets || [];
             document.getElementById('admin-tickets-tbody').innerHTML = tkList.length ? tkList.map(tk => `
                 <tr>
@@ -568,7 +662,6 @@
             fetchAdminOverview();
         }
 
-        // تابع حذف کامل کاربر
         async function deleteUser(user_id, username) {
             if (!confirm(`آیا از حذف دائمی کاربر "${username}" و تمامی سوابق مالی، کمپین‌ها و تیکت‌های او مطمئن هستید؟`)) return;
 
@@ -583,6 +676,37 @@
                 return;
             }
             fetchAdminOverview();
+        }
+
+        // توابع مربوط به مدال ویرایش موجودی
+        function openBalanceModal(id, username, currentBalance) {
+            document.getElementById('edit-balance-id').value = id;
+            document.getElementById('edit-balance-user').innerText = username;
+            document.getElementById('edit-balance-input').value = currentBalance;
+            document.getElementById('balance-modal').classList.remove('hidden');
+        }
+
+        function closeBalanceModal() {
+            document.getElementById('balance-modal').classList.add('hidden');
+        }
+
+        async function submitEditBalance() {
+            const user_id = document.getElementById('edit-balance-id').value;
+            const new_balance = document.getElementById('edit-balance-input').value;
+
+            const res = await fetch('/api/admin/users/update-balance', {
+                method: 'POST',
+                headers: getAdminHeaders(),
+                body: JSON.stringify({ user_id, new_balance })
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                alert(data.error || 'خطا در ویرایش موجودی');
+                return;
+            }
+            closeBalanceModal();
+            fetchAdminOverview();
+            alert('موجودی با موفقیت تغییر کرد.');
         }
 
         async function VerifyDeposit(deposit_id, action) {
