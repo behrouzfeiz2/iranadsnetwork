@@ -2,7 +2,7 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>شبکه تبلیغات ایران | تبلیغات هدفمند برای برندهای ایرانی</title>
     <meta name="description" content="انجام تبلیغات هدفمند در شبکه های اجتماعی برای برندهای ایرانی">
 
@@ -21,7 +21,7 @@
     <style>
         :root {
             --bg-base: #030712;
-            --bg-card: rgba(10, 22, 44, 0.65);
+            --bg-card: rgba(10, 22, 44, 0.7);
             --border-glow: rgba(56, 189, 248, 0.25);
             --primary-accent: #0284c7;
             --neon-blue: #38bdf8;
@@ -30,12 +30,7 @@
             --text-muted: #94a3b8;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            scroll-behavior: smooth;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
 
         body {
             font-family: 'Vazirmatn', sans-serif;
@@ -44,590 +39,349 @@
             line-height: 1.8;
             background-image: 
                 radial-gradient(ellipse at 80% 10%, rgba(2, 132, 199, 0.15), transparent 50%),
-                radial-gradient(ellipse at 20% 60%, rgba(6, 182, 212, 0.12), transparent 50%),
-                radial-gradient(ellipse at 50% 90%, rgba(15, 23, 42, 0.8), transparent 70%);
+                radial-gradient(ellipse at 20% 60%, rgba(6, 182, 212, 0.12), transparent 50%);
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
+        .hidden { display: none !important; }
 
-        /* Header */
         header {
+            backdrop-filter: blur(16px);
+            background: rgba(3, 7, 18, 0.85);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 16px 20px;
             position: sticky;
             top: 0;
-            backdrop-filter: blur(16px);
-            background: rgba(3, 7, 18, 0.75);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             z-index: 100;
         }
 
-        .nav-wrapper {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 80px;
-        }
+        .container { max-width: 1340px; width: 100%; margin: 0 auto; padding: 0 20px; }
 
-        .brand-logo {
-            font-size: 1.4rem;
-            font-weight: 800;
-            color: #fff;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
 
-        .brand-logo img {
-            width: 32px;
-            height: 32px;
-            object-fit: contain;
-            filter: drop-shadow(0 0 8px var(--neon-cyan));
-        }
+        .brand-logo { font-size: 1.25rem; font-weight: 800; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+        .brand-logo img { width: 32px; height: 32px; filter: drop-shadow(0 0 8px var(--neon-cyan)); }
 
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 24px;
-            align-items: center;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
+        .nav-links { display: flex; list-style: none; gap: 24px; align-items: center; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: color 0.3s ease; }
         .nav-links a:hover { color: var(--neon-blue); }
 
         .nav-dashboard-btn {
-            background: rgba(6, 182, 212, 0.1);
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            padding: 6px 14px;
-            border-radius: 8px;
-            color: var(--neon-cyan) !important;
-            font-weight: 600 !important;
+            background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.3);
+            padding: 6px 14px; border-radius: 8px; color: var(--neon-cyan) !important; font-weight: 600 !important;
         }
 
         .menu-toggle {
-            display: none;
-            width: 44px;
-            height: 44px;
-            border: 1px solid rgba(56, 189, 248, 0.28);
-            border-radius: 12px;
-            background: rgba(56, 189, 248, 0.08);
-            color: var(--neon-blue);
-            cursor: pointer;
-            font-size: 1.25rem;
-            align-items: center;
-            justify-content: center;
+            display: none; width: 40px; height: 40px; border: 1px solid rgba(56, 189, 248, 0.28);
+            border-radius: 10px; background: rgba(56, 189, 248, 0.08); color: var(--neon-blue);
+            cursor: pointer; font-size: 1.2rem; align-items: center; justify-content: center;
         }
 
-        .mobile-menu {
-            display: none;
-            padding: 8px 0 18px;
-            border-top: 1px solid rgba(255,255,255,0.07);
-        }
+        .mobile-menu { display: none; padding: 8px 0 18px; border-top: 1px solid rgba(255,255,255,0.07); margin-top: 12px; }
         .mobile-menu.is-open { display: block; }
         .mobile-menu ul { list-style: none; display: grid; gap: 6px; }
-        .mobile-menu a { display: block; padding: 11px 14px; border-radius: 10px; color: var(--text-muted); text-decoration: none; }
+        .mobile-menu a { display: block; padding: 10px 14px; border-radius: 8px; color: var(--text-muted); text-decoration: none; }
 
-        /* Hero & 3D Interactive Devices */
-        .hero {
-            padding: 60px 0 50px;
-            text-align: center;
-            position: relative;
-        }
-
+        /* Hero */
+        .hero { padding: 60px 0 50px; text-align: center; position: relative; }
         .badge {
-            display: inline-block;
-            padding: 6px 18px;
-            border-radius: 9999px;
-            background: rgba(56, 189, 248, 0.08);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            color: var(--neon-blue);
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 16px;
+            display: inline-block; padding: 6px 18px; border-radius: 9999px;
+            background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.3);
+            color: var(--neon-blue); font-size: 0.85rem; font-weight: 600; margin-bottom: 16px;
         }
+        .hero h1 { font-size: 2.6rem; font-weight: 900; margin-bottom: 12px; background: linear-gradient(135deg, #ffffff 30%, var(--neon-cyan) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { max-width: 680px; margin: 0 auto 28px; color: var(--text-muted); font-size: 1.1rem; }
 
-        .hero h1 {
-            font-size: 2.6rem;
-            font-weight: 900;
-            margin-bottom: 12px;
-            background: linear-gradient(135deg, #ffffff 30%, var(--neon-cyan) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            max-width: 680px;
-            margin: 0 auto 28px;
-            color: var(--text-muted);
-            font-size: 1.1rem;
-        }
-
+        /* Hero 3D Devices */
         .scene-outer-wrapper {
-            width: 100%;
-            max-width: 640px;
-            height: 430px;
-            margin: 10px auto 36px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            position: relative;
-            z-index: 2;
+            width: 100%; max-width: 640px; height: 430px; margin: 10px auto 36px;
+            display: flex; justify-content: center; align-items: flex-start; position: relative; z-index: 2;
         }
-
-        .scene-stage {
-            width: 640px;
-            height: 430px;
-            perspective: 1400px;
-            transform-origin: top center;
-            flex-shrink: 0;
-            position: relative;
-        }
-
-        .device-3d-group {
-            position: relative;
-            width: 640px;
-            height: 430px;
-            transform-style: preserve-3d;
-            transition: transform 0.12s ease-out;
-        }
-
-        .monitor-wrapper-pos {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 560px;
-            transform: translateZ(-20px);
-        }
-
+        .scene-stage { width: 640px; height: 430px; perspective: 1400px; transform-origin: top center; flex-shrink: 0; position: relative; }
+        .device-3d-group { position: relative; width: 640px; height: 430px; transform-style: preserve-3d; transition: transform 0.12s ease-out; }
+        
+        .monitor-wrapper-pos { position: absolute; top: 0; right: 0; width: 560px; transform: translateZ(-20px); }
         .monitor-frame {
-            width: 560px;
-            height: 320px;
-            background: #0f172a;
-            border: 4px solid #334155;
-            border-radius: 18px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85), 0 0 35px rgba(6, 182, 212, 0.22);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
+            width: 560px; height: 320px; background: #0f172a; border: 4px solid #334155; border-radius: 18px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85), 0 0 35px rgba(6, 182, 212, 0.22); display: flex; flex-direction: column; overflow: hidden;
         }
-
-        .monitor-screen {
-            background: #090d16;
-            color: #f8fafc;
-            flex: 1;
-            padding: 18px 22px;
-            text-align: right;
-            border-bottom: 2px solid #1e293b;
-        }
-
-        .monitor-stand {
-            width: 110px;
-            height: 34px;
-            background: linear-gradient(180deg, #1e293b, #334155);
-            margin: 0 auto;
-            clip-path: polygon(18% 0%, 82% 0%, 100% 100%, 0% 100%);
-        }
-
-        .monitor-base {
-            width: 190px;
-            height: 10px;
-            background: #475569;
-            margin: 0 auto;
-            border-radius: 6px;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.6);
-        }
-
-        .google-dark-box {
-            background: #111827;
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            border-radius: 12px;
-            padding: 14px 16px;
-            margin-top: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-        }
+        .monitor-screen { background: #090d16; color: #f8fafc; flex: 1; padding: 18px 22px; text-align: right; border-bottom: 2px solid #1e293b; }
+        .monitor-stand { width: 110px; height: 34px; background: linear-gradient(180deg, #1e293b, #334155); margin: 0 auto; clip-path: polygon(18% 0%, 82% 0%, 100% 100%, 0% 100%); }
+        .monitor-base { width: 190px; height: 10px; background: #475569; margin: 0 auto; border-radius: 6px; box-shadow: 0 6px 16px rgba(0,0,0,0.6); }
+        
+        .google-dark-box { background: #111827; border: 1px solid rgba(56, 189, 248, 0.25); border-radius: 12px; padding: 14px 16px; margin-top: 10px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4); }
 
         .iphone-frame {
-            width: 215px;
-            height: 385px;
-            background: #030712;
-            border: 5px solid #334155;
-            border-radius: 36px;
-            box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.95), 0 0 30px rgba(6, 182, 212, 0.28);
-            position: absolute;
-            left: 10px;
-            top: 38px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            transform: translateZ(55px);
-            z-index: 10;
+            width: 215px; height: 385px; background: #030712; border: 5px solid #334155; border-radius: 36px;
+            box-shadow: 0 25px 50px -10px rgba(0, 0, 0, 0.95), 0 0 30px rgba(6, 182, 212, 0.28); position: absolute; left: 10px; top: 38px; display: flex; flex-direction: column; overflow: hidden; transform: translateZ(55px); z-index: 10;
         }
+        .iphone-notch { width: 86px; height: 18px; background: #1e293b; position: absolute; top: 7px; left: 50%; transform: translateX(-50%); border-radius: 12px; z-index: 20; }
+        .iphone-screen { background: #0b1120; color: #fff; flex: 1; padding: 34px 12px 12px; text-align: right; display: flex; flex-direction: column; justify-content: space-between; }
+        .insta-ad-card { background: #152238; border-radius: 14px; padding: 10px; border: 1px solid rgba(56, 189, 248, 0.2); }
+        .leather-bag-mockup { width: 100%; height: 135px; background: radial-gradient(circle at 50% 35%, rgba(217, 119, 6, 0.28), #1e1b4b 85%); border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; border: 1px solid rgba(245, 158, 11, 0.35); }
 
-        .iphone-notch {
-            width: 86px;
-            height: 18px;
-            background: #1e293b;
-            position: absolute;
-            top: 7px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 12px;
-            z-index: 20;
-        }
-
-        .iphone-screen {
-            background: #0b1120;
-            color: #fff;
-            flex: 1;
-            padding: 34px 12px 12px;
-            text-align: right;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .insta-ad-card {
-            background: #152238;
-            border-radius: 14px;
-            padding: 10px;
-            border: 1px solid rgba(56, 189, 248, 0.2);
-        }
-
-        .leather-bag-mockup {
-            width: 100%;
-            height: 135px;
-            background: radial-gradient(circle at 50% 35%, rgba(217, 119, 6, 0.28), #1e1b4b 85%);
-            border-radius: 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(245, 158, 11, 0.35);
-        }
-
-        .cta-group {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 16px;
-            position: relative;
-            z-index: 5;
-            margin-top: 10px;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 28px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            gap: 8px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary-accent), var(--neon-cyan));
-            color: #030712;
-            box-shadow: 0 0 25px rgba(6, 182, 212, 0.4);
-        }
+        .cta-group { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; position: relative; z-index: 5; margin-top: 10px; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; padding: 12px 28px; border-radius: 12px; text-decoration: none; font-weight: 600; font-size: 0.95rem; transition: all 0.3s ease; gap: 8px; }
+        .btn-primary { background: linear-gradient(135deg, var(--primary-accent), var(--neon-cyan)); color: #030712; box-shadow: 0 0 25px rgba(6, 182, 212, 0.4); }
         .btn-primary:hover { box-shadow: 0 0 35px rgba(6, 182, 212, 0.6); transform: translateY(-2px); }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
+        .btn-secondary { background: rgba(255, 255, 255, 0.05); color: #fff; border: 1px solid rgba(255, 255, 255, 0.15); }
         .btn-secondary:hover { background: rgba(255, 255, 255, 0.1); }
 
-        section { padding: 70px 0; }
-
+        section { padding: 60px 0; }
         .section-header { text-align: center; margin-bottom: 45px; }
-        .section-header h2 { font-size: 2rem; font-weight: 800; margin-bottom: 10px; }
-        .section-header p { color: var(--text-muted); font-size: 1rem; }
+        .section-header h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; }
+        .section-header p { color: var(--text-muted); font-size: 0.95rem; }
 
         /* =========================================================
-           بخش سه‌بعدی (3D): چرا تبلیغات در موتور جستجو و سوشال مدیا؟
+           بخش "چرا تبلیغات..." - المان‌های مینیاتوری
            ========================================================= */
         .why-ads-section {
-            position: relative;
-            background: radial-gradient(circle at 50% 50%, rgba(2, 132, 199, 0.12), rgba(3, 7, 18, 0.9) 80%);
-            border-top: 1px solid rgba(56, 189, 248, 0.2);
-            border-bottom: 1px solid rgba(56, 189, 248, 0.2);
-            overflow: hidden;
-        }
-
-        .why-ads-section::before {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background-image: 
-                linear-gradient(rgba(56, 189, 248, 0.04) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(56, 189, 248, 0.04) 1px, transparent 1px);
-            background-size: 40px 40px;
-            transform: perspective(600px) rotateX(45deg) scale(1.5);
-            transform-origin: center top;
-            pointer-events: none;
+            background: linear-gradient(180deg, rgba(3, 7, 18, 0.5), rgba(10, 22, 44, 0.4));
+            border-top: 1px solid rgba(56, 189, 248, 0.15);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.15);
         }
 
         .why-ads-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 28px;
-            perspective: 1200px;
-            position: relative;
-            z-index: 2;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
         }
 
-        .why-card-3d {
-            background: linear-gradient(145deg, rgba(15, 30, 58, 0.85), rgba(8, 16, 34, 0.92));
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            border-bottom: 4px solid var(--neon-cyan);
-            border-radius: 22px;
-            padding: 32px 26px;
-            transform-style: preserve-3d;
-            transition: transform 0.2s ease-out, box-shadow 0.3s ease, border-color 0.3s ease;
-            box-shadow: 
-                0 20px 40px -15px rgba(0, 0, 0, 0.85),
-                0 0 25px rgba(6, 182, 212, 0.08),
-                inset 0 1px 1px rgba(255, 255, 255, 0.15);
-            position: relative;
-        }
-
-        .why-card-3d:hover {
-            border-color: var(--neon-blue);
-            box-shadow: 
-                0 30px 55px -12px rgba(0, 0, 0, 0.95),
-                0 0 35px rgba(6, 182, 212, 0.28),
-                inset 0 1px 2px rgba(255, 255, 255, 0.25);
-        }
-
-        /* لایه درخشش سه‌بعدی روی کارت */
-        .card-3d-inner {
-            transform: translateZ(35px);
-            transform-style: preserve-3d;
-        }
-
-        /* آیکون مکعبی سه‌بعدی معلق */
-        .why-icon-3d {
-            width: 72px;
-            height: 72px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.22), rgba(3, 7, 18, 0.9));
-            border: 1.5px solid rgba(56, 189, 248, 0.45);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 24px;
-            font-size: 2rem;
-            color: var(--neon-cyan);
-            transform: translateZ(50px);
-            box-shadow: 
-                0 14px 24px rgba(0, 0, 0, 0.65),
-                0 0 20px rgba(6, 182, 212, 0.3),
-                inset 0 2px 4px rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .why-card-3d:hover .why-icon-3d {
-            transform: translateZ(65px) scale(1.08) rotate(-4deg);
-        }
-
-        .why-card-3d h3 {
-            font-size: 1.18rem;
-            font-weight: 800;
-            margin-bottom: 14px;
-            color: #fff;
-            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
-        }
-
-        .why-card-3d p {
-            color: #cbd5e1;
-            font-size: 0.92rem;
-            text-align: justify;
-            line-height: 1.85;
-        }
-
-        /* بنر سه‌بعدی آمار جهانی گوگل و ایپسوس */
-        .stats-banner-3d {
-            grid-column: 1 / -1;
-            background: linear-gradient(135deg, rgba(14, 38, 72, 0.9), rgba(6, 18, 38, 0.95));
-            border: 1.5px solid rgba(6, 182, 212, 0.5);
-            border-bottom: 5px solid var(--neon-blue);
-            border-radius: 24px;
-            padding: 36px 40px;
-            display: flex;
-            align-items: center;
-            gap: 32px;
-            transform-style: preserve-3d;
-            transition: transform 0.2s ease-out, box-shadow 0.3s ease;
-            box-shadow: 
-                0 25px 50px -12px rgba(0, 0, 0, 0.9),
-                0 0 40px rgba(6, 182, 212, 0.2),
-                inset 0 2px 4px rgba(255, 255, 255, 0.15);
-            margin-top: 8px;
-        }
-
-        .stats-orb-3d {
-            width: 110px;
-            height: 110px;
-            flex-shrink: 0;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #38bdf8, #0284c7 60%, #030712 100%);
-            border: 2px solid rgba(103, 232, 249, 0.7);
+        .why-card-new {
+            background: linear-gradient(145deg, rgba(15, 30, 58, 0.6), rgba(8, 16, 34, 0.8));
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            border-top: 3px solid var(--neon-cyan);
+            border-radius: 16px;
+            padding: 24px 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transform: translateZ(55px);
-            box-shadow: 
-                0 15px 35px rgba(0, 0, 0, 0.8),
-                0 0 30px rgba(56, 189, 248, 0.55),
-                inset 0 4px 10px rgba(255, 255, 255, 0.45);
         }
 
-        .stats-orb-3d strong {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: #fff;
-            line-height: 1.1;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+        .why-card-new:hover {
+            border-color: var(--neon-blue);
+            transform: translateY(-6px);
+            box-shadow: 0 15px 40px -10px rgba(6, 182, 212, 0.25);
         }
 
-        .stats-orb-3d span {
-            font-size: 0.72rem;
-            color: #e0f2fe;
-            font-weight: 700;
+        /* استایل‌های مینی‌ماکاپ‌ها */
+        .mockup-container { height: 110px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; }
+        .mini-browser, .mini-phone {
+            background: #0f172a; border: 2px solid #334155; border-radius: 8px; overflow: hidden;
+            position: relative; box-shadow: 0 8px 16px rgba(0,0,0,0.4); width: 100%;
+        }
+        .mini-browser { height: 100px; display: flex; flex-direction: column; }
+        .mini-browser-header { background: #1e293b; height: 16px; display: flex; align-items: center; padding: 0 6px; gap: 4px; }
+        .mini-dot { width: 6px; height: 6px; border-radius: 50%; background: #475569; }
+        
+        .mockup-search-body { padding: 10px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+        .mockup-line-title { width: 50%; height: 6px; background: #38bdf8; border-radius: 3px; }
+        .mockup-line-badge { width: 25%; height: 4px; background: #10b981; border-radius: 2px; }
+        .mockup-line-text { width: 80%; height: 4px; background: #475569; border-radius: 2px; }
+        
+        .mockup-yt-body { background: #000; flex: 1; display: flex; align-items: center; justify-content: center; position: relative; }
+        
+        .mockup-display-body { flex: 1; display: flex; padding: 8px; gap: 8px; }
+        .mockup-display-content { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+        .mockup-display-banner { width: 35px; background: linear-gradient(135deg, #0284c7, #06b6d4); border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 0.45rem; font-weight: bold; }
+
+        .mini-phone { width: 65px; height: 105px; border-radius: 12px; border-width: 3px; display: flex; flex-direction: column; }
+        .mini-notch { width: 20px; height: 5px; background: #334155; position: absolute; top: 0; left: 50%; transform: translateX(-50%); border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; }
+        .mini-phone-body { padding: 14px 6px 6px; flex: 1; display: flex; flex-direction: column; gap: 4px; }
+
+        .why-card-new h3 { font-size: 1.05rem; font-weight: 800; color: #fff; margin-bottom: 12px; line-height: 1.6; }
+        .why-card-new p { font-size: 0.82rem; color: #94a3b8; text-align: justify; line-height: 1.8; margin-bottom: 0; }
+
+        /* بنر آمار ایپسوس */
+        .stats-banner-card {
+            grid-column: 1 / -1; background: linear-gradient(135deg, rgba(14, 38, 72, 0.6), rgba(6, 18, 38, 0.8));
+            border: 1px solid rgba(6, 182, 212, 0.35); border-bottom: 3px solid var(--neon-blue);
+            border-radius: 20px; padding: 24px 30px; display: flex; align-items: center; gap: 24px; margin-top: 10px;
+        }
+        .stats-orb {
+            width: 80px; height: 80px; flex-shrink: 0; border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #38bdf8, #0284c7 60%, #030712 100%);
+            border: 2px solid rgba(103, 232, 249, 0.7); display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .stats-orb strong { font-size: 1.5rem; font-weight: 900; color: #fff; line-height: 1.1; }
+        .stats-orb span { font-size: 0.65rem; color: #e0f2fe; font-weight: 700; }
+        .stats-content h4 { font-size: 1.1rem; color: #67e8f9; margin-bottom: 8px; font-weight: 800; }
+        .stats-content p { color: #f1f5f9; font-size: 0.9rem; text-align: justify; line-height: 1.8; margin: 0; }
+
+
+        /* =========================================================
+           بخش جدید: پارتنر رسمی گوگل (CSS 3D Badge)
+           ========================================================= */
+        .google-partner-section {
+            padding: 70px 0;
+            background: linear-gradient(135deg, rgba(10, 22, 44, 0.4), rgba(3, 7, 18, 0.6));
+            border-bottom: 1px solid rgba(56, 189, 248, 0.1);
         }
 
-        .stats-content-3d {
-            transform: translateZ(35px);
-        }
-
-        .stats-content-3d h4 {
-            font-size: 1.25rem;
-            color: #67e8f9;
-            margin-bottom: 10px;
-            font-weight: 800;
+        .partner-container {
             display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: space-between;
+            gap: 40px;
+            flex-wrap: wrap;
         }
 
-        .stats-content-3d p {
-            color: #f1f5f9;
-            font-size: 1rem;
+        .partner-content {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .partner-content h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+
+        .partner-content p {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            line-height: 1.9;
             text-align: justify;
-            line-height: 1.95;
         }
 
-        /* Services */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 24px;
+        /* محفظه و افکت سه‌بعدی بج گوگل پارتنر */
+        .partner-badge-wrapper {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            perspective: 1000px;
         }
 
-        .service-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glow);
-            border-radius: 16px;
-            padding: 30px;
-            backdrop-filter: blur(12px);
-            transition: all 0.3s ease;
+        .google-premier-badge {
+            display: flex;
+            width: 340px;
+            height: 130px;
+            background: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 40px rgba(255, 255, 255, 0.1);
+            transform-style: preserve-3d;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            cursor: pointer;
+            /* بج به زبان انگلیسی است پس باید LTR باشد */
+            direction: ltr; 
         }
+
+        /* انیمیشن شناور بودن بج */
+        @keyframes floatBadge {
+            0% { transform: translateY(0px) rotateY(-5deg) rotateX(2deg); }
+            50% { transform: translateY(-10px) rotateY(-5deg) rotateX(2deg); }
+            100% { transform: translateY(0px) rotateY(-5deg) rotateX(2deg); }
+        }
+
+        .google-premier-badge {
+            animation: floatBadge 6s ease-in-out infinite;
+            transform: rotateY(-5deg) rotateX(2deg);
+        }
+
+        .google-premier-badge:hover {
+            animation-play-state: paused;
+            transform: rotateY(0deg) rotateX(0deg) scale(1.05);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8), 0 0 60px rgba(66, 133, 244, 0.3);
+        }
+
+        /* نوار قرمز سمت چپ */
+        .g-badge-left {
+            background-color: #EA4335;
+            width: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        /* کلمه PREMIER چرخیده */
+        .g-badge-left span {
+            color: #ffffff;
+            font-family: Arial, Helvetica, sans-serif;
+            font-weight: bold;
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            transform: rotate(-90deg);
+            white-space: nowrap;
+        }
+
+        /* بخش سفید سمت راست */
+        .g-badge-right {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 22px;
+            padding-right: 20px;
+            flex: 1;
+        }
+
+        /* استایل متن Google */
+        .g-badge-google {
+            font-family: Arial, Helvetica, sans-serif; /* استفاده از فونت استاندارد نزدیک */
+            font-size: 2.6rem;
+            font-weight: bold;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 2px;
+        }
+
+        .g-badge-google span { display: inline-block; }
+        
+        /* استایل متن Partner */
+        .g-badge-partner {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 2.6rem;
+            color: #5F6368;
+            line-height: 0.9;
+            font-weight: normal;
+            letter-spacing: -1px;
+        }
+
+
+        /* Services, Pricing, About */
+        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .service-card { background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: 16px; padding: 30px; transition: all 0.3s ease; }
         .service-card:hover { border-color: var(--neon-cyan); transform: translateY(-4px); }
-
-        .threed-icon-container {
-            width: 65px; height: 65px; background: radial-gradient(circle, rgba(6,182,212,0.15) 0%, rgba(3,7,18,0) 70%);
-            display: flex; align-items: center; justify-content: center; margin-bottom: 20px; border-radius: 16px;
-            border: 1.5px solid rgba(255,255,255,0.08);
-        }
+        .threed-icon-container { width: 65px; height: 65px; background: radial-gradient(circle, rgba(6,182,212,0.15) 0%, rgba(3,7,18,0) 70%); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; border-radius: 16px; border: 1.5px solid rgba(255,255,255,0.08); }
         .threed-icon { font-size: 2rem; }
-        .service-card h3 { font-size: 1.2rem; margin-bottom: 12px; color: #fff; }
-        .service-card p { color: var(--text-muted); font-size: 0.92rem; text-align: justify; }
+        .service-card h3 { font-size: 1.15rem; margin-bottom: 12px; color: #fff; }
+        .service-card p { color: var(--text-muted); font-size: 0.9rem; text-align: justify; }
 
-        /* Pricing */
-        .pricing-meta {
-            background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border-glow); border-radius: 16px;
-            padding: 22px 30px; margin-bottom: 30px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px;
-        }
+        .pricing-meta { background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border-glow); border-radius: 16px; padding: 22px 30px; margin-bottom: 30px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 15px; }
         .payment-badges { display: flex; gap: 10px; }
-        .pay-badge {
-            display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 10px;
-            background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); font-size: 0.85rem; font-weight: 600; color: #fff;
-        }
-        .pricing-fee-note {
-            margin: -15px 0 30px; padding: 12px 16px; border: 1px solid rgba(251, 191, 36, 0.28);
-            border-radius: 12px; background: rgba(245, 158, 11, 0.07); color: #fde68a; font-size: 0.88rem; text-align: center;
-        }
+        .pay-badge { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 10px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); font-size: 0.85rem; font-weight: 600; color: #fff; }
+        .pricing-fee-note { margin: -15px 0 30px; padding: 12px 16px; border: 1px solid rgba(251, 191, 36, 0.28); border-radius: 12px; background: rgba(245, 158, 11, 0.07); color: #fde68a; font-size: 0.88rem; text-align: center; }
 
-        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .pricing-card {
-            background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: 20px;
-            padding: 32px 24px; display: flex; flex-direction: column; justify-content: space-between; text-align: center; position: relative;
-        }
+        .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+        .pricing-card { background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: 20px; padding: 32px 24px; display: flex; flex-direction: column; justify-content: space-between; text-align: center; position: relative; }
         .pricing-card.featured { background: linear-gradient(180deg, rgba(14, 34, 68, 0.85), rgba(10, 22, 44, 0.85)); border-color: var(--neon-cyan); }
-        .popular-tag {
-            position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
-            background: linear-gradient(135deg, var(--primary-accent), var(--neon-cyan)); color: #030712;
-            font-size: 0.75rem; font-weight: 800; padding: 4px 14px; border-radius: 999px; white-space: nowrap;
-        }
+        .popular-tag { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--primary-accent), var(--neon-cyan)); color: #030712; font-size: 0.75rem; font-weight: 800; padding: 4px 14px; border-radius: 999px; white-space: nowrap; }
         .plan-title { font-size: 1.1rem; font-weight: 700; color: var(--text-muted); margin-bottom: 14px; }
         .plan-price { font-size: 2.2rem; font-weight: 900; color: #fff; margin-bottom: 6px; direction: ltr; }
         .plan-fee-text { font-size: 0.76rem; color: #34d399; margin-bottom: 10px; font-weight: 600; }
-        .plan-duration {
-            display: inline-block; margin: 6px auto 18px; padding: 5px 14px; border-radius: 8px;
-            background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.25); color: var(--neon-cyan); font-size: 0.82rem;
-        }
+        .plan-duration { display: inline-block; margin: 6px auto 18px; padding: 5px 14px; border-radius: 8px; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.25); color: var(--neon-cyan); font-size: 0.82rem; }
         .plan-features { list-style: none; margin-bottom: 24px; text-align: right; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 16px; }
         .plan-features li { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
 
-        /* About Us */
         .about-box { background: linear-gradient(180deg, rgba(15, 23, 42, 0.8), rgba(10, 22, 44, 0.8)); border: 1px solid var(--border-glow); border-radius: 20px; padding: 42px; }
         .about-box p { color: var(--text-muted); font-size: 1.02rem; line-height: 1.9; margin-bottom: 18px; text-align: justify; }
         .about-more-content { display: none; }
         .about-more-content.expanded { display: block; }
-        .read-more-btn {
-            background: transparent; border: 1px solid var(--neon-cyan); color: var(--neon-cyan);
-            padding: 10px 22px; border-radius: 10px; font-family: 'Vazirmatn', sans-serif; font-weight: 600;
-            cursor: pointer; margin-top: 14px; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s;
-        }
+        .read-more-btn { background: transparent; border: 1px solid var(--neon-cyan); color: var(--neon-cyan); padding: 10px 22px; border-radius: 10px; font-family: 'Vazirmatn', sans-serif; font-weight: 600; cursor: pointer; margin-top: 14px; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; }
         .read-more-btn:hover { background: rgba(6, 182, 212, 0.15); }
 
-        /* Contact Us */
-        .contact-card {
-            background: linear-gradient(135deg, rgba(10, 22, 44, 0.95), rgba(3, 7, 18, 0.95));
-            border: 1.5px solid var(--neon-cyan); border-radius: 24px; padding: 42px; text-align: center;
-        }
+        .contact-card { background: linear-gradient(135deg, rgba(10, 22, 44, 0.95), rgba(3, 7, 18, 0.95)); border: 1.5px solid var(--neon-cyan); border-radius: 24px; padding: 42px; text-align: center; }
         .contact-channels { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 30px; }
-        .contact-item {
-            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px;
-            padding: 18px 22px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: #fff; transition: 0.3s;
-        }
+        .contact-item { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 18px 22px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: #fff; transition: 0.3s; }
         .contact-item:hover { border-color: var(--neon-blue); background: rgba(56, 189, 248, 0.08); }
-        .contact-icon-box {
-            width: 45px; height: 45px; flex-shrink: 0; border-radius: 12px;
-            background: rgba(6, 182, 212, 0.12); border: 1px solid rgba(6, 182, 212, 0.25);
-            display: flex; align-items: center; justify-content: center; font-size: 1.25rem; color: var(--neon-cyan);
-        }
+        .contact-icon-box { width: 45px; height: 45px; flex-shrink: 0; border-radius: 12px; background: rgba(6, 182, 212, 0.12); border: 1px solid rgba(6, 182, 212, 0.25); display: flex; align-items: center; justify-content: center; font-size: 1.25rem; color: var(--neon-cyan); }
         .contact-item span { display: block; font-size: 0.78rem; color: var(--text-muted); text-align: right; margin-bottom: 2px; }
         .contact-item strong { display: block; font-size: 0.98rem; direction: ltr; text-align: right; }
 
@@ -638,12 +392,17 @@
         .branex-link { color: var(--neon-cyan); text-decoration: none; font-weight: 700; }
         .branex-link:hover { color: var(--neon-blue); }
 
+        @media (max-width: 1024px) {
+            .why-ads-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
         @media (max-width: 768px) {
             .hero h1 { font-size: 2rem; }
             .nav-links { display: none; }
             .menu-toggle { display: inline-flex; }
-            .stats-banner-3d { flex-direction: column; text-align: center; padding: 28px 22px; }
-            .stats-content-3d h4 { justify-content: center; }
+            .why-ads-grid { grid-template-columns: 1fr; }
+            .stats-banner-card { flex-direction: column; text-align: center; padding: 24px 20px; }
+            .partner-container { flex-direction: column; text-align: center; }
             .about-box, .contact-card { padding: 26px; }
         }
     </style>
@@ -725,7 +484,7 @@
                                 <div class="monitor-base"></div>
                             </div>
 
-                            <!-- آیفون (اینستاگرام - حالت شب، کمی جلوتر از مانیتور) -->
+                            <!-- آیفون (اینستاگرام - حالت شب) -->
                             <div class="iphone-frame">
                                 <div class="iphone-notch"></div>
                                 <div class="iphone-screen">
@@ -761,12 +520,10 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
 
-                <!-- دکمه‌های زیر انیمیشن -->
                 <div class="cta-group">
                     <a href="#contact" class="btn btn-primary">
                         <i class="fa-solid fa-paper-plane"></i> شروع همکاری
@@ -776,7 +533,7 @@
             </div>
         </section>
 
-        <!-- بخش سه‌بعدی: چرا تبلیغات در موتور جستجو و سوشال مدیا؟ -->
+        <!-- بخش بهبود یافته: چرا تبلیغات در موتور جستجو و سوشال مدیا؟ -->
         <section class="why-ads-section">
             <div class="container">
                 <div class="section-header">
@@ -785,62 +542,135 @@
                 </div>
 
                 <div class="why-ads-grid">
-                    <!-- کارت سه‌بعدی ۱: گوگل سرچ -->
-                    <div class="why-card-3d tilt-card">
-                        <div class="card-3d-inner">
-                            <div class="why-icon-3d">
-                                <i class="fa-solid fa-magnifying-glass-chart" style="color: #38bdf8;"></i>
+                    
+                    <!-- کارت ۱: گوگل سرچ -->
+                    <div class="why-card-new" style="border-top-color: #38bdf8;">
+                        <div class="mockup-container">
+                            <div class="mini-browser">
+                                <div class="mini-browser-header">
+                                    <div class="mini-dot" style="background:#ef4444;"></div>
+                                    <div class="mini-dot" style="background:#f59e0b;"></div>
+                                    <div class="mini-dot" style="background:#10b981;"></div>
+                                </div>
+                                <div class="mockup-search-body">
+                                    <div class="mockup-line-title"></div>
+                                    <div class="mockup-line-badge"></div>
+                                    <div class="mockup-line-text" style="margin-top: 4px;"></div>
+                                    <div class="mockup-line-text" style="width: 60%;"></div>
+                                </div>
                             </div>
-                            <h3>تبلیغات هدفمند در موتور جستجوی گوگل (Google Search)</h3>
-                            <p>با تبلیغات در موتور جستجوی گوگل، درست در لحظه‌ای با مخاطب ارتباط برقرار کنید که به دنبال محصول یا خدمات شماست. امکان هدف‌گذاری بر اساس کلمات کلیدی، موقعیت جغرافیایی و رفتار کاربران باعث می‌شود بودجه تبلیغاتی صرف جذب مخاطبان مرتبط و مشتریان بالقوه شود. اندازه‌گیری دقیق کلیک‌ها، نرخ تبدیل و بازگشت سرمایه نیز مدیریت و بهینه‌سازی کمپین‌ها را امکان‌پذیر می‌کند.</p>
                         </div>
+                        <h3>تبلیغات هدفمند در موتور جستجوی گوگل</h3>
+                        <p>با تبلیغات در موتور جستجوی گوگل، درست در لحظه‌ای با مخاطب ارتباط برقرار کنید که به دنبال محصول یا خدمات شماست. اندازه‌گیری دقیق کلیک‌ها و نرخ تبدیل امکان‌پذیر است.</p>
                     </div>
 
-                    <!-- کارت سه‌بعدی ۲: یوتیوب -->
-                    <div class="why-card-3d tilt-card" style="border-bottom-color: #ef4444;">
-                        <div class="card-3d-inner">
-                            <div class="why-icon-3d" style="border-color: rgba(239, 68, 68, 0.45); box-shadow: 0 14px 24px rgba(0,0,0,0.65), 0 0 20px rgba(239, 68, 68, 0.25);">
-                                <i class="fa-brands fa-youtube" style="color: #ff4d4d;"></i>
+                    <!-- کارت ۲: یوتیوب -->
+                    <div class="why-card-new" style="border-top-color: #ef4444;">
+                        <div class="mockup-container">
+                            <div class="mini-browser">
+                                <div class="mini-browser-header">
+                                    <div class="mini-dot"></div><div class="mini-dot"></div><div class="mini-dot"></div>
+                                </div>
+                                <div class="mockup-yt-body">
+                                    <i class="fa-brands fa-youtube" style="color:#ef4444; font-size:2rem; z-index:2; filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.5));"></i>
+                                    <div style="position:absolute; bottom:6px; right:8px; background:rgba(255,255,255,0.9); color:#000; font-size:0.5rem; padding:2px 6px; border-radius:3px; font-weight:bold;">Ad</div>
+                                </div>
                             </div>
-                            <h3>بازاریابی و تبلیغات ویدئویی در یوتیوب (YouTube Ads)</h3>
-                            <p>یوتیوب یکی از قدرتمندترین بسترهای جهان برای معرفی برند، محصولات و خدمات از طریق محتوای ویدئویی است. تبلیغات در این پلتفرم با استفاده از تصویر، صدا و پیام‌های خلاقانه، فرصت ایجاد ارتباط عمیق‌تر با مخاطبان و افزایش آگاهی از برند را فراهم می‌کند. هدف‌گذاری بر اساس علایق، موضوعات مورد توجه و ویژگی‌های مخاطبان، امکان نمایش تبلیغات به جامعه هدف را فراهم می‌سازد.</p>
                         </div>
+                        <h3>بازاریابی و تبلیغات ویدئویی در یوتیوب</h3>
+                        <p>یوتیوب یکی از قدرتمندترین بسترهای جهان برای معرفی برند از طریق محتوای ویدئویی است. امکان ایجاد ارتباط عمیق‌تر با مخاطبان و افزایش آگاهی از برند را فراهم می‌کند.</p>
                     </div>
 
-                    <!-- کارت سه‌بعدی ۳: گوگل دیسپلی -->
-                    <div class="why-card-3d tilt-card" style="border-bottom-color: #a855f7;">
-                        <div class="card-3d-inner">
-                            <div class="why-icon-3d" style="border-color: rgba(168, 85, 247, 0.45); box-shadow: 0 14px 24px rgba(0,0,0,0.65), 0 0 20px rgba(168, 85, 247, 0.25);">
-                                <i class="fa-solid fa-globe" style="color: #c084fc;"></i>
+                    <!-- کارت ۳: گوگل دیسپلی -->
+                    <div class="why-card-new" style="border-top-color: #c084fc;">
+                        <div class="mockup-container">
+                            <div class="mini-browser">
+                                <div class="mini-browser-header">
+                                    <div class="mini-dot"></div><div class="mini-dot"></div><div class="mini-dot"></div>
+                                </div>
+                                <div class="mockup-display-body">
+                                    <div class="mockup-display-content">
+                                        <div style="width:100%; height:20px; background:#1e293b; border-radius:4px;"></div>
+                                        <div style="width:100%; height:4px; background:#475569; border-radius:2px; margin-top:2px;"></div>
+                                        <div style="width:80%; height:4px; background:#475569; border-radius:2px;"></div>
+                                    </div>
+                                    <div class="mockup-display-banner">
+                                         <span>AD</span>
+                                    </div>
+                                </div>
                             </div>
-                            <h3>تبلیغات در وب‌سایت‌های همکار گوگل (Google Display Network)</h3>
-                            <p>شبکه نمایش تبلیغاتی گوگل به کسب‌وکارها امکان می‌دهد بنرها و تبلیغات تصویری خود را در میلیون‌ها وب‌سایت، اپلیکیشن و فضای محتوایی همکار گوگل منتشر کنند. این روش برای افزایش دیده‌شدن برند، معرفی محصولات و بازاریابی مجدد (Remarketing) بسیار کاربردی است. با شناسایی علایق و رفتار کاربران و هدف‌گذاری هوشمندانه، می‌توان مخاطبان جدیدی جذب کرد و افرادی را که قبلاً با برند تعامل داشته‌اند، دوباره هدف قرار داد.</p>
                         </div>
+                        <h3>تبلیغات در وب‌سایت‌های همکار گوگل</h3>
+                        <p>شبکه نمایش تبلیغاتی گوگل به کسب‌وکارها امکان می‌دهد بنرهای خود را در میلیون‌ها وب‌سایت منتشر کنند. این روش برای بازاریابی مجدد (Remarketing) بسیار کاربردی است.</p>
                     </div>
 
-                    <!-- کارت سه‌بعدی ۴: اینستاگرام -->
-                    <div class="why-card-3d tilt-card" style="border-bottom-color: #ec4899;">
-                        <div class="card-3d-inner">
-                            <div class="why-icon-3d" style="border-color: rgba(236, 72, 153, 0.45); box-shadow: 0 14px 24px rgba(0,0,0,0.65), 0 0 20px rgba(236, 72, 153, 0.25);">
-                                <i class="fa-brands fa-instagram" style="color: #f472b6;"></i>
+                    <!-- کارت ۴: اینستاگرام -->
+                    <div class="why-card-new" style="border-top-color: #ec4899;">
+                        <div class="mockup-container">
+                            <div class="mini-phone">
+                                <div class="mini-notch"></div>
+                                <div class="mini-phone-body">
+                                    <div style="display:flex; gap:4px; align-items:center; margin-bottom:4px;">
+                                        <div style="width:8px; height:8px; border-radius:50%; background:#ec4899;"></div>
+                                        <div style="width:24px; height:4px; background:#475569; border-radius:2px;"></div>
+                                    </div>
+                                    <div style="width:100%; height:45px; background:linear-gradient(45deg, #f59e0b, #ec4899); border-radius:4px;"></div>
+                                    <div style="width:100%; height:8px; background:#0ea5e9; border-radius:2px; margin-top:4px;"></div>
+                                </div>
                             </div>
-                            <h3>تبلیغ و پروموت محتوا در اینستاگرام (Instagram Promotion)</h3>
-                            <p>با پروموت پست‌ها و محتوای منتخب اینستاگرام، پیام برند خود را فراتر از دنبال‌کنندگان فعلی منتشر کنید. این روش امکان افزایش بازدید پست‌ها، جذب دنبال‌کننده، معرفی محصولات و افزایش تعامل با مخاطبان را فراهم می‌کند. هدف‌گذاری بر اساس سن، موقعیت جغرافیایی، علایق و ویژگی‌های کاربران به کسب‌وکارها کمک می‌کند محتوای خود را به مخاطبان مرتبط نمایش دهند و از ظرفیت اینستاگرام برای توسعه بازار و افزایش آگاهی از برند بهره ببرند.</p>
                         </div>
+                        <h3>تبلیغ و پروموت محتوا در اینستاگرام</h3>
+                        <p>با پروموت پست‌ها و محتوای منتخب اینستاگرام، پیام برند خود را فراتر از دنبال‌کنندگان فعلی منتشر کنید. هدف‌گذاری دقیق بر اساس ویژگی‌های کاربران امکان‌پذیر است.</p>
                     </div>
 
-                    <!-- بنر سه‌بعدی آمار قابل توجه (گوگل و ایپسوس) -->
-                    <div class="stats-banner-3d tilt-card">
-                        <div class="stats-orb-3d">
+                    <!-- بنر آمار ایپسوس -->
+                    <div class="stats-banner-card">
+                        <div class="stats-orb">
                             <strong>۸۳٪</strong>
                             <span>کاربران جهان</span>
                         </div>
-                        <div class="stats-content-3d">
+                        <div class="stats-content">
                             <h4><i class="fa-solid fa-chart-pie"></i> آمار قابل توجه جهانی</h4>
-                            <p>طبق نظرسنجی گوگل و <strong>ایپسوس</strong>، ۸۳٪ مصرف‌کنندگان در سطح جهان اعلام کرده‌اند که روزانه از گوگل و/یا یوتیوب استفاده می‌کنند؛ آماری که نشان‌دهنده ظرفیت بالای این دو پلتفرم برای دسترسی به مخاطبان جهانی است.</p>
+                            <p>طبق نظرسنجی گوگل و <strong>ایپسوس</strong>، ۸۳٪ مصرف‌کنندگان در سطح جهان اعلام کرده‌اند که روزانه از گوگل و/یا یوتیوب استفاده می‌کنند؛ آماری که نشان‌دهنده ظرفیت بالای این دو پلتفرم است.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- بخش جدید: همکار رسمی گوگل (Google Premier Partner) -->
+        <section class="google-partner-section">
+            <div class="container partner-container">
+                
+                <!-- سمت متن توضیحات -->
+                <div class="partner-content">
+                    <h2>می‌دانستید شبکه تبلیغات ایران همکار رسمی گوگل است؟</h2>
+                    <p>
+                        ما با افتخار نشان <strong>Google Premier Partner</strong> را دریافت کرده‌ایم. این سطح از همکاری تنها به ۳٪ از برترین آژانس‌های تبلیغاتی در هر کشور اعطا می‌شود که توانسته‌اند بالاترین استانداردهای گوگل را در بهینه‌سازی کمپین‌ها، تخصص فنی و رشد کسب‌وکار مشتریان رعایت کنند. 
+                        به عنوان یک پارتنر پریمیر، ما به پشتیبانی مستقیم و اختصاصی تیم گوگل دسترسی داریم که به معنای رفع سریع‌تر موانع، استفاده از جدیدترین ابزارهای آزمایشی پیش از عرضه عمومی و تضمین بالاترین سطح بازدهی برای بودجه تبلیغاتی شماست.
+                    </p>
+                </div>
+
+                <!-- سمت المان سه‌بعدی نشان گوگل -->
+                <div class="partner-badge-wrapper">
+                    <div class="google-premier-badge">
+                        <!-- نوار قرمز سمت چپ -->
+                        <div class="g-badge-left">
+                            <span>PREMIER</span>
+                        </div>
+                        <!-- بخش سفید و لوگو -->
+                        <div class="g-badge-right">
+                            <div class="g-badge-google">
+                                <span style="color: #4285F4;">G</span><span style="color: #EA4335;">o</span><span style="color: #FBBC05;">o</span><span style="color: #4285F4;">g</span><span style="color: #34A853;">l</span><span style="color: #EA4335;">e</span>
+                            </div>
+                            <div class="g-badge-partner">
+                                Partner
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </section>
 
@@ -851,7 +681,6 @@
                     <h2>خدمات تخصصی ما</h2>
                     <p>پوشش یکپارچه و بهینه‌سازی شده در پربازده‌ترین بسترهای تبلیغاتی جهان</p>
                 </div>
-
                 <div class="services-grid">
                     <div class="service-card">
                         <div class="threed-icon-container"><i class="fa-brands fa-google threed-icon" style="color: #4285F4;"></i></div>
@@ -882,7 +711,7 @@
             </div>
         </section>
 
-        <!-- Pricing & Tariffs Section -->
+        <!-- Pricing -->
         <section id="pricing">
             <div class="container">
                 <div class="section-header">
@@ -919,7 +748,6 @@
                         </div>
                         <a href="dashboard.html" class="btn btn-secondary">ورود به پنل و شارژ</a>
                     </div>
-
                     <div class="pricing-card">
                         <div>
                             <div class="plan-title">پکیج رشد تجاری</div>
@@ -934,7 +762,6 @@
                         </div>
                         <a href="dashboard.html" class="btn btn-secondary">ورود به پنل و شارژ</a>
                     </div>
-
                     <div class="pricing-card featured">
                         <span class="popular-tag">پیشنهاد ویژه برندها</span>
                         <div>
@@ -950,7 +777,6 @@
                         </div>
                         <a href="dashboard.html" class="btn btn-primary">ورود به پنل و شارژ</a>
                     </div>
-
                     <div class="pricing-card">
                         <div>
                             <div class="plan-title">پکیج سازمانی VIP</div>
@@ -978,7 +804,6 @@
                 </div>
                 <div class="about-box">
                     <p><strong>شبکه تبلیغات ایران</strong> با هدف توسعه بازار برندهای ایرانی و ایجاد فرصت‌های جدید برای حضور مؤثر کسب‌وکارهای داخلی در عرصه بین‌المللی، راهکارهای جامع، یکپارچه و هوشمند بازاریابی و تبلیغات دیجیتال را در پلتفرم‌های بین‌المللی ارائه می‌کند. این مجموعه با بهره‌گیری از ظرفیت‌های گسترده تبلیغات آنلاین، ابزارهای نوین تحلیل داده و شناخت دقیق رفتار مخاطبان ایرانی، تلاش می‌کند ارتباطی مؤثر میان برندها، مشتریان بالقوه و بازارهای هدف ایجاد کند و مسیر تبدیل مخاطب به مشتری وفادار را هموار سازد.</p>
-                    
                     <div id="about-more" class="about-more-content">
                         <p>مقر اصلی شبکه تبلیغات ایران در شهر دبی، امارات متحده عربی قرار دارد؛ شهری که به‌عنوان یکی از مهم‌ترین شاهراه‌های اقتصادی، تجاری و ارتباطی جهان، نقطه اتصال بازارهای خاورمیانه، آسیا، اروپا و آفریقا به شمار می‌رود. استقرار در این مرکز تجاری بین‌المللی، امکان بهره‌مندی از ظرفیت‌های اقتصادی، زیرساخت‌های ارتباطی و فرصت‌های همکاری فرامرزی را فراهم کرده و بستری مناسب برای توسعه خدمات تبلیغاتی در مقیاس بین‌المللی ایجاد می‌کند.</p>
                         <p>رویکرد ما در اجرای کمپین‌های تبلیغاتی بر پایه شفافیت در قیمت‌گذاری، تخصیص هوشمندانه بودجه و استفاده بهینه از منابع استوار است. اعتقاد داریم تبلیغات مؤثر الزاماً به معنای صرف هزینه‌های بیشتر نیست؛ بلکه نتیجه شناخت صحیح بازار، انتخاب کانال‌های مناسب، هدف‌گذاری دقیق و مدیریت اصولی منابع مالی است. به همین دلیل، تلاش می‌کنیم با ارائه ساختارهای شفاف هزینه‌ای و مشخص کردن جایگاه هر بخش از بودجه تبلیغاتی، امکان تصمیم‌گیری آگاهانه و ارزیابی دقیق عملکرد را برای مشتریان فراهم کنیم.</p>
@@ -986,7 +811,6 @@
                         <p>در شبکه تبلیغات ایران، هر کمپین یک سرمایه‌گذاری هدفمند برای رشد کسب‌وکار محسوب می‌شود. ما تلاش می‌کنیم با تلفیق دانش بازاریابی دیجیتال، فناوری‌های روز، تحلیل داده و شناخت بازارهای بین‌المللی، راهکارهایی متناسب با اهداف و ظرفیت اقتصادی هر مجموعه ارائه دهیم؛ راهکارهایی که علاوه بر افزایش دیده‌شدن برند، به توسعه بازار، جذب مشتریان جدید و ایجاد ارزش اقتصادی پایدار منجر شوند.</p>
                         <p><strong>شبکه تبلیغات ایران؛ پیوند هوشمند برندهای ایرانی با فرصت‌های تبلیغاتی و بازارهای بین‌المللی.</strong></p>
                     </div>
-
                     <button id="read-more-toggle" class="read-more-btn" onclick="toggleAboutText()">
                         <span>مشاهده کامل متن</span> <i class="fa-solid fa-chevron-down" id="read-more-icon"></i>
                     </button>
@@ -1000,7 +824,6 @@
                 <div class="contact-card">
                     <h2>ارتباط با ما</h2>
                     <p style="color: var(--text-muted); margin-top: 10px;">جهت دریافت مشاوره رایگان، بررسی پتانسیل بازار و اجرای کمپین‌های هدفمند با کارشناسان ما در ارتباط باشید.</p>
-                    
                     <div class="contact-channels">
                         <a href="mailto:info@iranadsnetwork.ir" class="contact-item">
                             <div class="contact-icon-box"><i class="fa-solid fa-envelope"></i></div>
@@ -1015,7 +838,6 @@
                             <div><span>آدرس دفتر مرکزی</span><strong style="direction: rtl;">دوبی، برج تجاری الصغر، طبقه ۳۵، واحد ۲۳</strong></div>
                         </a>
                     </div>
-
                     <div class="map-wrapper">
                         <iframe 
                             src="https://maps.google.com/maps?q=al-Saqr%20Business%20Tower,%20Sheikh+Zayed+Road,%20Dubai,%20UAE&t=&z=16&ie=UTF8&iwloc=&output=embed" 
@@ -1041,14 +863,12 @@
         const sceneStage = document.getElementById('scene-stage');
         const group = document.getElementById('device-group');
 
-        // تنظیم مقیاس (Scale) مانیتور و آیفون در موبایل و دسکتاپ
         function updateSceneScale() {
             if (!sceneOuter || !sceneStage) return;
             const availableWidth = sceneOuter.clientWidth;
             const baseWidth = 640;
             const baseHeight = 430;
             const scale = Math.min(1, availableWidth / baseWidth);
-
             sceneStage.style.transform = `scale(${scale})`;
             sceneOuter.style.height = `${Math.round(baseHeight * scale)}px`;
         }
@@ -1057,7 +877,6 @@
         window.addEventListener('DOMContentLoaded', updateSceneScale);
         updateSceneScale();
 
-        // حرکت سه‌بعدی مانیتور و آیفون با ماوس
         if (sceneOuter && group) {
             sceneOuter.addEventListener('mousemove', (e) => {
                 const rect = sceneOuter.getBoundingClientRect();
@@ -1065,39 +884,15 @@
                 const y = e.clientY - rect.top - rect.height / 2;
                 group.style.transform = `rotateY(${x / 22}deg) rotateX(${-y / 22}deg)`;
             });
-
             sceneOuter.addEventListener('mouseleave', () => {
                 group.style.transition = 'transform 0.5s ease';
                 group.style.transform = `rotateY(0deg) rotateX(0deg)`;
             });
-
             sceneOuter.addEventListener('mouseenter', () => {
                 group.style.transition = 'transform 0.1s ease-out';
             });
         }
 
-        // افکت سه‌بعدی تعاملی (3D Tilt) روی کارت‌های بخش "چرا تبلیغات در موتور جستجو و سوشال مدیا؟"
-        document.querySelectorAll('.tilt-card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                const rotateX = (-y / (rect.height / 2)) * 7;
-                const rotateY = (x / (rect.width / 2)) * 7;
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
-            });
-
-            card.addEventListener('mouseleave', () => {
-                card.style.transition = 'transform 0.45s ease, box-shadow 0.3s ease';
-                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
-            });
-
-            card.addEventListener('mouseenter', () => {
-                card.style.transition = 'transform 0.1s ease-out, box-shadow 0.3s ease';
-            });
-        });
-
-        // دکمه مشاهده بیشتر در درباره ما
         function toggleAboutText() {
             const moreContent = document.getElementById('about-more');
             const btnText = document.querySelector('#read-more-toggle span');
@@ -1113,7 +908,6 @@
             }
         }
 
-        // منوی موبایل
         const toggle = document.querySelector('.menu-toggle');
         const menu = document.getElementById('mobile-menu');
         if (toggle && menu) {
