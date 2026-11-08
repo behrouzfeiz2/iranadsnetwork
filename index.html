@@ -216,16 +216,13 @@
         .openai-partner-section {
             padding: 70px 0; background: linear-gradient(135deg, rgba(3, 7, 18, 0.6), rgba(16, 185, 129, 0.05)); border-bottom: 1px solid rgba(16, 185, 129, 0.1);
         }
-        
         .chatgpt-mockup-wrapper { flex: 1; min-width: 300px; display: flex; justify-content: center; align-items: center; perspective: 1200px; }
-
         .chatgpt-mockup {
             width: 480px; height: 320px; background: #212121; border: 1px solid #424242; border-radius: 12px;
             display: flex; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 30px rgba(16, 163, 127, 0.15);
             transform: rotateY(12deg) rotateX(4deg); transition: transform 0.4s ease; direction: rtl;
         }
         .chatgpt-mockup:hover { transform: rotateY(0deg) rotateX(0deg) scale(1.03); box-shadow: 0 25px 50px rgba(0,0,0,0.9), 0 0 40px rgba(16, 163, 127, 0.25); }
-
         .cg-sidebar { width: 110px; background: #171717; padding: 10px; display: flex; flex-direction: column; border-left: 1px solid #424242; }
         .cg-nav { font-size: 0.7rem; color: #ececf1; padding: 6px; border-radius: 6px; background: #202123; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
         .cg-history-item { font-size: 0.65rem; color: #8e8ea0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 4px; }
@@ -239,15 +236,6 @@
         .cg-ad-box { margin-top: 10px; border: 1px solid #3f3f46; background: #27272a; border-radius: 8px; padding: 10px; }
         .cg-input-area { padding: 12px; }
         .cg-input-box { background: #2f2f33; border: 1px solid #52525b; border-radius: 12px; padding: 8px 12px; font-size: 0.75rem; color: #a1a1aa; display: flex; justify-content: space-between; direction: ltr; }
-
-        /* طراحی خالص CSS برای بج OpenAI Select Partner مطابق عکس ارسالی */
-        .openai-partner-badge {
-            display: inline-flex; align-items: center; background: #ffffff; border: 2px solid #000000;
-            border-radius: 12px; padding: 12px 20px; gap: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,255,0.1);
-            direction: ltr; margin-top: 18px;
-        }
-        .openai-partner-badge svg { width: 50px; height: 50px; color: #000000; flex-shrink: 0; }
-        .openai-partner-text { font-family: Arial, sans-serif; color: #000000; font-weight: bold; font-size: 1.15rem; line-height: 1.15; text-align: left; }
 
         /* Services, Pricing, About */
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
@@ -545,7 +533,7 @@
                     </div>
                 </div>
 
-                <!-- سمت راست: توضیحات + لوگوی OpenAI Select Partner دقیقاً مشابه تصویر ارسالی -->
+                <!-- سمت راست: توضیحات + لوگوی آپلود شده از پوشه assets -->
                 <div class="partner-content" style="padding-right: 10px;">
                     <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: #34d399; border-color: #34d399;">به‌زودی ...</span>
                     <h2>تبلیغات هوشمند در ChatGPT؛ آینده بازاریابی دیجیتال</h2>
@@ -553,14 +541,9 @@
                         مفتخریم اعلام کنیم که شبکه تبلیغات ایران در حال دریافت تاییدیه رسمی همکاری با OpenAI است. با فعال شدن این قابلیت به زودی، شما می‌توانید تبلیغات کسب‌وکار خود را مستقیماً در پاسخ‌های هوش مصنوعی ChatGPT به مخاطبان نمایش دهید.
                     </p>
                     
-                    <!-- لوگوی OpenAI Select Partner طراحی شده با CSS خالص مطابق عکس ارسالی کاربر -->
-                    <div class="openai-partner-badge">
-                        <svg viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2057 5.9847 5.9847 0 0 0 3.989-2.9001 6.0557 6.0557 0 0 0-.7388-7.0731zM13.2599 22.5002c-1.229 0-2.4276-.4603-3.3444-1.272l.081-.0447 4.8872-2.8253a.9082.9082 0 0 0 .4527-.7882V7.6163l1.8344 1.0592c.0047.0047.0047.0094.0047.0141v7.7126c-.0019 1.487-1.1278 2.7667-2.6105 3.0975a6.002 6.002 0 0 1-1.3051.1005zm-6.1084-2.8017c-.6146-.6145-1.0267-1.4274-1.1873-2.3155l.0763.0447 4.8872 2.8253a.9054.9054 0 0 0 .9077 0l8.6015-4.966v2.1182c.0012.008.0012.015 0 .0223-1.288 2.2312-4.148 3.01-6.3792 1.722L4.6293 15.5414a5.9554 5.9554 0 0 1-1.118-1.0772zm-2.5802-5.7876c.0154-1.2293.4757-2.4279 1.2874-3.3448l-.0447.081L3.0387 5.76a.91.91 0 0 0-.7882.4526v9.9318l1.0592-1.8345c.0047-.0047.0094-.0047.0141-.0047h7.7127c1.487-.0019 2.7666 1.1277 3.0974 2.6104a6.002 6.002 0 0 1-.581 2.378L4.6293 13.9109zM18.8475 3.818c.6146.6146 1.0268 1.4275 1.1874 2.3156l-.0763-.0448-4.8872-2.8253a.9054.9054 0 0 0-.9077 0L5.562 8.2295V6.1112c-.0012-.0079-.0012-.015 0-.0223 1.288-2.2313 4.148-3.01 6.3792-1.722l9.0223 5.2114a5.9554 5.9554 0 0 1 .472-3.4116zm2.5802 5.7876c-.0154 1.2293-.4757 2.4279-1.2874 3.3448l.0447-.081 2.8253 4.8871a.91.91 0 0 0 .7882-.4526V7.3722L21.7393 9.2067c-.0047.0047-.0094.0047-.0141.0047h-7.7127c-1.487.0019-2.7666-1.1277-3.0974-2.6104a6.002 6.002 0 0 1 .581-2.378L19.3491 9.698a6.002 6.002 0 0 1 .581 2.378zM10.74 1.4998c1.229 0 2.4276.4603 3.3444 1.272l-.081.0447-4.8872 2.8253a.9082.9082 0 0 0-.4527.7882v9.9318l-1.8344-1.0592c-.0047-.0047-.0047-.0094-.0047-.0141V7.5756c.0019-1.487 1.1278-2.7667 2.6105-3.0975a6.002 6.002 0 0 1 1.3051-.1005zM12 15.65c-2.0152 0-3.65-1.6348-3.65-3.65S9.9848 8.35 12 8.35s3.65 1.6348 3.65 3.65-1.6348 3.65-3.65 3.65z"/>
-                        </svg>
-                        <div class="openai-partner-text">
-                            OpenAI<br>Select<br>Partner
-                        </div>
+                    <!-- جایگزینی کدهای CSS قبلی با تگ عکس -->
+                    <div style="margin-top: 24px;">
+                        <img src="assets/openai-partner.png" alt="OpenAI Select Partner" style="max-width: 260px; width: 100%; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
                     </div>
                 </div>
 
