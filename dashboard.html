@@ -61,241 +61,83 @@
             gap: 10px;
         }
 
-        .brand-logo {
-            font-size: 1.15rem;
-            font-weight: 800;
-            color: #fff;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            white-space: nowrap;
-        }
+        .brand-logo { font-size: 1.15rem; font-weight: 800; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+        .brand-logo img { width: 30px; height: 30px; filter: drop-shadow(0 0 8px var(--neon-cyan)); }
 
-        .brand-logo img {
-            width: 30px;
-            height: 30px;
-            filter: drop-shadow(0 0 8px var(--neon-cyan));
-        }
-
-        .auth-wrapper {
-            min-height: calc(100vh - 76px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-        }
+        .auth-wrapper { min-height: calc(100vh - 76px); display: flex; align-items: center; justify-content: center; padding: 16px; }
 
         .glass-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-glow);
-            border-radius: 20px;
-            padding: 28px;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
-            width: 100%;
-            min-width: 0;
+            background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: 20px;
+            padding: 28px; backdrop-filter: blur(12px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35); width: 100%; min-width: 0;
         }
 
         .auth-card { width: 100%; max-width: 460px; text-align: center; }
 
         .auth-tabs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            background: rgba(3, 7, 18, 0.7);
-            padding: 6px;
-            border-radius: 14px;
-            margin-bottom: 22px;
-            border: 1px solid rgba(255, 255, 255, 0.07);
+            display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: rgba(3, 7, 18, 0.7);
+            padding: 6px; border-radius: 14px; margin-bottom: 22px; border: 1px solid rgba(255, 255, 255, 0.07);
         }
 
         .auth-tab-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-family: 'Vazirmatn', sans-serif;
-            font-weight: 700;
-            font-size: 0.92rem;
-            padding: 10px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            background: transparent; border: none; color: var(--text-muted); font-family: 'Vazirmatn', sans-serif;
+            font-weight: 700; font-size: 0.92rem; padding: 10px; border-radius: 10px; cursor: pointer; transition: all 0.3s ease;
         }
 
         .auth-tab-btn.active {
-            background: linear-gradient(135deg, var(--primary-accent), var(--neon-cyan));
-            color: #030712;
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
+            background: linear-gradient(135deg, var(--primary-accent), var(--neon-cyan)); color: #030712; box-shadow: 0 0 15px rgba(6, 182, 212, 0.3);
         }
 
         .form-group { margin-bottom: 16px; text-align: right; width: 100%; }
         .form-group label { display: block; font-size: 0.88rem; color: var(--text-muted); margin-bottom: 6px; }
 
         .form-input {
-            width: 100%;
-            background: rgba(3, 7, 18, 0.8);
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            border-radius: 12px;
-            padding: 12px 14px;
-            color: #fff;
-            font-family: 'Vazirmatn', sans-serif;
-            font-size: 0.92rem;
-            transition: all 0.3s ease;
+            width: 100%; background: rgba(3, 7, 18, 0.8); border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 12px; padding: 12px 14px; color: #fff; font-family: 'Vazirmatn', sans-serif; font-size: 0.92rem; transition: all 0.3s ease;
         }
+        .form-input:focus { outline: none; border-color: var(--neon-cyan); box-shadow: 0 0 15px rgba(6, 182, 212, 0.25); }
 
-        .form-input:focus {
-            outline: none;
-            border-color: var(--neon-cyan);
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.25);
-        }
-
-        /* استایل چک‌لیست قوانین رمز عبور */
-        .pass-rules-box {
-            background: rgba(3, 7, 18, 0.65);
-            border: 1px solid rgba(56, 189, 248, 0.18);
-            border-radius: 12px;
-            padding: 12px 14px;
-            margin-top: 10px;
-            text-align: right;
-            font-size: 0.8rem;
-        }
-
-        .pass-rule-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-            transition: color 0.25s ease;
-        }
-
-        .pass-rule-item:last-child { margin-bottom: 0; }
+        .pass-rules-box { background: rgba(3, 7, 18, 0.65); border: 1px solid rgba(56, 189, 248, 0.18); border-radius: 12px; padding: 12px 14px; margin-top: 10px; text-align: right; font-size: 0.8rem; }
+        .pass-rule-item { display: flex; align-items: center; gap: 8px; color: var(--text-muted); margin-bottom: 4px; transition: color 0.25s ease; }
         .pass-rule-item.valid { color: #34d399; font-weight: 600; }
-        .pass-rule-item i { font-size: 0.78rem; width: 14px; text-align: center; }
 
         .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 12px 24px;
-            border-radius: 12px;
-            border: none;
-            cursor: pointer;
-            font-family: 'Vazirmatn', sans-serif;
-            font-weight: 700;
-            font-size: 0.92rem;
-            transition: all 0.3s ease;
-            gap: 8px;
-            text-decoration: none;
-            white-space: nowrap;
+            display: inline-flex; align-items: center; justify-content: center; padding: 12px 24px;
+            border-radius: 12px; border: none; cursor: pointer; font-family: 'Vazirmatn', sans-serif;
+            font-weight: 700; font-size: 0.92rem; transition: all 0.3s ease; gap: 8px; text-decoration: none; white-space: nowrap;
         }
 
         .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary-accent), var(--neon-cyan));
-            color: #030712;
-            box-shadow: 0 0 22px rgba(6, 182, 212, 0.35);
-        }
-
-        .btn-primary:hover:not(:disabled) {
-            box-shadow: 0 0 32px rgba(6, 182, 212, 0.6);
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-main);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
+        .btn-primary { background: linear-gradient(135deg, var(--primary-accent), var(--neon-cyan)); color: #030712; box-shadow: 0 0 22px rgba(6, 182, 212, 0.35); }
+        .btn-primary:hover:not(:disabled) { box-shadow: 0 0 32px rgba(6, 182, 212, 0.6); transform: translateY(-2px); }
+        .btn-outline { background: rgba(255, 255, 255, 0.05); color: var(--text-main); border: 1px solid rgba(255, 255, 255, 0.15); }
         .btn-outline:hover { border-color: var(--neon-blue); color: var(--neon-blue); }
 
         .dashboard-layout {
-            max-width: 1320px;
-            width: 100%;
-            margin: 24px auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: 270px minmax(0, 1fr);
-            gap: 24px;
-            align-items: start;
+            max-width: 1320px; width: 100%; margin: 24px auto; padding: 0 20px;
+            display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 24px; align-items: start;
         }
 
-        main {
-            width: 100%;
-            min-width: 0;
-            display: grid;
-            gap: 24px;
-        }
-
-        .tab-section {
-            width: 100%;
-            min-width: 0;
-            display: grid;
-            gap: 24px;
-        }
+        main { width: 100%; min-width: 0; display: grid; gap: 24px; }
+        .tab-section { width: 100%; min-width: 0; display: grid; gap: 24px; }
 
         .sidebar-menu { list-style: none; display: grid; gap: 8px; margin-top: 18px; }
 
         .tab-btn {
-            width: 100%;
-            text-align: right;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-            padding: 13px 16px;
-            border-radius: 14px;
-            color: var(--text-muted);
-            font-family: 'Vazirmatn', sans-serif;
-            font-size: 0.92rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.3s ease;
-            white-space: nowrap;
+            width: 100%; text-align: right; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.07);
+            padding: 13px 16px; border-radius: 14px; color: var(--text-muted); font-family: 'Vazirmatn', sans-serif;
+            font-size: 0.92rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: space-between; transition: all 0.3s ease; white-space: nowrap;
         }
 
         .tab-btn:hover { color: #fff; border-color: rgba(56, 189, 248, 0.3); }
+        .tab-btn.active { background: linear-gradient(110deg, rgba(6, 182, 212, 0.2), rgba(2, 132, 199, 0.1)); border-color: var(--neon-cyan); color: #fff; box-shadow: 0 0 20px rgba(6, 182, 212, 0.15); }
 
-        .tab-btn.active {
-            background: linear-gradient(110deg, rgba(6, 182, 212, 0.2), rgba(2, 132, 199, 0.1));
-            border-color: var(--neon-cyan);
-            color: #fff;
-            box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
-        }
-
-        .wallet-badge-box {
-            background: linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(2, 132, 199, 0.05));
-            border: 1px solid rgba(6, 182, 212, 0.35);
-            border-radius: 16px;
-            padding: 16px;
-            text-align: center;
-        }
-
-        .wallet-amount {
-            font-size: 1.9rem;
-            font-weight: 900;
-            color: #34d399;
-            direction: ltr;
-            text-shadow: 0 0 15px rgba(52, 211, 153, 0.35);
-        }
+        .wallet-badge-box { background: linear-gradient(135deg, rgba(6, 182, 212, 0.12), rgba(2, 132, 199, 0.05)); border: 1px solid rgba(6, 182, 212, 0.35); border-radius: 16px; padding: 16px; text-align: center; }
+        .wallet-amount { font-size: 1.9rem; font-weight: 900; color: #34d399; direction: ltr; text-shadow: 0 0 15px rgba(52, 211, 153, 0.35); }
 
         .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; width: 100%; }
         .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; width: 100%; }
 
-        .sub-card {
-            background: rgba(3, 7, 18, 0.6);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            border-radius: 16px;
-            padding: 20px;
-            transition: all 0.3s ease;
-            width: 100%;
-            min-width: 0;
-        }
-
+        .sub-card { background: rgba(3, 7, 18, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 16px; padding: 20px; transition: all 0.3s ease; width: 100%; min-width: 0; }
         .sub-card:hover { border-color: var(--neon-cyan); }
 
         .color-google { color: #4285F4; text-shadow: 0 0 12px rgba(66, 133, 244, 0.5); }
@@ -304,147 +146,38 @@
         .color-instagram { color: #E1306C; text-shadow: 0 0 12px rgba(225, 48, 108, 0.5); }
         .color-display { color: #a855f7; text-shadow: 0 0 12px rgba(168, 85, 247, 0.5); }
 
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-        }
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.06); }
+        table { width: 100%; min-width: 650px; border-collapse: collapse; text-align: right; font-size: 0.88rem; }
+        th { color: var(--text-muted); padding: 12px 14px; background: rgba(3, 7, 18, 0.5); border-bottom: 1px solid rgba(255, 255, 255, 0.1); white-space: nowrap; }
+        td { padding: 14px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); vertical-align: middle; }
 
-        table {
-            width: 100%;
-            min-width: 650px;
-            border-collapse: collapse;
-            text-align: right;
-            font-size: 0.88rem;
-        }
-
-        th {
-            color: var(--text-muted);
-            padding: 12px 14px;
-            background: rgba(3, 7, 18, 0.5);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            white-space: nowrap;
-        }
-
-        td {
-            padding: 14px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            vertical-align: middle;
-        }
-
-        .status-pill {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 999px;
-            font-size: 0.76rem;
-            font-weight: 700;
-            white-space: nowrap;
-        }
-
+        .status-pill { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 0.76rem; font-weight: 700; white-space: nowrap; }
         .pill-pending { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
         .pill-approved { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
         .pill-rejected { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
 
-        .address-box {
-            background: rgba(3, 7, 18, 0.9);
-            border: 1px dashed rgba(56, 189, 248, 0.4);
-            padding: 12px;
-            border-radius: 10px;
-            font-family: monospace;
-            font-size: 0.82rem;
-            color: #67e8f9;
-            direction: ltr;
-            word-break: break-all;
-            margin: 10px 0 0;
-        }
-
-        .guide-text-block {
-            margin-top: 22px;
-            padding-top: 18px;
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            line-height: 1.95;
-            text-align: justify;
-        }
-
+        .address-box { background: rgba(3, 7, 18, 0.9); border: 1px dashed rgba(56, 189, 248, 0.4); padding: 12px; border-radius: 10px; font-family: monospace; font-size: 0.82rem; color: #67e8f9; direction: ltr; word-break: break-all; margin: 10px 0 0; }
+        
+        .guide-text-block { margin-top: 22px; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, 0.08); color: var(--text-muted); font-size: 0.9rem; line-height: 1.95; text-align: justify; }
         .guide-text-block p { margin-bottom: 14px; }
+        
+        .budget-summary-bar { background: rgba(6, 182, 212, 0.08); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 14px; padding: 16px 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; }
 
-        .budget-summary-bar {
-            background: rgba(6, 182, 212, 0.08);
-            border: 1px solid rgba(6, 182, 212, 0.3);
-            border-radius: 14px;
-            padding: 16px 20px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .ticket-item {
-            background: rgba(3, 7, 18, 0.65);
-            border: 1px solid rgba(56, 189, 248, 0.22);
-            border-radius: 16px;
-            padding: 18px;
-            margin-bottom: 14px;
-        }
-
-        .ticket-reply-box {
-            margin-top: 12px;
-            background: rgba(16, 185, 129, 0.08);
-            border-right: 3px solid #34d399;
-            padding: 12px 14px;
-            border-radius: 8px;
-            font-size: 0.88rem;
-            color: #e2e8f0;
-        }
+        .ticket-item { background: rgba(3, 7, 18, 0.65); border: 1px solid rgba(56, 189, 248, 0.22); border-radius: 16px; padding: 18px; margin-bottom: 14px; }
+        .ticket-reply-box { margin-top: 12px; background: rgba(16, 185, 129, 0.08); border-right: 3px solid #34d399; padding: 12px 14px; border-radius: 8px; font-size: 0.88rem; color: #e2e8f0; }
 
         @media (max-width: 960px) {
-            .dashboard-layout {
-                grid-template-columns: minmax(0, 1fr);
-                padding: 0 14px;
-                margin: 16px auto;
-                gap: 18px;
-            }
-
-            .grid-3, .grid-2 {
-                grid-template-columns: minmax(0, 1fr);
-                gap: 14px;
-            }
-
-            .glass-card {
-                padding: 18px;
-                border-radius: 16px;
-            }
-
-            .sidebar-menu {
-                display: flex;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                gap: 8px;
-                padding-bottom: 6px;
-            }
-
+            .dashboard-layout { grid-template-columns: minmax(0, 1fr); padding: 0 14px; margin: 16px auto; gap: 18px; }
+            .grid-3, .grid-2 { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+            .glass-card { padding: 18px; border-radius: 16px; }
+            
+            /* اسکرول افقی منو در موبایل */
+            .sidebar-menu { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 8px; padding-bottom: 6px; }
             .sidebar-menu li { flex: 0 0 auto; }
+            .tab-btn { width: auto; padding: 10px 14px; font-size: 0.85rem; gap: 8px; }
 
-            .tab-btn {
-                width: auto;
-                padding: 10px 14px;
-                font-size: 0.85rem;
-                gap: 8px;
-            }
-
-            .budget-summary-bar {
-                flex-direction: column;
-                align-items: stretch;
-                text-align: center;
-            }
-
+            .budget-summary-bar { flex-direction: column; align-items: stretch; text-align: center; }
             .budget-summary-bar .btn { width: 100%; }
-
             .nav-wrapper { padding: 0 14px; height: 64px; }
             .brand-logo { font-size: 0.95rem; }
         }
@@ -469,7 +202,7 @@
         </div>
     </header>
 
-    <!-- صفحه ورود و ثبت‌نام مستقیم با ایمیل -->
+    <!-- صفحه ورود و ثبت‌نام -->
     <div id="login-view" class="auth-wrapper">
         <div class="glass-card auth-card">
             <div style="font-size: 2.3rem; color: var(--neon-cyan); margin-bottom: 8px;">
@@ -483,7 +216,6 @@
                 <button type="button" id="tab-btn-register" class="auth-tab-btn" onclick="switchAuthMode('register')">ثبت‌نام با ایمیل</button>
             </div>
 
-            <!-- فرم ورود -->
             <form id="form-login" onsubmit="handleUserLogin(event)">
                 <div class="form-group">
                     <label>ایمیل یا نام کاربری</label>
@@ -499,7 +231,6 @@
                 </button>
             </form>
 
-            <!-- فرم ثبت‌نام مستقیم با ایمیل + قوانین سخت‌گیرانه رمز عبور -->
             <form id="form-register" class="hidden" onsubmit="handleUserRegister(event)">
                 <div class="form-group">
                     <label>نام کاربری دلخواه (انگلیسی)</label>
@@ -512,21 +243,11 @@
                 <div class="form-group">
                     <label>رمز عبور امن</label>
                     <input type="password" id="reg-password" class="form-input" oninput="checkPasswordStrength()" placeholder="حداقل ۱۰ کاراکتر (حروف بزرگ، کوچک و علامت)" required dir="ltr">
-                    
-                    <!-- چک‌لیست زنده قوانین رمز عبور -->
                     <div class="pass-rules-box">
-                        <div id="rule-len" class="pass-rule-item">
-                            <i class="fa-regular fa-circle"></i> حداقل ۱۰ کاراکتر
-                        </div>
-                        <div id="rule-upper" class="pass-rule-item">
-                            <i class="fa-regular fa-circle"></i> شامل حداقل یک حرف بزرگ انگلیسی (A-Z)
-                        </div>
-                        <div id="rule-lower" class="pass-rule-item">
-                            <i class="fa-regular fa-circle"></i> شامل حداقل یک حرف کوچک انگلیسی (a-z)
-                        </div>
-                        <div id="rule-symbol" class="pass-rule-item">
-                            <i class="fa-regular fa-circle"></i> شامل حداقل یک علامت خاص (!@#$%^&*...)
-                        </div>
+                        <div id="rule-len" class="pass-rule-item"><i class="fa-regular fa-circle"></i> حداقل ۱۰ کاراکتر</div>
+                        <div id="rule-upper" class="pass-rule-item"><i class="fa-regular fa-circle"></i> شامل حرف بزرگ (A-Z)</div>
+                        <div id="rule-lower" class="pass-rule-item"><i class="fa-regular fa-circle"></i> شامل حرف کوچک (a-z)</div>
+                        <div id="rule-symbol" class="pass-rule-item"><i class="fa-regular fa-circle"></i> شامل علامت خاص (!@#$...)</div>
                     </div>
                 </div>
                 <div id="reg-err" style="color: #f87171; font-size: 0.85rem; margin-bottom: 14px;" class="hidden"></div>
@@ -554,33 +275,33 @@
 
             <ul class="sidebar-menu">
                 <li>
-                    <button onclick="switchTab('google')" id="tab-google" class="tab-btn active">
+                    <button onclick="switchTab('home')" id="tab-home" class="tab-btn active">
+                        <span><i class="fa-solid fa-house-user" style="color: #fff; margin-left: 6px;"></i> داشبورد</span>
+                    </button>
+                </li>
+                <li>
+                    <button onclick="switchTab('google')" id="tab-google" class="tab-btn">
                         <span><i class="fa-brands fa-google color-google" style="margin-left: 6px;"></i> کمپین گوگل</span>
-                        <i class="fa-solid fa-chevron-left" style="font-size: 0.7rem;"></i>
                     </button>
                 </li>
                 <li>
                     <button onclick="switchTab('telegram')" id="tab-telegram" class="tab-btn">
                         <span><i class="fa-brands fa-telegram color-telegram" style="margin-left: 6px;"></i> کمپین تلگرام</span>
-                        <i class="fa-solid fa-chevron-left" style="font-size: 0.7rem;"></i>
                     </button>
                 </li>
                 <li>
                     <button onclick="switchTab('instagram')" id="tab-instagram" class="tab-btn">
                         <span><i class="fa-brands fa-instagram color-instagram" style="margin-left: 6px;"></i> کمپین اینستاگرام</span>
-                        <span class="status-pill pill-pending" style="font-size: 0.65rem; padding: 2px 7px;">به‌زودی</span>
                     </button>
                 </li>
                 <li>
                     <button onclick="switchTab('wallet')" id="tab-wallet" class="tab-btn">
-                        <span><i class="fa-solid fa-wallet" style="color: var(--neon-cyan); margin-left: 6px;"></i> امور مالی و کیف پول</span>
-                        <i class="fa-solid fa-chevron-left" style="font-size: 0.7rem;"></i>
+                        <span><i class="fa-solid fa-wallet" style="color: var(--neon-cyan); margin-left: 6px;"></i> کیف پول</span>
                     </button>
                 </li>
                 <li>
                     <button onclick="switchTab('tickets')" id="tab-tickets" class="tab-btn">
-                        <span><i class="fa-solid fa-headset" style="color: #34d399; margin-left: 6px;"></i> تیکت پشتیبانی</span>
-                        <i class="fa-solid fa-chevron-left" style="font-size: 0.7rem;"></i>
+                        <span><i class="fa-solid fa-headset" style="color: #34d399; margin-left: 6px;"></i> پشتیبانی</span>
                     </button>
                 </li>
             </ul>
@@ -589,11 +310,30 @@
         <!-- محتوای تب‌ها -->
         <main>
 
+            <!-- تب ۰: داشبورد اصلی (جدید) -->
+            <div id="content-home" class="tab-section">
+                <div class="glass-card" style="text-align: center; padding: 40px 20px;">
+                    <i class="fa-solid fa-face-smile" style="font-size: 3.5rem; color: var(--neon-cyan); margin-bottom: 16px;"></i>
+                    <h2 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 12px;">به پنل مدیریت تبلیغات خوش آمدید!</h2>
+                    <p style="color: var(--text-muted); font-size: 0.95rem; max-width: 600px; margin: 0 auto; line-height: 2;">
+                        شما در این پنل می‌توانید به راحتی حساب خود را با ارز دیجیتال شارژ کرده و کمپین‌های تبلیغاتی قدرتمندی در پلتفرم‌های مختلف راه‌اندازی کنید.
+                    </p>
+                    
+                    <div style="background: rgba(3, 7, 18, 0.8); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 12px; padding: 16px; margin: 30px auto 0; max-width: 500px; text-align: right;">
+                        <div style="font-weight: 800; color: #fff; margin-bottom: 8px;"><i class="fa-solid fa-circle-info" style="color: var(--neon-cyan);"></i> راهنمای استفاده از پنل:</div>
+                        <ul style="color: #cbd5e1; font-size: 0.88rem; padding-right: 20px; line-height: 1.9;">
+                            <li>در <strong>نسخه دسکتاپ</strong>، منوهای اصلی در نوار سمت راست قرار دارند. بخش مورد نظر خود را انتخاب کنید.</li>
+                            <li>در <strong>نسخه موبایل</strong>، نوار منو در بالای همین صفحه قرار گرفته و می‌توانید با <strong>اسکرول افقی (کشیدن به سمت چپ و راست)</strong> تمام گزینه‌ها را ببینید و انتخاب کنید.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
             <!-- تب ۱: کمپین گوگل -->
-            <div id="content-google" class="tab-section">
+            <div id="content-google" class="tab-section hidden">
                 <div class="glass-card">
                     <div style="margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 14px;">
-                        <h2 style="font-size: 1.25rem; font-weight: 800;"><i class="fa-brands fa-google color-google"></i> سفارش و مدیریت تبلیغات گوگل (Google Ads)</h2>
+                        <h2 style="font-size: 1.25rem; font-weight: 800;"><i class="fa-brands fa-google color-google"></i> سفارش و مدیریت تبلیغات گوگل</h2>
                         <p style="color: var(--text-muted); font-size: 0.88rem;">مشخصات وب‌سایت، معرفی محصول، کلمات کلیدی پیشنهادی و بودجه مورد نظر خود را وارد نمایید.</p>
                     </div>
 
@@ -606,11 +346,11 @@
                         <div class="grid-2">
                             <div class="form-group">
                                 <label><i class="fa-solid fa-box-open" style="color: var(--neon-cyan);"></i> معرفی محصول یا خدمات شما</label>
-                                <textarea id="camp-product" rows="3" class="form-input" placeholder="توضیح کوتاهی درباره محصول، خدمات یا مزیت رقابتی کسب‌وکارتان بنویسید..." required></textarea>
+                                <textarea id="camp-product" rows="3" class="form-input" placeholder="توضیح کوتاهی درباره محصول..." required></textarea>
                             </div>
                             <div class="form-group">
                                 <label><i class="fa-solid fa-key" style="color: var(--neon-cyan);"></i> کلمات کلیدی مرتبط پیشنهادی</label>
-                                <textarea id="camp-keywords" rows="3" class="form-input" placeholder="کلمات کلیدی مدنظرتان را با ویرگول جدا کنید (مثلاً: خرید کیف چرم، قیمت کیف چرم طبیعی)" required></textarea>
+                                <textarea id="camp-keywords" rows="3" class="form-input" placeholder="با ویرگول جدا کنید..." required></textarea>
                             </div>
                         </div>
 
@@ -620,7 +360,6 @@
                                     <i class="fa-solid fa-magnifying-glass color-google" style="font-size: 1.3rem;"></i>
                                     <h3 style="font-size: 1rem;">جستجوی گوگل</h3>
                                 </div>
-                                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px;">نمایش در صدر نتایج صفحه اول گوگل</p>
                                 <label style="font-size: 0.78rem; color: #cbd5e1; display: block; margin-bottom: 6px;">بودجه (دلار - USD)</label>
                                 <input type="number" step="0.1" min="0" id="b-search" value="0" oninput="updateCampTotal()" class="form-input" dir="ltr">
                             </div>
@@ -630,7 +369,6 @@
                                     <i class="fa-solid fa-rectangle-ad color-display" style="font-size: 1.3rem;"></i>
                                     <h3 style="font-size: 1rem;">سایت‌های همکار</h3>
                                 </div>
-                                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px;">نمایش بنر در سایت‌ها و اپ‌های همکار (GDN)</p>
                                 <label style="font-size: 0.78rem; color: #cbd5e1; display: block; margin-bottom: 6px;">بودجه (دلار - USD)</label>
                                 <input type="number" step="0.1" min="0" id="b-display" value="0" oninput="updateCampTotal()" class="form-input" dir="ltr">
                             </div>
@@ -638,30 +376,27 @@
                             <div class="sub-card">
                                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
                                     <i class="fa-brands fa-youtube color-youtube" style="font-size: 1.3rem;"></i>
-                                    <h3 style="font-size: 1rem;">تبلیغات در یوتیوب</h3>
+                                    <h3 style="font-size: 1rem;">تبلیغات یوتیوب</h3>
                                 </div>
-                                <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px;">پخش تیزر ویدیویی در یوتیوب</p>
                                 <label style="font-size: 0.78rem; color: #cbd5e1; display: block; margin-bottom: 6px;">بودجه (دلار - USD)</label>
                                 <input type="number" step="0.1" min="0" id="b-youtube" value="0" oninput="updateCampTotal()" class="form-input" dir="ltr">
+                                <div style="font-size: 0.7rem; color: #fbbf24; margin-top: 8px; line-height: 1.5;">
+                                    <i class="fa-solid fa-info-circle"></i> برای اجرای کمپین یوتیوب، باید پس از ثبت سفارش، تیزر ویدیویی خود را از طریق بخش "تیکت پشتیبانی" ارسال کنید یا درخواست ساخت تیزر دهید.
+                                </div>
                             </div>
                         </div>
 
                         <div class="budget-summary-bar">
                             <div>
-                                <span style="color: var(--text-muted); font-size: 0.92rem;">مجموع بودجه تخصیص‌یافته:</span>
+                                <span style="color: var(--text-muted); font-size: 0.92rem;">مجموع بودجه:</span>
                                 <strong id="camp-total-sum" style="font-size: 1.4rem; color: var(--neon-cyan); margin-right: 8px; direction: ltr; display: inline-block;">$0.00</strong>
-                                <div id="google-budget-err" class="hidden" style="color: #f87171; font-size: 0.8rem; margin-top: 4px;">
-                                    <i class="fa-solid fa-triangle-exclamation"></i> مجموع بودجه از موجودی کیف پول شما بیشتر است!
-                                </div>
+                                <div id="google-budget-err" class="hidden" style="color: #f87171; font-size: 0.8rem; margin-top: 4px;">مجموع بودجه از کیف پول بیشتر است!</div>
                             </div>
-                            <button type="submit" id="google-submit-btn" class="btn btn-primary">
-                                <i class="fa-solid fa-rocket"></i> ثبت درخواست و ارسال برای تایید ادمین
-                            </button>
+                            <button type="submit" id="google-submit-btn" class="btn btn-primary">ثبت درخواست و ارسال</button>
                         </div>
                     </form>
                 </div>
 
-                <!-- لیست کمپین‌های گوگل با اسکرول افقی موبایل -->
                 <div class="glass-card">
                     <h3 style="font-size: 1.15rem; margin-bottom: 14px;"><i class="fa-solid fa-list-check" style="color: var(--neon-cyan);"></i> لیست کمپین‌های گوگل شما</h3>
                     <div class="table-responsive">
@@ -669,10 +404,7 @@
                             <thead>
                                 <tr>
                                     <th>وب‌سایت</th>
-                                    <th>معرفی محصول و کلمات کلیدی</th>
-                                    <th>جستجو</th>
-                                    <th>همکار (GDN)</th>
-                                    <th>یوتیوب</th>
+                                    <th>بودجه (S/G/Y)</th>
                                     <th>کل بودجه</th>
                                     <th>وضعیت</th>
                                 </tr>
@@ -681,89 +413,50 @@
                         </table>
                     </div>
                 </div>
-
-                <!-- راهنمای مدل‌های تبلیغاتی -->
-                <div class="glass-card" style="border-top: 3px solid var(--neon-cyan);">
-                    <h3 style="font-size: 1.18rem; margin-bottom: 18px;">
-                        <i class="fa-solid fa-circle-question" style="color: var(--neon-cyan);"></i> راهنمای مدل‌های تبلیغاتی گوگل ادز
-                    </h3>
-                    <div class="grid-3">
-                        <div class="sub-card">
-                            <h4 style="color: var(--neon-blue); margin-bottom: 8px;">۱. تبلیغات در موتور جستجو (Search Ads)</h4>
-                            <p style="font-size: 0.85rem; color: var(--text-muted); text-align: justify;">
-                                زمانی که کاربران عبارات مرتبط با محصول یا خدمات شما را در گوگل سرچ می‌کنند، لینک سایت شما در اولین نتایج صفحه اول نمایش داده می‌شود. هزینه تنها به ازای کلیک واقعی کاربر (PPC) محاسبه شده و بالاترین نرخ تبدیل به فروش را دارد.
-                            </p>
-                        </div>
-                        <div class="sub-card">
-                            <h4 style="color: #c084fc; margin-bottom: 8px;">۲. تبلیغات در سایت‌های همکار (Display Ads)</h4>
-                            <p style="font-size: 0.85rem; color: var(--text-muted); text-align: justify;">
-                                بنرهای گرافیکی و متحرک برند شما در بیش از ۲ میلیون سایت پربازدید خبری، تخصصی و اپلیکیشن‌های موبایل همکار گوگل نمایش داده می‌شود. این روش برای افزایش آگاهی از برند (Branding) و ریتارگتینگ کاربران فوق‌العاده است.
-                            </p>
-                        </div>
-                        <div class="sub-card">
-                            <h4 style="color: #f87171; margin-bottom: 8px;">۳. تبلیغات ویدیویی در یوتیوب (YouTube Ads)</h4>
-                            <p style="font-size: 0.85rem; color: var(--text-muted); text-align: justify;">
-                                تیزرهای ویدیویی شما در ابتدا یا میانه ویدیوهای یوتیوب برای مخاطبان هدفمند (بر اساس علاقه‌مندی، موضوع کانال‌ها و کلیدواژه‌ها) پخش می‌شود و تاثیر بصری عمیقی در ذهن مخاطب ایجاد می‌کند.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="guide-text-block">
-                        <p>
-                            <strong>تبلیغات در موتور جستجوی گوگل (Google Search)</strong> یکی از هدفمندترین روش‌های بازاریابی دیجیتال است؛ زیرا پیام تبلیغاتی دقیقاً در زمانی به مخاطب نمایش داده می‌شود که او به دنبال محصول، خدمات یا راهکار موردنظر خود است. با استفاده از کلمات کلیدی تخصصی، تعیین موقعیت جغرافیایی و شناخت رفتار جستجوی کاربران، می‌توان مشتریان بالقوه را در لحظه تصمیم‌گیری جذب کرد. این روش علاوه بر افزایش ورودی هدفمند وب‌سایت، امکان مدیریت دقیق هزینه‌ها، سنجش نرخ تبدیل و بهینه‌سازی بازگشت سرمایه را فراهم می‌کند. در کنار آن، <strong>تبلیغات ویدئویی در YouTube</strong> فرصتی ارزشمند برای معرفی برند، نمایش توانمندی محصولات و ایجاد ارتباط بصری با مخاطبان فراهم می‌سازد. ترکیب تصویر، صدا و پیام تبلیغاتی به برندها کمک می‌کند در ذهن مخاطب ماندگار شوند و دامنه آگاهی از برند خود را گسترش دهند.
-                        </p>
-                        <p style="margin-bottom: 0;">
-                            <strong>شبکه نمایش تبلیغاتی گوگل (Google Display Network)</strong> نیز امکان انتشار تبلیغات تصویری و بنری در میلیون‌ها وب‌سایت، اپلیکیشن و فضای محتوایی همکار گوگل را فراهم می‌کند. این بستر به کسب‌وکارها اجازه می‌دهد مخاطبان خود را بر اساس علایق، موضوعات مورد توجه، رفتار آنلاین و سوابق بازدید هدف‌گذاری کنند. همچنین با استفاده از قابلیت <strong>بازاریابی مجدد (Remarketing)</strong>، می‌توان افرادی را که قبلاً از وب‌سایت یا محصولات یک برند بازدید کرده‌اند، دوباره هدف قرار داد و احتمال تبدیل آن‌ها به مشتری را افزایش داد.
-                        </p>
-                    </div>
-                </div>
             </div>
 
             <!-- تب ۲: کمپین تلگرام -->
             <div id="content-telegram" class="tab-section hidden">
                 <div class="glass-card">
                     <div style="margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 14px;">
-                        <h2 style="font-size: 1.25rem; font-weight: 800;"><i class="fa-brands fa-telegram color-telegram"></i> سفارش و مدیریت تبلیغات در تلگرام</h2>
-                        <p style="color: var(--text-muted); font-size: 0.88rem;">آدرس کانال تلگرام، بودجه مورد نظر و توضیحات کمپین خود را جهت بررسی و اجرا ثبت نمایید.</p>
+                        <h2 style="font-size: 1.25rem; font-weight: 800;"><i class="fa-brands fa-telegram color-telegram"></i> سفارش تبلیغات در تلگرام</h2>
+                    </div>
+
+                    <div style="background: rgba(3,7,18,0.7); border: 1px solid rgba(34,158,217,0.3); padding: 12px 16px; border-radius: 12px; margin-bottom: 20px; font-size: 0.85rem; color: #cbd5e1; line-height: 1.8;">
+                        <strong style="color: #229ED9;">پیش‌نیاز:</strong> کسب‌وکار شما حتماً باید دارای یک کانال تلگرام فعال باشد.<br>
+                        <strong style="color: #34d399;">تعرفه استاندارد:</strong> به‌طور میانگین، هر <strong>۴ دلار</strong> تخصیص بودجه معادل حدود <strong>۷۰۰ بازدید (ویو) واقعی</strong> در کانال‌های مرتبط است.
                     </div>
 
                     <form onsubmit="submitTelegramCampaign(event)">
                         <div class="grid-2">
                             <div class="form-group">
-                                <label><i class="fa-brands fa-telegram color-telegram"></i> آدرس کانال یا آیدی تلگرام مقصد</label>
-                                <input type="text" id="tg-url" class="form-input" placeholder="https://t.me/yourchannel یا @yourchannel" required dir="ltr">
+                                <label><i class="fa-brands fa-telegram color-telegram"></i> آدرس کانال تلگرام شما</label>
+                                <input type="text" id="tg-url" class="form-input" placeholder="https://t.me/yourchannel" required dir="ltr">
                             </div>
                             <div class="form-group">
-                                <label><i class="fa-solid fa-dollar-sign" style="color: #34d399;"></i> بودجه اختصاصی (دلار - USD)</label>
-                                <input type="number" step="0.1" min="1" id="tg-budget" oninput="checkTelegramBudget()" class="form-input" placeholder="مثلاً: 50" required dir="ltr">
-                                <div id="tg-budget-err" class="hidden" style="color: #f87171; font-size: 0.8rem; margin-top: 6px;">
-                                    <i class="fa-solid fa-triangle-exclamation"></i> بودجه وارد شده از موجودی کیف پول شما بیشتر است!
-                                </div>
+                                <label><i class="fa-solid fa-dollar-sign" style="color: #34d399;"></i> بودجه اختصاصی (دلار)</label>
+                                <input type="number" step="0.1" min="4" id="tg-budget" oninput="checkTelegramBudget()" class="form-input" placeholder="حداقل ۴ دلار" required dir="ltr">
+                                <div id="tg-budget-err" class="hidden" style="color: #f87171; font-size: 0.8rem; margin-top: 6px;">موجودی کیف پول کافی نیست!</div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label><i class="fa-solid fa-file-lines" style="color: var(--neon-cyan);"></i> توضیحات کمپین، مخاطبان هدف و متن پیشنهادی</label>
-                            <textarea id="tg-desc" rows="4" class="form-input" placeholder="توضیحات مربوط به هدف تبلیغ، موضوع کانال‌های مدنظر برای نمایش و متن تبلیغاتی خود را بنویسید..." required></textarea>
+                            <label><i class="fa-solid fa-file-lines" style="color: var(--neon-cyan);"></i> توضیحات و متن تبلیغ</label>
+                            <textarea id="tg-desc" rows="3" class="form-input" placeholder="متن تبلیغاتی خود را بنویسید..." required></textarea>
                         </div>
 
-                        <div style="display: flex; justify-content: flex-end; margin-top: 12px;">
-                            <button type="submit" id="tg-submit-btn" class="btn btn-primary" style="width: 100%; max-width: 280px;">
-                                <i class="fa-solid fa-paper-plane"></i> ثبت درخواست کمپین تلگرام
-                            </button>
-                        </div>
+                        <button type="submit" id="tg-submit-btn" class="btn btn-primary" style="width: 100%;">ثبت کمپین تلگرام</button>
                     </form>
                 </div>
 
                 <div class="glass-card">
-                    <h3 style="font-size: 1.15rem; margin-bottom: 14px;"><i class="fa-brands fa-telegram color-telegram"></i> لیست کمپین‌های تلگرام ثبت‌شده شما</h3>
+                    <h3 style="font-size: 1.15rem; margin-bottom: 14px;"><i class="fa-brands fa-telegram color-telegram"></i> لیست کمپین‌های تلگرام شما</h3>
                     <div class="table-responsive">
                         <table>
                             <thead>
                                 <tr>
                                     <th>آدرس کانال</th>
                                     <th>بودجه اختصاصی</th>
-                                    <th>توضیحات</th>
                                     <th>وضعیت</th>
                                 </tr>
                             </thead>
@@ -773,87 +466,126 @@
                 </div>
             </div>
 
-            <!-- تب ۳: کمپین اینستاگرام (به‌زودی) -->
-            <div id="content-instagram" class="glass-card hidden" style="text-align: center; padding: 60px 20px;">
-                <div style="font-size: 3.5rem; margin-bottom: 12px;" class="color-instagram">
-                    <i class="fa-brands fa-instagram"></i>
+            <!-- تب ۳: کمپین اینستاگرام (جدید) -->
+            <div id="content-instagram" class="tab-section hidden">
+                <div class="glass-card">
+                    <div style="margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 14px;">
+                        <h2 style="font-size: 1.25rem; font-weight: 800;"><i class="fa-brands fa-instagram color-instagram"></i> پروموت پست اینستاگرام</h2>
+                    </div>
+
+                    <div style="background: rgba(225,48,108,0.1); border: 1px solid rgba(225,48,108,0.3); padding: 14px 18px; border-radius: 12px; margin-bottom: 20px; font-size: 0.88rem; color: #f8fafc; line-height: 1.9;">
+                        <i class="fa-solid fa-circle-exclamation" style="color: #f472b6;"></i> <strong>قوانین و تعرفه کمپین اینستاگرام:</strong><br>
+                        برای اجرای پروموشن اسپانسری، باید لینک پستی که در پیج خودتان منتشر کرده‌اید را وارد کنید. 
+                        <strong>حداقل بودجه شارژ اینستاگرام ۲۰ دلار است.</strong><br>
+                        در این روش، کارمزد مدیریت، دور زدن تحریم‌ها و اجرای دقیق کمپین معادل ۱۰۰٪ مبلغ درخواستی است. 
+                        <br><span style="color: #34d399;">(مثال: برای شارژ ۲۰ دلاری اینستاگرام، معادل ۲۰ دلار هم کارمزد کسر می‌شود، پس باید در حساب خود حداقل ۴۰ دلار داشته باشید).</span>
+                    </div>
+
+                    <form onsubmit="submitInstagramCampaign(event)">
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label><i class="fa-brands fa-instagram color-instagram"></i> لینک پست اینستاگرام</label>
+                                <input type="url" id="ig-url" class="form-input" placeholder="https://instagram.com/p/..." required dir="ltr">
+                            </div>
+                            <div class="form-group">
+                                <label><i class="fa-solid fa-dollar-sign" style="color: #34d399;"></i> مبلغ شارژ درخواستی (حداقل ۲۰ دلار)</label>
+                                <input type="number" step="0.1" min="20" id="ig-budget" oninput="calcInstagramCost()" class="form-input" placeholder="مثلاً: 20" required dir="ltr">
+                            </div>
+                        </div>
+
+                        <div class="budget-summary-bar" style="background: rgba(3,7,18,0.8); border-color: #334155;">
+                            <div>
+                                <span style="color: var(--text-muted); font-size: 0.9rem;">جمع مبلغی که از کیف پول کسر می‌شود (بودجه + کارمزد):</span>
+                                <strong id="ig-total-cost" style="font-size: 1.4rem; color: #f472b6; margin-right: 8px; direction: ltr; display: inline-block;">$0.00</strong>
+                                <div id="ig-budget-err" class="hidden" style="color: #f87171; font-size: 0.8rem; margin-top: 4px;">موجودی کیف پول شما کافی نیست!</div>
+                            </div>
+                            <button type="submit" id="ig-submit-btn" class="btn btn-primary" style="background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);">
+                                <i class="fa-solid fa-bullhorn"></i> ثبت پروموشن اینستاگرام
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <span class="status-pill pill-pending" style="font-size: 0.85rem; margin-bottom: 14px;">به‌زودی ...</span>
-                <h2 style="font-size: 1.5rem; font-weight: 900; margin-bottom: 10px;">بخش کمپین‌های اینستاگرام</h2>
-                <p style="color: var(--text-muted); max-width: 520px; margin: 0 auto; font-size: 0.9rem;">
-                    امکان ثبت و مدیریت مستقیم کمپین‌های تبلیغاتی اینستاگرام (فید، استوری و ریلز هدفمند) در حال آماده‌سازی است و به‌زودی در دسترس قرار می‌گیرد.
-                </p>
+
+                <div class="glass-card">
+                    <h3 style="font-size: 1.15rem; margin-bottom: 14px;"><i class="fa-brands fa-instagram color-instagram"></i> لیست کمپین‌های اینستاگرام شما</h3>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>لینک پست</th>
+                                    <th>بودجه اختصاصی</th>
+                                    <th>جمع کسر شده</th>
+                                    <th>وضعیت</th>
+                                </tr>
+                            </thead>
+                            <tbody id="instagram-campaigns-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
             <!-- تب ۴: امور مالی و کیف پول کریپتو -->
             <div id="content-wallet" class="tab-section hidden">
                 <div class="glass-card">
                     <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 8px;">
-                        <i class="fa-solid fa-coins" style="color: var(--neon-cyan);"></i> کیف پول و شارژ حساب با ارز دیجیتال
+                        <i class="fa-solid fa-coins" style="color: var(--neon-cyan);"></i> کیف پول و شارژ حساب
                     </h2>
                     <p style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 20px;">
-                        مبلغ مورد نظر خود را از طریق تتر (USDT) یا ترون (TRX) به آدرس‌های زیر واریز کرده و کد هش (TxID) را ثبت نمایید تا پس از تایید مدیریت در حساب شما منظور گردد.
+                        مبلغ مورد نظر خود را واریز کرده و کد هش (TxID) را ثبت نمایید تا پس از تایید مدیریت شارژ شود.
                     </p>
 
                     <div class="grid-2">
                         <div style="display: grid; gap: 14px; align-content: start;">
                             <div class="sub-card">
-                                <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;">
-                                    <strong style="color: #34d399; font-size: 0.9rem;"><i class="fa-solid fa-dollar-sign"></i> آدرس تتر (USDT - TRC20)</strong>
-                                    <button onclick="copyText('wallet-usdt-addr')" class="btn btn-outline" style="padding: 5px 10px; font-size: 0.75rem;">
-                                        <i class="fa-regular fa-copy"></i> کپی آدرس
-                                    </button>
+                                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                                    <strong style="color: #34d399; font-size: 0.9rem;">آدرس تتر (TRC20)</strong>
+                                    <button onclick="copyText('wallet-usdt-addr')" class="btn btn-outline" style="padding: 5px 10px; font-size: 0.75rem;">کپی</button>
                                 </div>
                                 <div id="wallet-usdt-addr" class="address-box">در حال بارگذاری...</div>
                             </div>
-
                             <div class="sub-card">
-                                <div style="display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap;">
-                                    <strong style="color: #f87171; font-size: 0.9rem;"><i class="fa-solid fa-bolt"></i> آدرس ترون (TRX - TRON)</strong>
-                                    <button onclick="copyText('wallet-trx-addr')" class="btn btn-outline" style="padding: 5px 10px; font-size: 0.75rem;">
-                                        <i class="fa-regular fa-copy"></i> کپی آدرس
-                                    </button>
+                                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                                    <strong style="color: #f87171; font-size: 0.9rem;">آدرس ترون (TRX)</strong>
+                                    <button onclick="copyText('wallet-trx-addr')" class="btn btn-outline" style="padding: 5px 10px; font-size: 0.75rem;">کپی</button>
                                 </div>
                                 <div id="wallet-trx-addr" class="address-box">در حال بارگذاری...</div>
                             </div>
                         </div>
 
                         <div class="sub-card">
-                            <h3 style="font-size: 1.05rem; margin-bottom: 14px; color: #fff;">ثبت فیش واریزی جدید</h3>
+                            <h3 style="font-size: 1.05rem; margin-bottom: 14px; color: #fff;">ثبت فیش واریزی</h3>
                             <form onsubmit="submitDeposit(event)">
                                 <div class="form-group">
                                     <label>نوع ارز واریزی</label>
                                     <select id="dep-crypto" class="form-input">
-                                        <option value="USDT (TRC20)">تتر - USDT (شبکه TRC20)</option>
-                                        <option value="TRX (TRON)">ترون - TRX (معادل دلاری)</option>
+                                        <option value="USDT (TRC20)">تتر - USDT</option>
+                                        <option value="TRX (TRON)">ترون - TRX</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>مبلغ واریز شده به دلار (USD)</label>
-                                    <input type="number" step="0.01" min="1" id="dep-amount" class="form-input" placeholder="مثلاً: 100" required dir="ltr">
+                                    <input type="number" step="0.01" min="1" id="dep-amount" class="form-input" required dir="ltr">
                                 </div>
                                 <div class="form-group">
-                                    <label>کد پیگیری تراکنش (TxID / Transaction Hash)</label>
-                                    <input type="text" id="dep-hash" class="form-input" placeholder="هش تراکنش را وارد کنید" required dir="ltr">
+                                    <label>کد پیگیری تراکنش (TxID)</label>
+                                    <input type="text" id="dep-hash" class="form-input" required dir="ltr">
                                 </div>
-                                <button type="submit" class="btn btn-primary" style="width: 100%;">
-                                    <i class="fa-solid fa-check-double"></i> ثبت و ارسال برای تایید مدیریت
-                                </button>
+                                <button type="submit" class="btn btn-primary" style="width: 100%;">ثبت و ارسال فیش</button>
                             </form>
                         </div>
                     </div>
                 </div>
 
                 <div class="glass-card">
-                    <h3 style="font-size: 1.15rem; margin-bottom: 14px;"><i class="fa-solid fa-clock-rotate-left" style="color: var(--neon-cyan);"></i> تاریخچه تراکنش‌ها و شارژ کیف پول</h3>
+                    <h3 style="font-size: 1.15rem; margin-bottom: 14px;"><i class="fa-solid fa-clock-rotate-left" style="color: var(--neon-cyan);"></i> تاریخچه تراکنش‌ها</h3>
                     <div class="table-responsive">
                         <table>
                             <thead>
                                 <tr>
                                     <th>شناسه</th>
-                                    <th>ارز دیجیتال</th>
-                                    <th>مبلغ (دلار)</th>
-                                    <th>کد هش (TxID)</th>
+                                    <th>ارز</th>
+                                    <th>مبلغ</th>
+                                    <th>کد هش</th>
                                     <th>وضعیت</th>
                                 </tr>
                             </thead>
@@ -868,28 +600,23 @@
                 <div class="glass-card">
                     <div style="margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 14px;">
                         <h2 style="font-size: 1.25rem; font-weight: 800;"><i class="fa-solid fa-headset" style="color: #34d399;"></i> ارسال تیکت به پشتیبانی</h2>
-                        <p style="color: var(--text-muted); font-size: 0.88rem;">هرگونه سوال، راهنمایی یا پیگیری در خصوص کمپین‌ها و امور مالی دارید، از طریق فرم زیر ارسال نمایید.</p>
                     </div>
 
                     <form onsubmit="submitTicket(event)">
                         <div class="form-group">
-                            <label><i class="fa-solid fa-tag" style="color: var(--neon-cyan);"></i> موضوع تیکت</label>
-                            <input type="text" id="ticket-subject" class="form-input" placeholder="مثلاً: سوال در مورد کمپین گوگل ادز یا پیگیری شارژ حساب" required>
+                            <label><i class="fa-solid fa-tag" style="color: var(--neon-cyan);"></i> موضوع تیکت (مثلاً ارسال تیزر یوتیوب)</label>
+                            <input type="text" id="ticket-subject" class="form-input" required>
                         </div>
                         <div class="form-group">
-                            <label><i class="fa-solid fa-comment-dots" style="color: var(--neon-cyan);"></i> متن پیام شما</label>
-                            <textarea id="ticket-message" rows="4" class="form-input" placeholder="مشروح پیام یا درخواست خود را بنویسید..." required></textarea>
+                            <label><i class="fa-solid fa-comment-dots" style="color: var(--neon-cyan);"></i> متن پیام (درج لینک دانلود تیزر)</label>
+                            <textarea id="ticket-message" rows="4" class="form-input" required></textarea>
                         </div>
-                        <div style="display: flex; justify-content: flex-end;">
-                            <button type="submit" class="btn btn-primary" style="width: 100%; max-width: 240px;">
-                                <i class="fa-solid fa-paper-plane"></i> ثبت و ارسال تیکت
-                            </button>
-                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">ثبت و ارسال تیکت</button>
                     </form>
                 </div>
 
                 <div class="glass-card">
-                    <h3 style="font-size: 1.15rem; margin-bottom: 16px;"><i class="fa-solid fa-envelope-open-text" style="color: var(--neon-cyan);"></i> لیست تیکت‌های شما و پاسخ‌های مدیریت</h3>
+                    <h3 style="font-size: 1.15rem; margin-bottom: 16px;"><i class="fa-solid fa-envelope-open-text" style="color: var(--neon-cyan);"></i> لیست تیکت‌ها</h3>
                     <div id="user-tickets-container"></div>
                 </div>
             </div>
@@ -907,29 +634,19 @@
             const regBtn = document.getElementById('tab-btn-register');
 
             if (mode === 'login') {
-                loginForm.classList.remove('hidden');
-                regForm.classList.add('hidden');
-                loginBtn.classList.add('active');
-                regBtn.classList.remove('active');
+                loginForm.classList.remove('hidden'); regForm.classList.add('hidden');
+                loginBtn.classList.add('active'); regBtn.classList.remove('active');
             } else {
-                loginForm.classList.add('hidden');
-                regForm.classList.remove('hidden');
-                loginBtn.classList.remove('active');
-                regBtn.classList.add('active');
+                loginForm.classList.add('hidden'); regForm.classList.remove('hidden');
+                loginBtn.classList.remove('active'); regBtn.classList.add('active');
             }
         }
 
-        // بررسی زنده قدرت رمز عبور هنگام تایپ در فرم ثبت‌نام
         function updateRuleUI(elementId, isValid) {
             const el = document.getElementById(elementId);
             const icon = el.querySelector('i');
-            if (isValid) {
-                el.classList.add('valid');
-                icon.className = 'fa-solid fa-circle-check';
-            } else {
-                el.classList.remove('valid');
-                icon.className = 'fa-regular fa-circle';
-            }
+            if (isValid) { el.classList.add('valid'); icon.className = 'fa-solid fa-circle-check'; } 
+            else { el.classList.remove('valid'); icon.className = 'fa-regular fa-circle'; }
         }
 
         function checkPasswordStrength() {
@@ -974,7 +691,7 @@
             });
             const data = await res.json();
             if (!res.ok) {
-                errEl.innerText = data.error || 'خطا در ورود به حساب';
+                errEl.innerText = data.error || 'خطا در ورود';
                 errEl.classList.remove('hidden');
                 return;
             }
@@ -1019,7 +736,7 @@
         }
 
         function switchTab(tab) {
-            ['google', 'telegram', 'instagram', 'wallet', 'tickets'].forEach(t => {
+            ['home', 'google', 'telegram', 'instagram', 'wallet', 'tickets'].forEach(t => {
                 document.getElementById(`content-${t}`).classList.add('hidden');
                 document.getElementById(`tab-${t}`).classList.remove('active');
             });
@@ -1036,14 +753,10 @@
 
             const errBox = document.getElementById('google-budget-err');
             const submitBtn = document.getElementById('google-submit-btn');
-            const userBalance = currentUser ? Number(currentUser.balance) : 0;
-
-            if (sum > userBalance) {
-                errBox.classList.remove('hidden');
-                submitBtn.disabled = true;
+            if (sum > Number(currentUser.balance)) {
+                errBox.classList.remove('hidden'); submitBtn.disabled = true;
             } else {
-                errBox.classList.add('hidden');
-                submitBtn.disabled = false;
+                errBox.classList.add('hidden'); submitBtn.disabled = false;
             }
         }
 
@@ -1051,25 +764,33 @@
             const b = parseFloat(document.getElementById('tg-budget').value) || 0;
             const errBox = document.getElementById('tg-budget-err');
             const submitBtn = document.getElementById('tg-submit-btn');
-            const userBalance = currentUser ? Number(currentUser.balance) : 0;
-
-            if (b > userBalance) {
-                errBox.classList.remove('hidden');
-                submitBtn.disabled = true;
+            if (b > Number(currentUser.balance)) {
+                errBox.classList.remove('hidden'); submitBtn.disabled = true;
             } else {
-                errBox.classList.add('hidden');
-                submitBtn.disabled = false;
+                errBox.classList.add('hidden'); submitBtn.disabled = false;
+            }
+        }
+
+        // محاسبه بودجه + کارمزد ۱۰۰ درصدی اینستاگرام
+        function calcInstagramCost() {
+            const budget = parseFloat(document.getElementById('ig-budget').value) || 0;
+            const total = budget * 2; // ۱۰۰٪ کارمزد
+            document.getElementById('ig-total-cost').innerText = `$${total.toFixed(2)}`;
+
+            const errBox = document.getElementById('ig-budget-err');
+            const submitBtn = document.getElementById('ig-submit-btn');
+            
+            if (total > Number(currentUser.balance)) {
+                errBox.classList.remove('hidden'); submitBtn.disabled = true;
+            } else {
+                errBox.classList.add('hidden'); submitBtn.disabled = false;
             }
         }
 
         function renderCampaignStatus(status) {
-            if (status === 'active' || status === 'approved') {
-                return `<span class="status-pill pill-approved">تایید شده و در حال اجرا</span>`;
-            }
-            if (status === 'rejected') {
-                return `<span class="status-pill pill-rejected">رد شده (عودت بودجه)</span>`;
-            }
-            return `<span class="status-pill pill-pending">در انتظار تایید ادمین</span>`;
+            if (status === 'active' || status === 'approved') return `<span class="status-pill pill-approved">در حال اجرا</span>`;
+            if (status === 'rejected') return `<span class="status-pill pill-rejected">رد شده (عودت)</span>`;
+            return `<span class="status-pill pill-pending">در انتظار تایید</span>`;
         }
 
         async function loadDashboardData() {
@@ -1081,214 +802,168 @@
             currentUser = data.user;
             localStorage.setItem('iran_ad_user', JSON.stringify(currentUser));
             document.getElementById('ui-balance').innerText = `$${Number(currentUser.balance).toFixed(2)}`;
-            document.getElementById('ui-email').innerText = currentUser.email || '';
 
-            document.getElementById('wallet-usdt-addr').innerText = data.wallets.usdt || 'توسط ادمین ثبت نشده';
-            document.getElementById('wallet-trx-addr').innerText = data.wallets.trx || 'توسط ادمین ثبت نشده';
+            document.getElementById('wallet-usdt-addr').innerText = data.wallets.usdt || 'خالی';
+            document.getElementById('wallet-trx-addr').innerText = data.wallets.trx || 'خالی';
 
-            // ۱. جدول کمپین‌های گوگل
-            const cBody = document.getElementById('campaigns-tbody');
+            // ۱. لیست گوگل
             const gList = data.google_campaigns || [];
-            cBody.innerHTML = gList.length ? gList.map(c => `
+            document.getElementById('campaigns-tbody').innerHTML = gList.length ? gList.map(c => `
                 <tr>
                     <td dir="ltr" style="font-family: monospace; color: var(--neon-blue); white-space: nowrap;">${c.website_url}</td>
-                    <td style="min-width: 220px;">
-                        <div style="font-size: 0.82rem; color: #fff;"><strong>محصول:</strong> ${c.product_info || '-'}</div>
-                        <div style="font-size: 0.78rem; color: var(--text-muted);"><strong>کلمات:</strong> ${c.keywords || '-'}</div>
-                    </td>
-                    <td style="white-space: nowrap;">$${c.budget_search}</td>
-                    <td style="white-space: nowrap;">$${c.budget_display}</td>
-                    <td style="white-space: nowrap;">$${c.budget_youtube}</td>
+                    <td style="white-space: nowrap;">$${c.budget_search} / $${c.budget_display} / $${c.budget_youtube}</td>
                     <td style="font-weight: 800; color: #34d399; white-space: nowrap;">$${c.total_budget}</td>
                     <td>${renderCampaignStatus(c.status)}</td>
                 </tr>
-            `).join('') : `<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">هنوز کمپینی ثبت نشده است</td></tr>`;
+            `).join('') : `<tr><td colspan="4" style="text-align: center;">هنوز کمپینی ثبت نشده است</td></tr>`;
 
-            // ۲. جدول کمپین‌های تلگرام
-            const tgBody = document.getElementById('telegram-campaigns-tbody');
+            // ۲. لیست تلگرام
             const tgList = data.telegram_campaigns || [];
-            tgBody.innerHTML = tgList.length ? tgList.map(t => `
+            document.getElementById('telegram-campaigns-tbody').innerHTML = tgList.length ? tgList.map(t => `
                 <tr>
-                    <td dir="ltr" style="font-family: monospace; color: var(--neon-blue); white-space: nowrap;">${t.channel_url}</td>
+                    <td dir="ltr" style="font-family: monospace; white-space: nowrap;">${t.channel_url}</td>
                     <td style="font-weight: 800; color: #34d399; white-space: nowrap;">$${t.budget}</td>
-                    <td style="font-size: 0.85rem; color: #cbd5e1; min-width: 220px;">${t.description}</td>
                     <td>${renderCampaignStatus(t.status)}</td>
                 </tr>
-            `).join('') : `<tr><td colspan="4" style="text-align: center; color: var(--text-muted);">هنوز کمپین تلگرامی ثبت نشده است</td></tr>`;
+            `).join('') : `<tr><td colspan="3" style="text-align: center;">هنوز کمپینی ثبت نشده است</td></tr>`;
 
-            // ۳. جدول واریزی‌ها
+            // ۳. لیست اینستاگرام
+            const igList = data.instagram_campaigns || [];
+            document.getElementById('instagram-campaigns-tbody').innerHTML = igList.length ? igList.map(i => `
+                <tr>
+                    <td dir="ltr" style="font-family: monospace; white-space: nowrap; max-width: 150px; overflow: hidden; text-overflow: ellipsis;">${i.post_link}</td>
+                    <td style="white-space: nowrap;">$${i.budget}</td>
+                    <td style="font-weight: 800; color: #f472b6; white-space: nowrap;">$${i.total_cost}</td>
+                    <td>${renderCampaignStatus(i.status)}</td>
+                </tr>
+            `).join('') : `<tr><td colspan="4" style="text-align: center;">هنوز پروموشنی ثبت نشده است</td></tr>`;
+
+            // ۴. لیست واریزی‌ها
             const dBody = document.getElementById('deposits-tbody');
             dBody.innerHTML = data.deposits.length ? data.deposits.map(d => {
-                let statusHtml = `<span class="status-pill pill-pending">در انتظار تایید مدیریت</span>`;
-                if (d.status === 'approved') statusHtml = `<span class="status-pill pill-approved">تایید و شارژ شد</span>`;
-                if (d.status === 'rejected') statusHtml = `<span class="status-pill pill-rejected">رد شده</span>`;
+                let statusHtml = `<span class="status-pill pill-pending">در انتظار</span>`;
+                if (d.status === 'approved') statusHtml = `<span class="status-pill pill-approved">تایید شد</span>`;
+                if (d.status === 'rejected') statusHtml = `<span class="status-pill pill-rejected">رد شد</span>`;
                 return `
                     <tr>
                         <td style="white-space: nowrap;">#${d.id}</td>
                         <td style="white-space: nowrap;">${d.crypto_type}</td>
                         <td style="font-weight: 800; white-space: nowrap;">$${d.amount_usd}</td>
-                        <td dir="ltr" style="font-family: monospace; font-size: 0.8rem; color: var(--text-muted);">${d.tx_hash}</td>
+                        <td dir="ltr" style="font-family: monospace; font-size: 0.8rem; white-space: nowrap;">${d.tx_hash}</td>
                         <td>${statusHtml}</td>
                     </tr>
                 `;
-            }).join('') : `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">هیچ تراکنشی ثبت نشده است</td></tr>`;
+            }).join('') : `<tr><td colspan="5" style="text-align: center;">تراکنشی ثبت نشده است</td></tr>`;
 
-            // ۴. لیست تیکت‌های پشتیبانی کاربر
+            // ۵. تیکت‌ها
             const tkContainer = document.getElementById('user-tickets-container');
             const tkList = data.tickets || [];
             tkContainer.innerHTML = tkList.length ? tkList.map(tk => {
                 const stBadge = tk.status === 'answered'
-                    ? `<span class="status-pill pill-approved">پاسخ داده شده</span>`
-                    : `<span class="status-pill pill-pending">در انتظار پاسخ مدیریت</span>`;
-
+                    ? `<span class="status-pill pill-approved">پاسخ داده شده</span>` : `<span class="status-pill pill-pending">در انتظار پاسخ</span>`;
                 const replyHtml = tk.admin_reply
-                    ? `<div class="ticket-reply-box">
-                           <div style="font-weight: 800; color: #34d399; margin-bottom: 4px;"><i class="fa-solid fa-reply"></i> پاسخ مدیریت:</div>
-                           <div>${tk.admin_reply}</div>
-                       </div>`
-                    : '';
-
+                    ? `<div class="ticket-reply-box"><div style="font-weight: 800; color: #34d399; margin-bottom: 4px;"><i class="fa-solid fa-reply"></i> پاسخ مدیریت:</div><div>${tk.admin_reply}</div></div>` : '';
                 return `
                     <div class="ticket-item">
-                        <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px;">
-                            <strong style="font-size: 1rem; color: #fff;">#${tk.id} - ${tk.subject}</strong>
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <span style="font-size: 0.75rem; color: var(--text-muted);" dir="ltr">${tk.created_at}</span>
-                                ${stBadge}
-                            </div>
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 8px;">
+                            <strong style="color: #fff;">#${tk.id} - ${tk.subject}</strong>
+                            ${stBadge}
                         </div>
                         <p style="font-size: 0.9rem; color: #cbd5e1; white-space: pre-wrap;">${tk.message}</p>
                         ${replyHtml}
                     </div>
                 `;
-            }).join('') : `<div style="text-align: center; color: var(--text-muted); padding: 20px;">هنوز تیکتی ثبت نکرده‌اید</div>`;
+            }).join('') : `<div style="text-align: center; color: var(--text-muted); padding: 20px;">تیکتی ثبت نکرده‌اید</div>`;
 
             updateCampTotal();
             checkTelegramBudget();
+            calcInstagramCost();
         }
 
         async function submitGoogleCampaign(e) {
             e.preventDefault();
-            const website_url = document.getElementById('camp-url').value;
-            const product_info = document.getElementById('camp-product').value;
-            const keywords = document.getElementById('camp-keywords').value;
-            const budget_search = parseFloat(document.getElementById('b-search').value) || 0;
-            const budget_display = parseFloat(document.getElementById('b-display').value) || 0;
-            const budget_youtube = parseFloat(document.getElementById('b-youtube').value) || 0;
-            const total = budget_search + budget_display + budget_youtube;
-
-            if (total > Number(currentUser.balance)) {
-                alert('مجموع بودجه انتخابی نمی‌تواند بیشتر از موجودی کیف پول شما باشد!');
-                return;
-            }
-
             const res = await fetch('/api/user/campaign/google', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     user_id: currentUser.id,
-                    website_url,
-                    product_info,
-                    keywords,
-                    budget_search,
-                    budget_display,
-                    budget_youtube
+                    website_url: document.getElementById('camp-url').value,
+                    product_info: document.getElementById('camp-product').value,
+                    keywords: document.getElementById('camp-keywords').value,
+                    budget_search: parseFloat(document.getElementById('b-search').value) || 0,
+                    budget_display: parseFloat(document.getElementById('b-display').value) || 0,
+                    budget_youtube: parseFloat(document.getElementById('b-youtube').value) || 0
                 })
             });
             const data = await res.json();
-            if (!res.ok) {
-                alert(data.error);
-                return;
-            }
-            alert('درخواست کمپین گوگل شما ثبت شد و جهت تایید و شروع برای مدیریت ارسال گردید.');
-            e.target.reset();
-            loadDashboardData();
+            if (!res.ok) { alert(data.error); return; }
+            alert('درخواست کمپین گوگل شما ثبت شد.'); e.target.reset(); loadDashboardData();
         }
 
         async function submitTelegramCampaign(e) {
             e.preventDefault();
-            const channel_url = document.getElementById('tg-url').value;
-            const budget = parseFloat(document.getElementById('tg-budget').value) || 0;
-            const description = document.getElementById('tg-desc').value;
-
-            if (budget > Number(currentUser.balance)) {
-                alert('بودجه اختصاصی نمی‌تواند بیشتر از موجودی کیف پول شما باشد!');
-                return;
-            }
-
             const res = await fetch('/api/user/campaign/telegram', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     user_id: currentUser.id,
-                    channel_url,
-                    budget,
-                    description
+                    channel_url: document.getElementById('tg-url').value,
+                    budget: parseFloat(document.getElementById('tg-budget').value) || 0,
+                    description: document.getElementById('tg-desc').value
                 })
             });
             const data = await res.json();
-            if (!res.ok) {
-                alert(data.error);
-                return;
-            }
-            alert('درخواست کمپین تلگرام شما ثبت شد و به پنل مدیریت ارسال گردید.');
-            e.target.reset();
-            loadDashboardData();
+            if (!res.ok) { alert(data.error); return; }
+            alert('درخواست کمپین تلگرام شما ثبت شد.'); e.target.reset(); loadDashboardData();
+        }
+
+        async function submitInstagramCampaign(e) {
+            e.preventDefault();
+            const res = await fetch('/api/user/campaign/instagram', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    user_id: currentUser.id,
+                    post_link: document.getElementById('ig-url').value,
+                    budget: parseFloat(document.getElementById('ig-budget').value) || 0
+                })
+            });
+            const data = await res.json();
+            if (!res.ok) { alert(data.error); return; }
+            alert('پروموشن اینستاگرام شما ثبت و مبلغ کل (بودجه + کارمزد) از کیف پول کسر شد.'); 
+            e.target.reset(); calcInstagramCost(); loadDashboardData();
         }
 
         async function submitDeposit(e) {
             e.preventDefault();
-            const crypto_type = document.getElementById('dep-crypto').value;
-            const amount_usd = document.getElementById('dep-amount').value;
-            const tx_hash = document.getElementById('dep-hash').value;
-
             const res = await fetch('/api/user/deposit', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     user_id: currentUser.id,
-                    crypto_type,
-                    amount_usd,
-                    tx_hash
+                    crypto_type: document.getElementById('dep-crypto').value,
+                    amount_usd: document.getElementById('dep-amount').value,
+                    tx_hash: document.getElementById('dep-hash').value
                 })
             });
             const data = await res.json();
-            if (!res.ok) {
-                alert(data.error);
-                return;
-            }
-            alert('فیش واریزی شما ثبت شد و پس از تایید مدیریت به موجودی شما اضافه می‌شود.');
-            e.target.reset();
-            loadDashboardData();
+            if (!res.ok) { alert(data.error); return; }
+            alert('فیش واریزی ثبت شد.'); e.target.reset(); loadDashboardData();
         }
 
         async function submitTicket(e) {
             e.preventDefault();
-            const subject = document.getElementById('ticket-subject').value;
-            const message = document.getElementById('ticket-message').value;
-
             const res = await fetch('/api/user/ticket', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     user_id: currentUser.id,
-                    subject,
-                    message
+                    subject: document.getElementById('ticket-subject').value,
+                    message: document.getElementById('ticket-message').value
                 })
             });
             const data = await res.json();
-            if (!res.ok) {
-                alert(data.error);
-                return;
-            }
-            alert('تیکت شما با موفقیت ثبت شد. پاسخ مدیریت در همین صفحه نمایش داده خواهد شد.');
-            e.target.reset();
-            loadDashboardData();
+            if (!res.ok) { alert(data.error); return; }
+            alert('تیکت شما با موفقیت ثبت شد.'); e.target.reset(); loadDashboardData();
         }
 
         function copyText(elementId) {
-            const txt = document.getElementById(elementId).innerText;
-            navigator.clipboard.writeText(txt);
+            navigator.clipboard.writeText(document.getElementById(elementId).innerText);
             alert('آدرس کیف پول کپی شد.');
         }
 
