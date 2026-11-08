@@ -107,6 +107,7 @@
 
         .btn-success { background: #10b981; color: #030712; }
         .btn-danger { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
+        .btn-danger:hover { background: rgba(239, 68, 68, 0.35); color: #fff; }
 
         .grid-2 {
             display: grid;
@@ -114,7 +115,6 @@
             gap: 24px;
         }
 
-        /* اسکرول افقی استاندارد برای جداول در موبایل */
         .table-responsive {
             width: 100%;
             overflow-x: auto;
@@ -247,6 +247,7 @@
                                 <th>رمز عبور</th>
                                 <th>موجودی فعلی</th>
                                 <th>تاریخ ثبت</th>
+                                <th>عملیات</th>
                             </tr>
                         </thead>
                         <tbody id="admin-users-tbody"></tbody>
@@ -326,7 +327,7 @@
             </div>
         </div>
 
-        <!-- ۶. مدیریت و پاسخگویی به تیکت‌های پشتیبانی (جدید) -->
+        <!-- ۶. مدیریت و پاسخگویی به تیکت‌های پشتیبانی -->
         <div class="glass-card">
             <h2 style="font-size: 1.15rem; margin-bottom: 16px;">
                 <i class="fa-solid fa-headset" style="color: #34d399;"></i> تیکت‌های پشتیبانی مشتریان و ارسال پاسخ
@@ -414,7 +415,7 @@
             document.getElementById('set-usdt').value = data.wallets.usdt || '';
             document.getElementById('set-trx').value = data.wallets.trx || '';
 
-            // ۱. جدول کاربران
+            // ۱. جدول کاربران (همراه با دکمه حذف کاربر)
             document.getElementById('admin-users-tbody').innerHTML = data.users.length ? data.users.map(u => `
                 <tr>
                     <td>#${u.id}</td>
@@ -423,8 +424,13 @@
                     <td dir="ltr" style="font-family: monospace; color: #fbbf24;">${u.password}</td>
                     <td style="font-weight: 800; color: #34d399;">$${Number(u.balance).toFixed(2)}</td>
                     <td dir="ltr" style="font-size: 0.8rem; color: var(--text-muted); white-space: nowrap;">${u.created_at}</td>
+                    <td>
+                        <button onclick="deleteUser(${u.id}, '${u.username}')" class="btn btn-danger" style="padding: 5px 12px; font-size: 0.75rem;">
+                            <i class="fa-solid fa-trash-can"></i> حذف
+                        </button>
+                    </td>
                 </tr>
-            `).join('') : `<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">کاربری ثبت نشده است</td></tr>`;
+            `).join('') : `<tr><td colspan="7" style="text-align:center; color:var(--text-muted);">کاربری ثبت نشده است</td></tr>`;
 
             // ۲. جدول واریزی‌ها
             document.getElementById('admin-deposits-tbody').innerHTML = data.deposits.length ? data.deposits.map(d => {
@@ -559,6 +565,23 @@
                 return;
             }
             e.target.reset();
+            fetchAdminOverview();
+        }
+
+        // تابع حذف کامل کاربر
+        async function deleteUser(user_id, username) {
+            if (!confirm(`آیا از حذف دائمی کاربر "${username}" و تمامی سوابق مالی، کمپین‌ها و تیکت‌های او مطمئن هستید؟`)) return;
+
+            const res = await fetch('/api/admin/users/delete', {
+                method: 'POST',
+                headers: getAdminHeaders(),
+                body: JSON.stringify({ user_id })
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                alert(data.error || 'خطا در حذف کاربر');
+                return;
+            }
             fetchAdminOverview();
         }
 
