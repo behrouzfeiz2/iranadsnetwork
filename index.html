@@ -133,9 +133,7 @@
         .section-header h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; }
         .section-header p { color: var(--text-muted); font-size: 0.95rem; }
 
-        /* =========================================================
-           بخش "چرا تبلیغات..." - المان‌های مینیاتوری
-           ========================================================= */
+        /* بخش چرا تبلیغات... */
         .why-ads-section {
             background: linear-gradient(180deg, rgba(3, 7, 18, 0.5), rgba(10, 22, 44, 0.4));
             border-top: 1px solid rgba(56, 189, 248, 0.15);
@@ -185,197 +183,71 @@
         .stats-content h4 { font-size: 1.1rem; color: #67e8f9; margin-bottom: 8px; font-weight: 800; }
         .stats-content p { color: #f1f5f9; font-size: 0.9rem; text-align: justify; line-height: 1.8; margin: 0; }
 
-        /* =========================================================
-           بخش گوگل پارتنر (Google Premier Partner)
-           ========================================================= */
+        /* بخش گوگل پارتنر */
         .google-partner-section {
-            padding: 70px 0;
-            background: linear-gradient(135deg, rgba(10, 22, 44, 0.4), rgba(3, 7, 18, 0.6));
-            border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+            padding: 70px 0; background: linear-gradient(135deg, rgba(10, 22, 44, 0.4), rgba(3, 7, 18, 0.6)); border-bottom: 1px solid rgba(56, 189, 248, 0.1);
         }
         .partner-container { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
         .partner-content { flex: 1; min-width: 300px; }
         .partner-content h2 { font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 16px; line-height: 1.4; }
         .partner-content p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.9; text-align: justify; }
 
-        .partner-badge-wrapper {
-            flex: 1; min-width: 300px; display: flex; justify-content: center; align-items: center; perspective: 1000px;
-        }
+        .partner-badge-wrapper { flex: 1; min-width: 300px; display: flex; justify-content: center; align-items: center; perspective: 1000px; }
 
-        /* طراحی خالص CSS برای بج گوگل پارتنر */
         .google-premier-badge {
             display: flex; width: 340px; height: 130px; background: #ffffff; border-radius: 4px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.6), 0 0 40px rgba(255, 255, 255, 0.1);
             transform-style: preserve-3d; transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative; cursor: pointer; direction: ltr; /* English LTR */
-            animation: floatBadge 6s ease-in-out infinite; transform: rotateY(-5deg) rotateX(2deg);
+            position: relative; cursor: pointer; direction: ltr; animation: floatBadge 6s ease-in-out infinite; transform: rotateY(-5deg) rotateX(2deg);
         }
         @keyframes floatBadge {
             0% { transform: translateY(0px) rotateY(-5deg) rotateX(2deg); }
             50% { transform: translateY(-10px) rotateY(-5deg) rotateX(2deg); }
             100% { transform: translateY(0px) rotateY(-5deg) rotateX(2deg); }
         }
-        .google-premier-badge:hover {
-            animation-play-state: paused; transform: rotateY(0deg) rotateX(0deg) scale(1.05);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.8), 0 0 60px rgba(66, 133, 244, 0.3);
-        }
+        .google-premier-badge:hover { animation-play-state: paused; transform: rotateY(0deg) rotateX(0deg) scale(1.05); box-shadow: 0 25px 50px rgba(0,0,0,0.8), 0 0 60px rgba(66, 133, 244, 0.3); }
         .g-badge-left { background-color: #EA4335; width: 44px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-        .g-badge-left span { color: #ffffff; font-family: Arial, Helvetica, sans-serif; font-weight: bold; font-size: 0.95rem; letter-spacing: 2px; transform: rotate(-90deg); white-space: nowrap; }
+        .g-badge-left span { color: #ffffff; font-family: Arial, sans-serif; font-weight: bold; font-size: 0.95rem; letter-spacing: 2px; transform: rotate(-90deg); white-space: nowrap; }
         .g-badge-right { display: flex; flex-direction: column; justify-content: center; padding-left: 22px; padding-right: 20px; flex: 1; }
-        .g-badge-google { font-family: Arial, Helvetica, sans-serif; font-size: 2.6rem; font-weight: bold; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 2px; }
-        .g-badge-partner { font-family: Arial, Helvetica, sans-serif; font-size: 2.6rem; color: #5F6368; line-height: 0.9; font-weight: normal; letter-spacing: -1px; }
+        .g-badge-google { font-family: Arial, sans-serif; font-size: 2.6rem; font-weight: bold; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 2px; }
+        .g-badge-partner { font-family: Arial, sans-serif; font-size: 2.6rem; color: #5F6368; line-height: 0.9; font-weight: normal; letter-spacing: -1px; }
 
-        /* =========================================================
-           بخش جدید: پارتنر OpenAI و تبلیغات ChatGPT
-           ========================================================= */
+        /* بخش OpenAI و ChatGPT */
         .openai-partner-section {
-            padding: 70px 0;
-            background: linear-gradient(135deg, rgba(3, 7, 18, 0.6), rgba(16, 185, 129, 0.05));
-            border-bottom: 1px solid rgba(16, 185, 129, 0.1);
+            padding: 70px 0; background: linear-gradient(135deg, rgba(3, 7, 18, 0.6), rgba(16, 185, 129, 0.05)); border-bottom: 1px solid rgba(16, 185, 129, 0.1);
         }
         
-        .chatgpt-mockup-wrapper {
-            flex: 1;
-            min-width: 300px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            perspective: 1200px;
-        }
+        .chatgpt-mockup-wrapper { flex: 1; min-width: 300px; display: flex; justify-content: center; align-items: center; perspective: 1200px; }
 
         .chatgpt-mockup {
-            width: 480px;
-            height: 320px;
-            background: #212121; /* رنگ دارک‌مود چت‌جی‌پی‌تی */
-            border: 1px solid #424242;
-            border-radius: 12px;
-            display: flex;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 30px rgba(16, 163, 127, 0.15);
-            transform: rotateY(12deg) rotateX(4deg);
-            transition: transform 0.4s ease;
-            direction: rtl; 
+            width: 480px; height: 320px; background: #212121; border: 1px solid #424242; border-radius: 12px;
+            display: flex; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 30px rgba(16, 163, 127, 0.15);
+            transform: rotateY(12deg) rotateX(4deg); transition: transform 0.4s ease; direction: rtl;
         }
+        .chatgpt-mockup:hover { transform: rotateY(0deg) rotateX(0deg) scale(1.03); box-shadow: 0 25px 50px rgba(0,0,0,0.9), 0 0 40px rgba(16, 163, 127, 0.25); }
 
-        .chatgpt-mockup:hover {
-            transform: rotateY(0deg) rotateX(0deg) scale(1.03);
-            box-shadow: 0 25px 50px rgba(0,0,0,0.9), 0 0 40px rgba(16, 163, 127, 0.25);
-        }
-
-        .cg-sidebar {
-            width: 110px;
-            background: #171717;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            border-left: 1px solid #424242;
-        }
-
-        .cg-nav {
-            font-size: 0.7rem;
-            color: #ececf1;
-            padding: 6px;
-            border-radius: 6px;
-            background: #202123;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .cg-history-item {
-            font-size: 0.65rem;
-            color: #8e8ea0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            padding: 4px;
-        }
-
-        .cg-main {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            background: #212121;
-        }
-
-        .cg-header {
-            padding: 12px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            color: #d1d5db;
-            border-bottom: 1px solid #3f3f46;
-            text-align: center;
-            direction: ltr;
-        }
-
-        .cg-chat-area {
-            flex: 1;
-            padding: 16px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            font-size: 0.8rem;
-            color: #ececf1;
-        }
-
+        .cg-sidebar { width: 110px; background: #171717; padding: 10px; display: flex; flex-direction: column; border-left: 1px solid #424242; }
+        .cg-nav { font-size: 0.7rem; color: #ececf1; padding: 6px; border-radius: 6px; background: #202123; margin-bottom: 12px; display: flex; align-items: center; gap: 6px; }
+        .cg-history-item { font-size: 0.65rem; color: #8e8ea0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 4px; }
+        .cg-main { flex: 1; display: flex; flex-direction: column; background: #212121; }
+        .cg-header { padding: 12px; font-size: 0.85rem; font-weight: bold; color: #d1d5db; border-bottom: 1px solid #3f3f46; text-align: center; direction: ltr; }
+        .cg-chat-area { flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 16px; font-size: 0.8rem; color: #ececf1; }
         .cg-message { display: flex; gap: 12px; }
         .cg-avatar { width: 24px; height: 24px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-weight: bold; flex-shrink: 0; }
         .cg-avatar.user-bg { background: #0ea5e9; color: #fff; font-size: 0.7rem; }
         .cg-avatar.openai-bg { background: #10a37f; border-radius: 50%; color: #fff; font-size: 0.7rem; }
+        .cg-ad-box { margin-top: 10px; border: 1px solid #3f3f46; background: #27272a; border-radius: 8px; padding: 10px; }
+        .cg-input-area { padding: 12px; }
+        .cg-input-box { background: #2f2f33; border: 1px solid #52525b; border-radius: 12px; padding: 8px 12px; font-size: 0.75rem; color: #a1a1aa; display: flex; justify-content: space-between; direction: ltr; }
 
-        .cg-ad-box {
-            margin-top: 10px;
-            border: 1px solid #3f3f46;
-            background: #27272a;
-            border-radius: 8px;
-            padding: 10px;
-        }
-        
-        .cg-input-area {
-            padding: 12px;
-        }
-        
-        .cg-input-box {
-            background: #2f2f33;
-            border: 1px solid #52525b;
-            border-radius: 12px;
-            padding: 8px 12px;
-            font-size: 0.75rem;
-            color: #a1a1aa;
-            display: flex;
-            justify-content: space-between;
-            direction: ltr;
-        }
-
-        /* طراحی خالص CSS برای بج OpenAI Select Partner */
+        /* طراحی خالص CSS برای بج OpenAI Select Partner مطابق عکس ارسالی */
         .openai-partner-badge {
-            display: inline-flex;
-            align-items: center;
-            background: #ffffff;
-            border: 2px solid #000000;
-            border-radius: 10px;
-            padding: 10px 18px;
-            gap: 14px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,255,0.1);
-            direction: ltr;
-            margin-top: 16px;
+            display: inline-flex; align-items: center; background: #ffffff; border: 2px solid #000000;
+            border-radius: 12px; padding: 12px 20px; gap: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,255,0.1);
+            direction: ltr; margin-top: 18px;
         }
-
-        .openai-partner-badge svg {
-            width: 44px;
-            height: 44px;
-            color: #000000;
-        }
-
-        .openai-partner-text {
-            font-family: Arial, Helvetica, sans-serif;
-            color: #000000;
-            font-weight: bold;
-            font-size: 1.15rem;
-            line-height: 1.15;
-            text-align: left;
-        }
+        .openai-partner-badge svg { width: 50px; height: 50px; color: #000000; flex-shrink: 0; }
+        .openai-partner-text { font-family: Arial, sans-serif; color: #000000; font-weight: bold; font-size: 1.15rem; line-height: 1.15; text-align: left; }
 
         /* Services, Pricing, About */
         .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
@@ -435,7 +307,7 @@
             .why-ads-grid { grid-template-columns: 1fr; }
             .stats-banner-card { flex-direction: column; text-align: center; padding: 24px 20px; }
             .partner-container { flex-direction: column; text-align: center; }
-            .chatgpt-mockup { transform: scale(0.9) rotateY(0) rotateX(0); margin-top: 20px; }
+            .chatgpt-mockup { transform: scale(0.9) rotateY(0) rotateX(0); margin-top: 20px; width: 100%; max-width: 380px; }
             .about-box, .contact-card { padding: 26px; }
         }
     </style>
@@ -479,12 +351,11 @@
                 <h1>شبکه تبلیغات ایران</h1>
                 <p>انجام تبلیغات هدفمند در شبکه های اجتماعی برای برندهای ایرانی با به‌کارگیری دقیق‌ترین ابزارهای بازاریابی داده‌محور و هدف‌گیری مخاطبان بالقوه.</p>
 
-                <!-- محفظه بیرونی هوشمند برای نمایش یکسان در دسکتاپ و موبایل -->
                 <div class="scene-outer-wrapper" id="scene-outer">
                     <div class="scene-stage" id="scene-stage">
                         <div class="device-3d-group" id="device-group">
                             
-                            <!-- مانیتور (گوگل سرچ - حالت شب) -->
+                            <!-- مانیتور (گوگل سرچ) -->
                             <div class="monitor-wrapper-pos">
                                 <div class="monitor-frame">
                                     <div style="background: #1e293b; padding: 8px 14px; display: flex; align-items: center; gap: 8px;">
@@ -507,10 +378,6 @@
                                             <div style="font-size: 1.02rem; font-weight: 800; color: #60a5fa; margin-bottom: 6px;">خرید کیف چرم — رتبه ۱ گوگل | چرم طبیعی دست‌دوز</div>
                                             <div style="font-size: 0.76rem; color: #94a3b8; line-height: 1.6;">کلکسیون جدید کیف چرم طبیعی مردانه و زنانه با ضمانت اصالت، ارسال سریع و تخفیف ویژه خرید آنلاین. همین حالا مشاهده کنید.</div>
                                         </div>
-                                        <div style="margin-top: 12px; opacity: 0.4; background: #111827; height: 42px; border-radius: 8px; padding: 8px 12px;">
-                                            <div style="width: 140px; height: 8px; background: #334155; border-radius: 4px; margin-bottom: 6px;"></div>
-                                            <div style="width: 240px; height: 6px; background: #1e293b; border-radius: 4px;"></div>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="monitor-stand"></div>
@@ -526,7 +393,6 @@
                                             <span style="font-weight: bold; color: #f8fafc;"><i class="fa-brands fa-instagram" style="color: #ec4899; margin-left: 4px;"></i> yourbrand.ir</span>
                                             <span style="color: #38bdf8; font-size: 0.64rem; font-weight: 700;">Sponsored</span>
                                         </div>
-                                        
                                         <div class="insta-ad-card">
                                             <div class="leather-bag-mockup">
                                                 <svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 6px 10px rgba(0,0,0,0.6)); margin-bottom: 6px;">
@@ -536,15 +402,6 @@
                                                     <rect x="27" y="27" width="10" height="8" rx="2" fill="#FDE68A"/>
                                                 </svg>
                                                 <span style="font-size: 0.72rem; font-weight: 800; color: #fef3c7;">کیف چرم دست‌دوز لوکس</span>
-                                            </div>
-                                            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.08);">
-                                                <span style="font-size: 0.68rem; color: #38bdf8; font-weight: bold;">خرید از وب‌سایت</span>
-                                                <i class="fa-solid fa-chevron-left" style="font-size: 0.65rem; color: #38bdf8;"></i>
-                                            </div>
-                                            <div style="display: flex; gap: 10px; margin-top: 8px; color: #cbd5e1; font-size: 0.85rem;">
-                                                <i class="fa-solid fa-heart" style="color: #ec4899;"></i>
-                                                <i class="fa-regular fa-comment"></i>
-                                                <i class="fa-regular fa-paper-plane"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -558,15 +415,13 @@
                 </div>
 
                 <div class="cta-group">
-                    <a href="#contact" class="btn btn-primary">
-                        <i class="fa-solid fa-paper-plane"></i> شروع همکاری
-                    </a>
+                    <a href="#contact" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> شروع همکاری</a>
                     <a href="#pricing" class="btn btn-secondary">مشاهده تعرفه‌ها</a>
                 </div>
             </div>
         </section>
 
-        <!-- بخش بهبود یافته: چرا تبلیغات در موتور جستجو و سوشال مدیا؟ -->
+        <!-- بخش: چرا تبلیغات در موتور جستجو و سوشال مدیا؟ -->
         <section class="why-ads-section">
             <div class="container">
                 <div class="section-header">
@@ -575,132 +430,74 @@
                 </div>
 
                 <div class="why-ads-grid">
-                    
-                    <!-- کارت ۱: گوگل سرچ -->
                     <div class="why-card-new" style="border-top-color: #38bdf8;">
                         <div class="mockup-container">
                             <div class="mini-browser">
-                                <div class="mini-browser-header">
-                                    <div class="mini-dot" style="background:#ef4444;"></div>
-                                    <div class="mini-dot" style="background:#f59e0b;"></div>
-                                    <div class="mini-dot" style="background:#10b981;"></div>
-                                </div>
-                                <div class="mockup-search-body">
-                                    <div class="mockup-line-title"></div>
-                                    <div class="mockup-line-badge"></div>
-                                    <div class="mockup-line-text" style="margin-top: 4px;"></div>
-                                    <div class="mockup-line-text" style="width: 60%;"></div>
-                                </div>
+                                <div class="mini-browser-header"><div class="mini-dot" style="background:#ef4444;"></div><div class="mini-dot" style="background:#f59e0b;"></div><div class="mini-dot" style="background:#10b981;"></div></div>
+                                <div class="mockup-search-body"><div class="mockup-line-title"></div><div class="mockup-line-badge"></div></div>
                             </div>
                         </div>
                         <h3>تبلیغات هدفمند در موتور جستجوی گوگل</h3>
-                        <p>با تبلیغات در موتور جستجوی گوگل، درست در لحظه‌ای با مخاطب ارتباط برقرار کنید که به دنبال محصول یا خدمات شماست. اندازه‌گیری دقیق کلیک‌ها و نرخ تبدیل امکان‌پذیر است.</p>
+                        <p>با تبلیغات در موتور جستجوی گوگل، درست در لحظه‌ای با مخاطب ارتباط برقرار کنید که به دنبال محصول یا خدمات شماست.</p>
                     </div>
 
-                    <!-- کارت ۲: یوتیوب -->
                     <div class="why-card-new" style="border-top-color: #ef4444;">
                         <div class="mockup-container">
                             <div class="mini-browser">
-                                <div class="mini-browser-header">
-                                    <div class="mini-dot"></div><div class="mini-dot"></div><div class="mini-dot"></div>
-                                </div>
-                                <div class="mockup-yt-body">
-                                    <i class="fa-brands fa-youtube" style="color:#ef4444; font-size:2rem; z-index:2; filter: drop-shadow(0 0 8px rgba(239, 68, 68, 0.5));"></i>
-                                    <div style="position:absolute; bottom:6px; right:8px; background:rgba(255,255,255,0.9); color:#000; font-size:0.5rem; padding:2px 6px; border-radius:3px; font-weight:bold;">Ad</div>
-                                </div>
+                                <div class="mini-browser-header"><div class="mini-dot"></div><div class="mini-dot"></div><div class="mini-dot"></div></div>
+                                <div class="mockup-yt-body"><i class="fa-brands fa-youtube" style="color:#ef4444; font-size:2rem; z-index:2;"></i></div>
                             </div>
                         </div>
                         <h3>بازاریابی و تبلیغات ویدئویی در یوتیوب</h3>
-                        <p>یوتیوب یکی از قدرتمندترین بسترهای جهان برای معرفی برند از طریق محتوای ویدئویی است. امکان ایجاد ارتباط عمیق‌تر با مخاطبان و افزایش آگاهی از برند را فراهم می‌کند.</p>
+                        <p>یوتیوب یکی از قدرتمندترین بسترهای جهان برای معرفی برند از طریق محتوای ویدئویی است.</p>
                     </div>
 
-                    <!-- کارت ۳: گوگل دیسپلی -->
                     <div class="why-card-new" style="border-top-color: #c084fc;">
                         <div class="mockup-container">
                             <div class="mini-browser">
-                                <div class="mini-browser-header">
-                                    <div class="mini-dot"></div><div class="mini-dot"></div><div class="mini-dot"></div>
-                                </div>
-                                <div class="mockup-display-body">
-                                    <div class="mockup-display-content">
-                                        <div style="width:100%; height:20px; background:#1e293b; border-radius:4px;"></div>
-                                        <div style="width:100%; height:4px; background:#475569; border-radius:2px; margin-top:2px;"></div>
-                                        <div style="width:80%; height:4px; background:#475569; border-radius:2px;"></div>
-                                    </div>
-                                    <div class="mockup-display-banner">
-                                         <span>AD</span>
-                                    </div>
-                                </div>
+                                <div class="mini-browser-header"><div class="mini-dot"></div><div class="mini-dot"></div><div class="mini-dot"></div></div>
+                                <div class="mockup-display-body"><div class="mockup-display-content"><div style="width:100%; height:20px; background:#1e293b; border-radius:4px;"></div></div><div class="mockup-display-banner"><span>AD</span></div></div>
                             </div>
                         </div>
                         <h3>تبلیغات در وب‌سایت‌های همکار گوگل</h3>
-                        <p>شبکه نمایش تبلیغاتی گوگل به کسب‌وکارها امکان می‌دهد بنرهای خود را در میلیون‌ها وب‌سایت منتشر کنند. این روش برای بازاریابی مجدد (Remarketing) بسیار کاربردی است.</p>
+                        <p>انتشار بنرها و تبلیغات تصویری در میلیون‌ها وب‌سایت و اپلیکیشن همکار گوگل برای بازاریابی مجدد (Remarketing).</p>
                     </div>
 
-                    <!-- کارت ۴: اینستاگرام -->
                     <div class="why-card-new" style="border-top-color: #ec4899;">
                         <div class="mockup-container">
-                            <div class="mini-phone">
-                                <div class="mini-notch"></div>
-                                <div class="mini-phone-body">
-                                    <div style="display:flex; gap:4px; align-items:center; margin-bottom:4px;">
-                                        <div style="width:8px; height:8px; border-radius:50%; background:#ec4899;"></div>
-                                        <div style="width:24px; height:4px; background:#475569; border-radius:2px;"></div>
-                                    </div>
-                                    <div style="width:100%; height:45px; background:linear-gradient(45deg, #f59e0b, #ec4899); border-radius:4px;"></div>
-                                    <div style="width:100%; height:8px; background:#0ea5e9; border-radius:2px; margin-top:4px;"></div>
-                                </div>
-                            </div>
+                            <div class="mini-phone"><div class="mini-notch"></div><div class="mini-phone-body"><div style="width:100%; height:45px; background:linear-gradient(45deg, #f59e0b, #ec4899); border-radius:4px;"></div></div></div>
                         </div>
                         <h3>تبلیغ و پروموت محتوا در اینستاگرام</h3>
-                        <p>با پروموت پست‌ها و محتوای منتخب اینستاگرام، پیام برند خود را فراتر از دنبال‌کنندگان فعلی منتشر کنید. هدف‌گذاری دقیق بر اساس ویژگی‌های کاربران امکان‌پذیر است.</p>
+                        <p>پیام برند خود را فراتر از دنبال‌کنندگان فعلی منتشر کرده و بازار هدف خود را با ابزارهای دقیق توسعه دهید.</p>
                     </div>
 
-                    <!-- بنر آمار ایپسوس -->
                     <div class="stats-banner-card">
-                        <div class="stats-orb">
-                            <strong>۸۳٪</strong>
-                            <span>کاربران جهان</span>
-                        </div>
+                        <div class="stats-orb"><strong>۸۳٪</strong><span>کاربران جهان</span></div>
                         <div class="stats-content">
                             <h4><i class="fa-solid fa-chart-pie"></i> آمار قابل توجه جهانی</h4>
-                            <p>طبق نظرسنجی گوگل و <strong>ایپسوس</strong>، ۸۳٪ مصرف‌کنندگان در سطح جهان اعلام کرده‌اند که روزانه از گوگل و/یا یوتیوب استفاده می‌کنند؛ آماری که نشان‌دهنده ظرفیت بالای این دو پلتفرم است.</p>
+                            <p>طبق نظرسنجی گوگل و <strong>ایپسوس</strong>، ۸۳٪ مصرف‌کنندگان در سطح جهان اعلام کرده‌اند که روزانه از گوگل و/یا یوتیوب استفاده می‌کنند.</p>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
 
-        <!-- بخش گوگل پارتنر (Google Premier Partner) -->
+        <!-- بخش گوگل پارتنر -->
         <section class="google-partner-section">
             <div class="container partner-container">
-                
                 <div class="partner-content">
                     <h2>می‌دانستید شبکه تبلیغات ایران همکار رسمی گوگل است؟</h2>
-                    <p>
-                        ما با افتخار نشان <strong>Google Premier Partner</strong> را دریافت کرده‌ایم. این سطح از همکاری تنها به ۳٪ از برترین آژانس‌های تبلیغاتی در هر کشور اعطا می‌شود که توانسته‌اند بالاترین استانداردهای گوگل را در بهینه‌سازی کمپین‌ها، تخصص فنی و رشد کسب‌وکار مشتریان رعایت کنند. 
-                        به عنوان یک پارتنر پریمیر، ما به پشتیبانی مستقیم و اختصاصی تیم گوگل دسترسی داریم که به معنای رفع سریع‌تر موانع، استفاده از جدیدترین ابزارهای آزمایشی پیش از عرضه عمومی و تضمین بالاترین سطح بازدهی برای بودجه تبلیغاتی شماست.
-                    </p>
+                    <p>ما با افتخار نشان <strong>Google Premier Partner</strong> را دریافت کرده‌ایم. این سطح از همکاری تنها به ۳٪ از برترین آژانس‌های تبلیغاتی در هر کشور اعطا می‌شود که توانسته‌اند بالاترین استانداردهای گوگل را رعایت کنند.</p>
                 </div>
-
                 <div class="partner-badge-wrapper">
-                    <!-- بج CSS خالص بر اساس تصویر نمونه -->
                     <div class="google-premier-badge">
-                        <div class="g-badge-left">
-                            <span>PREMIER</span>
-                        </div>
+                        <div class="g-badge-left"><span>PREMIER</span></div>
                         <div class="g-badge-right">
-                            <div class="g-badge-google">
-                                <span style="color: #4285F4;">G</span><span style="color: #EA4335;">o</span><span style="color: #FBBC05;">o</span><span style="color: #4285F4;">g</span><span style="color: #34A853;">l</span><span style="color: #EA4335;">e</span>
-                            </div>
-                            <div class="g-badge-partner">
-                                Partner
-                            </div>
+                            <div class="g-badge-google"><span style="color: #4285F4;">G</span><span style="color: #EA4335;">o</span><span style="color: #FBBC05;">o</span><span style="color: #4285F4;">g</span><span style="color: #34A853;">l</span><span style="color: #EA4335;">e</span></div>
+                            <div class="g-badge-partner">Partner</div>
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
 
@@ -708,65 +505,55 @@
         <section class="openai-partner-section">
             <div class="container partner-container">
                 
-                <!-- سمت المان سه‌بعدی ChatGPT -->
+                <!-- سمت چپ: ماکاپ سه‌بعدی چت‌جی‌پی‌تی همراه با نمایش تبلیغ -->
                 <div class="chatgpt-mockup-wrapper">
                     <div class="chatgpt-mockup">
-                        
                         <div class="cg-sidebar">
                             <div class="cg-nav"><i class="fa-solid fa-plus"></i> New chat</div>
                             <div class="cg-history-item"><i class="fa-regular fa-message"></i> بهترین برند کیف...</div>
-                            <div class="cg-history-item"><i class="fa-regular fa-message"></i> معرفی تبلیغات دیجیتال</div>
                         </div>
-                        
                         <div class="cg-main">
                             <div class="cg-header">ChatGPT 4o</div>
                             <div class="cg-chat-area">
-                                
                                 <div class="cg-message">
                                     <div class="cg-avatar user-bg">U</div>
                                     <div style="padding-top: 2px;">بهترین برند کیف چرم ایرانی چیست؟</div>
                                 </div>
-                                
                                 <div class="cg-message">
                                     <div class="cg-avatar openai-bg">
-                                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2057 5.9847 5.9847 0 0 0 3.989-2.9001 6.0557 6.0557 0 0 0-.7388-7.0731zM13.2599 22.5002c-1.229 0-2.4276-.4603-3.3444-1.272l.081-.0447 4.8872-2.8253a.9082.9082 0 0 0 .4527-.7882V7.6163l1.8344 1.0592c.0047.0047.0047.0094.0047.0141v7.7126c-.0019 1.487-1.1278 2.7667-2.6105 3.0975a6.002 6.002 0 0 1-1.3051.1005zm-6.1084-2.8017c-.6146-.6145-1.0267-1.4274-1.1873-2.3155l.0763.0447 4.8872 2.8253a.9054.9054 0 0 0 .9077 0l8.6015-4.966v2.1182c.0012.008.0012.015 0 .0223-1.288 2.2312-4.148 3.01-6.3792 1.722L4.6293 15.5414a5.9554 5.9554 0 0 1-1.118-1.0772zm-2.5802-5.7876c.0154-1.2293.4757-2.4279 1.2874-3.3448l-.0447.081L3.0387 5.76a.91.91 0 0 0-.7882.4526v9.9318l1.0592-1.8345c.0047-.0047.0094-.0047.0141-.0047h7.7127c1.487-.0019 2.7666 1.1277 3.0974 2.6104a6.002 6.002 0 0 1-.581 2.378L4.6293 13.9109zM18.8475 3.818c.6146.6146 1.0268 1.4275 1.1874 2.3156l-.0763-.0448-4.8872-2.8253a.9054.9054 0 0 0-.9077 0L5.562 8.2295V6.1112c-.0012-.0079-.0012-.015 0-.0223 1.288-2.2313 4.148-3.01 6.3792-1.722l9.0223 5.2114a5.9554 5.9554 0 0 1 .472-3.4116zm2.5802 5.7876c-.0154 1.2293-.4757 2.4279-1.2874 3.3448l.0447-.081 2.8253 4.8871a.91.91 0 0 0 .7882-.4526V7.3722L21.7393 9.2067c-.0047.0047-.0094.0047-.0141.0047h-7.7127c-1.487.0019-2.7666-1.1277-3.0974-2.6104a6.002 6.002 0 0 1 .581-2.378L19.3491 9.698a6.002 6.002 0 0 1 .581 2.378zM10.74 1.4998c1.229 0 2.4276.4603 3.3444 1.272l-.081.0447-4.8872 2.8253a.9082.9082 0 0 0-.4527.7882v9.9318l-1.8344-1.0592c-.0047-.0047-.0047-.0094-.0047-.0141V7.5756c.0019-1.487 1.1278-2.7667 2.6105-3.0975a6.002 6.002 0 0 1 1.3051-.1005zM12 15.65c-2.0152 0-3.65-1.6348-3.65-3.65S9.9848 8.35 12 8.35s3.65 1.6348 3.65 3.65-1.6348 3.65-3.65 3.65z"/></svg>
+                                        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2057 5.9847 5.9847 0 0 0 3.989-2.9001 6.0557 6.0557 0 0 0-.7388-7.0731z"/></svg>
                                     </div>
                                     <div style="flex: 1; padding-top: 2px;">
-                                        <p style="margin-bottom: 8px;">در بازار ایران برندهای مختلفی برای چرم طبیعی وجود دارد...</p>
+                                        <p style="margin-bottom: 8px;">برندهای متعددی در زمینه چرم طبیعی فعال هستند...</p>
                                         
-                                        <!-- جعبه تبلیغات داخل چت -->
+                                        <!-- کارت تبلیغاتی داخل چت چت‌جی‌پی‌تی -->
                                         <div class="cg-ad-box">
-                                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                                                <h4 style="font-size: 0.8rem; color: #10b981; font-weight: bold; margin: 0;">کیف چرم دست‌دوز - رتبه ۱</h4>
-                                                <span style="font-size: 0.6rem; color: #a1a1aa; border: 1px solid #52525b; padding: 1px 6px; border-radius: 4px;">Sponsored</span>
+                                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                                                <h4 style="font-size: 0.75rem; color: #10b981; font-weight: bold; margin: 0;">کیف چرم دست‌دوز لوکس</h4>
+                                                <span style="font-size: 0.55rem; color: #a1a1aa; border: 1px solid #52525b; padding: 1px 4px; border-radius: 3px;">Sponsored</span>
                                             </div>
-                                            <p style="font-size: 0.75rem; color: #d1d5db; margin-bottom: 8px; line-height: 1.5;">مشاهده جدیدترین مدل‌های کیف چرم طبیعی با ارسال رایگان و تخفیف ویژه فروش تابستانه.</p>
-                                            <div style="color: #60a5fa; font-size: 0.75rem; font-weight: bold;"><i class="fa-solid fa-arrow-up-right-from-square"></i> مشاهده وب‌سایت</div>
+                                            <p style="font-size: 0.7rem; color: #d1d5db; margin-bottom: 6px;">ارسال رایگان و تخفیف ویژه خرید آنلاین.</p>
+                                            <div style="color: #60a5fa; font-size: 0.7rem; font-weight: bold;"><i class="fa-solid fa-arrow-up-right-from-square"></i> مشاهده وب‌سایت</div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
                             <div class="cg-input-area">
-                                <div class="cg-input-box">
-                                    <span>Message ChatGPT...</span>
-                                    <i class="fa-solid fa-circle-arrow-up" style="color: #52525b; font-size: 1.1rem;"></i>
-                                </div>
+                                <div class="cg-input-box"><span>Message ChatGPT...</span><i class="fa-solid fa-circle-arrow-up" style="color: #52525b;"></i></div>
                             </div>
                         </div>
-
                     </div>
                 </div>
 
-                <!-- سمت متن توضیحات -->
-                <div class="partner-content" style="padding-right: 20px;">
+                <!-- سمت راست: توضیحات + لوگوی OpenAI Select Partner دقیقاً مشابه تصویر ارسالی -->
+                <div class="partner-content" style="padding-right: 10px;">
                     <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: #34d399; border-color: #34d399;">به‌زودی ...</span>
                     <h2>تبلیغات هوشمند در ChatGPT؛ آینده بازاریابی دیجیتال</h2>
                     <p>
-                        مفتخریم اعلام کنیم که شبکه تبلیغات ایران در حال دریافت تاییدیه رسمی <strong>OpenAI Select Partner</strong> است. با فعال شدن این قابلیت به زودی، شما می‌توانید تبلیغات کسب‌وکار خود را مستقیماً در پاسخ‌های هوش مصنوعی ChatGPT به کاربران ایرانی و جهانی نمایش دهید. این یک فرصت بی‌نظیر برای ارتباط با مخاطبان در تعاملی‌ترین بستر جهان است.
+                        مفتخریم اعلام کنیم که شبکه تبلیغات ایران در حال دریافت تاییدیه رسمی همکاری با OpenAI است. با فعال شدن این قابلیت به زودی، شما می‌توانید تبلیغات کسب‌وکار خود را مستقیماً در پاسخ‌های هوش مصنوعی ChatGPT به مخاطبان نمایش دهید.
                     </p>
                     
-                    <!-- بج OpenAI Select Partner CSS خالص -->
+                    <!-- لوگوی OpenAI Select Partner طراحی شده با CSS خالص مطابق عکس ارسالی کاربر -->
                     <div class="openai-partner-badge">
                         <svg viewBox="0 0 24 24" fill="currentColor">
                             <path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2057 5.9847 5.9847 0 0 0 3.989-2.9001 6.0557 6.0557 0 0 0-.7388-7.0731zM13.2599 22.5002c-1.229 0-2.4276-.4603-3.3444-1.272l.081-.0447 4.8872-2.8253a.9082.9082 0 0 0 .4527-.7882V7.6163l1.8344 1.0592c.0047.0047.0047.0094.0047.0141v7.7126c-.0019 1.487-1.1278 2.7667-2.6105 3.0975a6.002 6.002 0 0 1-1.3051.1005zm-6.1084-2.8017c-.6146-.6145-1.0267-1.4274-1.1873-2.3155l.0763.0447 4.8872 2.8253a.9054.9054 0 0 0 .9077 0l8.6015-4.966v2.1182c.0012.008.0012.015 0 .0223-1.288 2.2312-4.148 3.01-6.3792 1.722L4.6293 15.5414a5.9554 5.9554 0 0 1-1.118-1.0772zm-2.5802-5.7876c.0154-1.2293.4757-2.4279 1.2874-3.3448l-.0447.081L3.0387 5.76a.91.91 0 0 0-.7882.4526v9.9318l1.0592-1.8345c.0047-.0047.0094-.0047.0141-.0047h7.7127c1.487-.0019 2.7666 1.1277 3.0974 2.6104a6.002 6.002 0 0 1-.581 2.378L4.6293 13.9109zM18.8475 3.818c.6146.6146 1.0268 1.4275 1.1874 2.3156l-.0763-.0448-4.8872-2.8253a.9054.9054 0 0 0-.9077 0L5.562 8.2295V6.1112c-.0012-.0079-.0012-.015 0-.0223 1.288-2.2313 4.148-3.01 6.3792-1.722l9.0223 5.2114a5.9554 5.9554 0 0 1 .472-3.4116zm2.5802 5.7876c-.0154 1.2293-.4757 2.4279-1.2874 3.3448l.0447-.081 2.8253 4.8871a.91.91 0 0 0 .7882-.4526V7.3722L21.7393 9.2067c-.0047.0047-.0094.0047-.0141.0047h-7.7127c-1.487.0019-2.7666-1.1277-3.0974-2.6104a6.002 6.002 0 0 1 .581-2.378L19.3491 9.698a6.002 6.002 0 0 1 .581 2.378zM10.74 1.4998c1.229 0 2.4276.4603 3.3444 1.272l-.081.0447-4.8872 2.8253a.9082.9082 0 0 0-.4527.7882v9.9318l-1.8344-1.0592c-.0047-.0047-.0047-.0094-.0047-.0141V7.5756c.0019-1.487 1.1278-2.7667 2.6105-3.0975a6.002 6.002 0 0 1 1.3051-.1005zM12 15.65c-2.0152 0-3.65-1.6348-3.65-3.65S9.9848 8.35 12 8.35s3.65 1.6348 3.65 3.65-1.6348 3.65-3.65 3.65z"/>
@@ -791,27 +578,27 @@
                     <div class="service-card">
                         <div class="threed-icon-container"><i class="fa-brands fa-google threed-icon" style="color: #4285F4;"></i></div>
                         <h3>تبلیغات در موتور جستجوی گوگل</h3>
-                        <p>تبلیغات گوگل (Google Ads) ابزاری کارآمد است که کسب‌وکار شما را دقیقاً در لحظه‌ای که کاربران به دنبال محصولات یا خدمات مرتبط هستند، در صدر نتایج نمایش می‌دهد.</p>
+                        <p>تبلیغات گوگل (Google Ads) ابزاری کارآمد است که کسب‌وکار شما را دقیقاً در لحظه‌ای که کاربران به دنبال محصولات یا خدمات هستند، نمایش می‌دهد.</p>
                     </div>
                     <div class="service-card">
                         <div class="threed-icon-container"><i class="fa-brands fa-youtube threed-icon" style="color: #FF0000;"></i></div>
                         <h3>تبلیغات در ویدئوهای یوتیوب</h3>
-                        <p>بزرگ‌ترین پایگاه ویدئویی جهان با قالب‌های متنوع تبلیغاتی برای تثبیت نام برند در ذهن جامعه هدف به شکلی جذاب و تاثیرگذار.</p>
+                        <p>تثبیت نام برند در ذهن مخاطب با پلتفرم ویدئویی بزرگ جهان.</p>
                     </div>
                     <div class="service-card">
                         <div class="threed-icon-container"><i class="fa-brands fa-telegram threed-icon" style="color: #229ED9;"></i></div>
                         <h3>تبلیغات در کانال‌های تلگرام</h3>
-                        <p>انتشار پیام‌های برند در کانال‌های بزرگ و تخصصی با تکیه بر بازدهی بی‌درنگ پیام‌رسان‌ها و جذب ورودی باکیفیت.</p>
+                        <p>انتشار پیام‌های برند در کانال‌های بزرگ و تخصصی.</p>
                     </div>
                     <div class="service-card">
                         <div class="threed-icon-container"><i class="fa-brands fa-instagram threed-icon" style="color: #E1306C;"></i></div>
                         <h3>تبلیغات در اینستاگرام</h3>
-                        <p>استفاده از استوری، پست و ریلز با طراحی محتوای ویدیویی گیرا متناسب با جامعه دموگرافیک کاربران ایرانی.</p>
+                        <p>استفاده از استوری، پست و ریلز متناسب با جامعه ایرانی.</p>
                     </div>
                     <div class="service-card">
                         <div class="threed-icon-container" style="border-color: rgba(255,255,255,0.2);"><i class="fa-solid fa-bullhorn threed-icon" style="color: #fff;"></i></div>
                         <h3>تبلیغات در شبکه اجتماعی X</h3>
-                        <p>بستری گفتگومحور و جریان‌ساز برای مطرح شدن در ترندها، مدیریت بحران و تثبیت اقتدار برند در حوزه‌های تخصصی.</p>
+                        <p>بستری گفتگومحور و جریان‌ساز برای مطرح شدن در ترندها.</p>
                     </div>
                 </div>
             </div>
@@ -828,7 +615,7 @@
                 <div class="pricing-meta">
                     <div style="font-size: 0.92rem; color: #e2e8f0;">
                         <i class="fa-solid fa-bolt" style="color: var(--neon-cyan);"></i>
-                        <strong>تضمین بهترین قیمت:</strong> پایین‌ترین و اقتصادی‌ترین تعرفه اجرای کمپین‌های بین‌المللی برای برندهای ایرانی.
+                        <strong>تضمین بهترین قیمت:</strong> پایین‌ترین و اقتصادی‌ترین تعرفه اجرای کمپین‌ها.
                     </div>
                     <div class="payment-badges">
                         <span class="pay-badge"><i class="fa-solid fa-coins"></i> تتر و ترون (USDT / TRX)</span>
@@ -836,7 +623,7 @@
                 </div>
                 <div class="pricing-fee-note">
                     <i class="fa-solid fa-circle-info"></i>
-                    مبلغ کل شامل شارژ حساب به‌اضافه ۱۰٪ هزینه کارمزد مدیریت و اجرای کمپین است. (مثلاً ۵۰ دلار شارژ + ۵ دلار کارمزد = ۵۵ دلار نهایی). این مجموعه <strong>کمترین نرخ هزینه تبلیغات در فضای مجازی</strong> را ارائه می‌دهد.
+                    مبلغ کل شامل شارژ حساب به‌اضافه ۱۰٪ هزینه کارمزد مدیریت و اجرای کمپین است.
                 </div>
 
                 <div class="pricing-grid">
@@ -844,12 +631,11 @@
                         <div>
                             <div class="plan-title">پکیج استارتر</div>
                             <div class="plan-price">$55</div>
-                            <div class="plan-fee-text">معادل ۵۰ دلار شارژ + ۵ دلار کارمزد ۱۰٪</div>
-                            <div class="plan-duration">حداقل شارژ مناسب شروع</div>
+                            <div class="plan-fee-text">معادل ۵۰ دلار شارژ + ۵ دلار کارمزد</div>
+                            <div class="plan-duration">حداقل شارژ</div>
                             <ul class="plan-features">
-                                <li><i class="fa-solid fa-check"></i> مناسب تست بازار و ارزیابی بازخورد</li>
-                                <li><i class="fa-solid fa-check"></i> محاسبه دقیق بر اساس کلیک یا بازدید</li>
-                                <li><i class="fa-solid fa-check"></i> راه‌اندازی سریع کمپین تبلیغاتی</li>
+                                <li><i class="fa-solid fa-check"></i> مناسب تست بازار</li>
+                                <li><i class="fa-solid fa-check"></i> راه‌اندازی سریع</li>
                             </ul>
                         </div>
                         <a href="dashboard.html" class="btn btn-secondary">ورود به پنل و شارژ</a>
@@ -858,27 +644,25 @@
                         <div>
                             <div class="plan-title">پکیج رشد تجاری</div>
                             <div class="plan-price">$275</div>
-                            <div class="plan-fee-text">معادل ۲۵۰ دلار شارژ + ۲۵ دلار کارمزد ۱۰٪</div>
-                            <div class="plan-duration">مناسب حداقل ۶ ماه نمایش</div>
+                            <div class="plan-fee-text">معادل ۲۵۰ دلار شارژ + ۲۵ دلار کارمزد</div>
+                            <div class="plan-duration">حداقل ۶ ماه</div>
                             <ul class="plan-features">
-                                <li><i class="fa-solid fa-check"></i> حضور مستمر در پلتفرم‌ها</li>
-                                <li><i class="fa-solid fa-check"></i> بهینه‌سازی هدفمند کلمات و مخاطبان</li>
-                                <li><i class="fa-solid fa-check"></i> مدیریت بودجه بر پایه بالاترین نرخ تبدیل</li>
+                                <li><i class="fa-solid fa-check"></i> حضور مستمر</li>
+                                <li><i class="fa-solid fa-check"></i> بهینه‌سازی کلمات</li>
                             </ul>
                         </div>
                         <a href="dashboard.html" class="btn btn-secondary">ورود به پنل و شارژ</a>
                     </div>
                     <div class="pricing-card featured">
-                        <span class="popular-tag">پیشنهاد ویژه برندها</span>
+                        <span class="popular-tag">پیشنهاد ویژه</span>
                         <div>
                             <div class="plan-title">پکیج حرفه‌ای</div>
                             <div class="plan-price">$550</div>
-                            <div class="plan-fee-text">معادل ۵۰۰ دلار شارژ + ۵۰ دلار کارمزد ۱۰٪</div>
-                            <div class="plan-duration">مناسب ۶ تا ۱۰ ماه نمایش</div>
+                            <div class="plan-fee-text">معادل ۵۰۰ دلار شارژ + ۵۰ دلار کارمزد</div>
+                            <div class="plan-duration">۶ تا ۱۰ ماه</div>
                             <ul class="plan-features">
-                                <li><i class="fa-solid fa-check"></i> اجرای کمپین‌های ترکیبی چندکاناله</li>
-                                <li><i class="fa-solid fa-check"></i> پایش مستمر و ریتارگتینگ مخاطبان هدف</li>
-                                <li><i class="fa-solid fa-check"></i> پشتیبانی اختصاصی و بهینه‌سازی نرخ کلیک</li>
+                                <li><i class="fa-solid fa-check"></i> کمپین‌های ترکیبی</li>
+                                <li><i class="fa-solid fa-check"></i> پشتیبانی اختصاصی</li>
                             </ul>
                         </div>
                         <a href="dashboard.html" class="btn btn-primary">ورود به پنل و شارژ</a>
@@ -887,12 +671,11 @@
                         <div>
                             <div class="plan-title">پکیج سازمانی VIP</div>
                             <div class="plan-price">$1,100</div>
-                            <div class="plan-fee-text">معادل ۱۰۰۰ دلار شارژ + ۱۰۰ دلار کارمزد ۱۰٪</div>
-                            <div class="plan-duration">مناسب ۱ سال نمایش</div>
+                            <div class="plan-fee-text">معادل ۱۰۰۰ دلار شارژ + ۱۰۰ دلار کارمزد</div>
+                            <div class="plan-duration">۱ ساله</div>
                             <ul class="plan-features">
-                                <li><i class="fa-solid fa-check"></i> پوشش کامل و قدرتمند تبلیغاتی ۱ ساله</li>
-                                <li><i class="fa-solid fa-check"></i> استراتژی اختصاصی متناسب با قیف فروش</li>
-                                <li><i class="fa-solid fa-check"></i> مدیریت VIP و اولویت در پشتیبانی مستقیم</li>
+                                <li><i class="fa-solid fa-check"></i> پوشش کامل تبلیغاتی</li>
+                                <li><i class="fa-solid fa-check"></i> مدیریت VIP</li>
                             </ul>
                         </div>
                         <a href="dashboard.html" class="btn btn-secondary">ورود به پنل و شارژ</a>
@@ -909,12 +692,9 @@
                     <p>هویت و مأموریت شبکه تبلیغات ایران</p>
                 </div>
                 <div class="about-box">
-                    <p><strong>شبکه تبلیغات ایران</strong> با هدف توسعه بازار برندهای ایرانی و ایجاد فرصت‌های جدید برای حضور مؤثر کسب‌وکارهای داخلی در عرصه بین‌المللی، راهکارهای جامع، یکپارچه و هوشمند بازاریابی و تبلیغات دیجیتال را در پلتفرم‌های بین‌المللی ارائه می‌کند. این مجموعه با بهره‌گیری از ظرفیت‌های گسترده تبلیغات آنلاین، ابزارهای نوین تحلیل داده و شناخت دقیق رفتار مخاطبان ایرانی، تلاش می‌کند ارتباطی مؤثر میان برندها، مشتریان بالقوه و بازارهای هدف ایجاد کند و مسیر تبدیل مخاطب به مشتری وفادار را هموار سازد.</p>
+                    <p><strong>شبکه تبلیغات ایران</strong> با هدف توسعه بازار برندهای ایرانی و ایجاد فرصت‌های جدید برای حضور مؤثر کسب‌وکارهای داخلی در عرصه بین‌المللی، راهکارهای جامع و هوشمند بازاریابی دیجیتال را ارائه می‌کند.</p>
                     <div id="about-more" class="about-more-content">
-                        <p>مقر اصلی شبکه تبلیغات ایران در شهر دبی، امارات متحده عربی قرار دارد؛ شهری که به‌عنوان یکی از مهم‌ترین شاهراه‌های اقتصادی، تجاری و ارتباطی جهان، نقطه اتصال بازارهای خاورمیانه، آسیا، اروپا و آفریقا به شمار می‌رود. استقرار در این مرکز تجاری بین‌المللی، امکان بهره‌مندی از ظرفیت‌های اقتصادی، زیرساخت‌های ارتباطی و فرصت‌های همکاری فرامرزی را فراهم کرده و بستری مناسب برای توسعه خدمات تبلیغاتی در مقیاس بین‌المللی ایجاد می‌کند.</p>
-                        <p>رویکرد ما در اجرای کمپین‌های تبلیغاتی بر پایه شفافیت در قیمت‌گذاری، تخصیص هوشمندانه بودجه و استفاده بهینه از منابع استوار است. اعتقاد داریم تبلیغات مؤثر الزاماً به معنای صرف هزینه‌های بیشتر نیست؛ بلکه نتیجه شناخت صحیح بازار، انتخاب کانال‌های مناسب، هدف‌گذاری دقیق و مدیریت اصولی منابع مالی است. به همین دلیل، تلاش می‌کنیم با ارائه ساختارهای شفاف هزینه‌ای و مشخص کردن جایگاه هر بخش از بودجه تبلیغاتی، امکان تصمیم‌گیری آگاهانه و ارزیابی دقیق عملکرد را برای مشتریان فراهم کنیم.</p>
-                        <p>تیم تخصصی ما با بهره‌گیری از ابزارهای پیشرفته تحلیل رفتار کاربران، بررسی کلمات کلیدی، ارزیابی نرخ تبدیل، سنجش نرخ تعامل و محاسبه شاخص بازگشت سرمایه (ROI)، عملکرد کمپین‌ها را به‌صورت مستمر پایش و بهینه‌سازی می‌کند. هدف این فرآیند، شناسایی اثربخش‌ترین مسیرهای دسترسی به مخاطبان و جلوگیری از هدررفت بودجه در کانال‌های کم‌بازده است.</p>
-                        <p>در شبکه تبلیغات ایران، هر کمپین یک سرمایه‌گذاری هدفمند برای رشد کسب‌وکار محسوب می‌شود. ما تلاش می‌کنیم با تلفیق دانش بازاریابی دیجیتال، فناوری‌های روز، تحلیل داده و شناخت بازارهای بین‌المللی، راهکارهایی متناسب با اهداف و ظرفیت اقتصادی هر مجموعه ارائه دهیم؛ راهکارهایی که علاوه بر افزایش دیده‌شدن برند، به توسعه بازار، جذب مشتریان جدید و ایجاد ارزش اقتصادی پایدار منجر شوند.</p>
+                        <p>مقر اصلی شبکه تبلیغات ایران در شهر دبی، امارات متحده عربی قرار دارد؛ شهری که به‌عنوان یکی از مهم‌ترین شاهراه‌های اقتصادی جهان شناخته می‌شود.</p>
                         <p><strong>شبکه تبلیغات ایران؛ پیوند هوشمند برندهای ایرانی با فرصت‌های تبلیغاتی و بازارهای بین‌المللی.</strong></p>
                     </div>
                     <button id="read-more-toggle" class="read-more-btn" onclick="toggleAboutText()">
@@ -929,25 +709,25 @@
             <div class="container">
                 <div class="contact-card">
                     <h2>ارتباط با ما</h2>
-                    <p style="color: var(--text-muted); margin-top: 10px;">جهت دریافت مشاوره رایگان، بررسی پتانسیل بازار و اجرای کمپین‌های هدفمند با کارشناسان ما در ارتباط باشید.</p>
+                    <p style="color: var(--text-muted); margin-top: 10px;">جهت دریافت مشاوره رایگان با کارشناسان ما در ارتباط باشید.</p>
                     <div class="contact-channels">
                         <a href="mailto:info@iranadsnetwork.ir" class="contact-item">
                             <div class="contact-icon-box"><i class="fa-solid fa-envelope"></i></div>
-                            <div><span>پست الکترونیکی</span><strong>info@iranadsnetwork.ir</strong></div>
+                            <div><span>ایمیل</span><strong>info@iranadsnetwork.ir</strong></div>
                         </a>
                         <a href="tel:+255744956506" class="contact-item">
                             <div class="contact-icon-box"><i class="fa-solid fa-phone"></i></div>
-                            <div><span>تماس تلفنی بین‌المللی</span><strong>+255 744 956 506</strong></div>
+                            <div><span>تماس بین‌المللی</span><strong>+255 744 956 506</strong></div>
                         </a>
                         <a href="https://maps.google.com/?q=Al+Saqr+Business+Tower,+Sheikh+Zayed+Road,+Dubai,+UAE" target="_blank" rel="noopener noreferrer" class="contact-item">
                             <div class="contact-icon-box"><i class="fa-solid fa-location-dot"></i></div>
-                            <div><span>آدرس دفتر مرکزی</span><strong style="direction: rtl;">دوبی، برج تجاری الصغر، طبقه ۳۵، واحد ۲۳</strong></div>
+                            <div><span>دفتر مرکزی</span><strong style="direction: rtl;">دوبی، برج الصغر، طبقه ۳۵</strong></div>
                         </a>
                     </div>
                     <div class="map-wrapper">
                         <iframe 
                             src="https://maps.google.com/maps?q=al-Saqr%20Business%20Tower,%20Sheikh+Zayed+Road,%20Dubai,%20UAE&t=&z=16&ie=UTF8&iwloc=&output=embed" 
-                            allowfullscreen="" loading="lazy" title="لوکیشن دفتر دبی">
+                            allowfullscreen="" loading="lazy">
                         </iframe>
                     </div>
                 </div>
@@ -955,7 +735,6 @@
         </section>
     </main>
 
-    <!-- Footer -->
     <footer>
         <div class="container" style="display: flex; flex-direction: column; align-items: center; gap: 8px;">
             <p>© تمامی حقوق محفوظ است — شبکه تبلیغات ایران</p>
