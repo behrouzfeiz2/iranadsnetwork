@@ -30,7 +30,6 @@ export async function onRequest(context) {
             const cleanEmail = email.trim().toLowerCase();
             const cleanPass = String(password);
 
-            // بررسی قوانین امنیتی رمز عبور: حداقل ۱۰ کاراکتر، حرف بزرگ، حرف کوچک و علامت
             const hasMinLen = cleanPass.length >= 10;
             const hasUpper = /[A-Z]/.test(cleanPass);
             const hasLower = /[a-z]/.test(cleanPass);
@@ -187,7 +186,9 @@ export async function onRequest(context) {
             return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
         }
 
-        // ۸. مسیرهای پنل ادمین
+        // ==========================================
+        // ۸. مسیرهای پنل ادمین (admin.html)
+        // ==========================================
         if (path === 'admin/login' && method === 'POST') {
             const { username, password } = await request.json();
             if (username === ADMIN_USER && password === ADMIN_PASS) {
@@ -245,11 +246,30 @@ export async function onRequest(context) {
                 return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
             }
 
+            // ساخت کاربر جدید توسط ادمین
             if (path === 'admin/users' && method === 'POST') {
                 const { username, email, password, initial_balance } = await request.json();
                 await env.DB.prepare(
                     'INSERT INTO users (username, email, password, balance) VALUES (?, ?, ?, ?)'
                 ).bind(username.trim(), email.trim().toLowerCase(), password.trim(), parseFloat(initial_balance) || 0).run();
+                return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
+            }
+
+            // حذف کامل کاربر و تمامی رکوردهای مرتبط در دیتابیس D1
+            if (path === 'admin/users/delete' && method === 'POST') {
+                const { user_id } = await request.json();
+                if (!user_id) {
+                    return new Response(JSON.stringify({ error: 'شناسه کاربر مشخص نشده است' }), { status: 400, headers: corsHeaders });
+                }
+
+                await env.DB.batch([
+                    env.DB.prepare('DELETE FROM deposits WHERE user_id = ?').bind(user_id),
+                    env.DB.prepare('DELETE FROM google_campaigns WHERE user_id = ?').bind(user_id),
+                    env.DB.prepare('DELETE FROM telegram_campaigns WHERE user_id = ?').bind(user_id),
+                    env.DB.prepare('DELETE FROM tickets WHERE user_id = ?').bind(user_id),
+                    env.DB.prepare('DELETE FROM users WHERE id = ?').bind(user_id)
+                ]);
+
                 return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
             }
 
