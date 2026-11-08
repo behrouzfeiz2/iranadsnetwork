@@ -301,7 +301,21 @@ export async function onRequest(context) {
 
                 return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
             }
+// ویرایش دستی موجودی توسط ادمین
+            if (path === 'admin/users/update-balance' && method === 'POST') {
+                const { user_id, new_balance } = await request.json();
+                const bal = parseFloat(new_balance);
+                if (!user_id || isNaN(bal)) {
+                    return new Response(JSON.stringify({ error: 'مقدار موجودی نامعتبر است' }), { status: 400, headers: corsHeaders });
+                }
 
+                await env.DB.prepare(
+                    'UPDATE users SET balance = ? WHERE id = ?'
+                ).bind(bal, user_id).run();
+
+                return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
+            }
+            
             if (path === 'admin/deposits/action' && method === 'POST') {
                 const { deposit_id, action } = await request.json();
                 const dep = await env.DB.prepare('SELECT * FROM deposits WHERE id = ?').bind(deposit_id).first();
