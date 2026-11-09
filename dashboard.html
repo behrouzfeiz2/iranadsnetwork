@@ -51,12 +51,33 @@
         }
 
         .nav-wrapper {
-            max-width: 1320px; margin: 0 auto; padding: 0 20px;
-            display: flex; justify-content: space-between; align-items: center; height: 72px; gap: 10px;
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 72px;
+            gap: 10px;
         }
 
         .brand-logo { font-size: 1.15rem; font-weight: 800; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 10px; white-space: nowrap; }
         .brand-logo img { width: 30px; height: 30px; filter: drop-shadow(0 0 8px var(--neon-cyan)); }
+
+        /* استایل منوی هدر (دسکتاپ و موبایل) */
+        .header-actions { position: relative; display: flex; align-items: center; }
+        .desktop-header-actions { display: flex; gap: 8px; align-items: center; }
+        .mobile-header-toggle { 
+            display: none; background: transparent; border: 1px solid rgba(255,255,255,0.2); 
+            color: #fff; font-size: 1.2rem; cursor: pointer; padding: 6px 12px; border-radius: 8px; 
+        }
+        .mobile-header-menu {
+            display: none; position: absolute; left: 0; top: 100%; margin-top: 10px;
+            background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: 12px;
+            padding: 12px; flex-direction: column; gap: 8px; min-width: 150px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5); backdrop-filter: blur(12px);
+        }
+        .mobile-header-menu.active { display: flex; }
 
         .auth-wrapper { min-height: calc(100vh - 76px); display: flex; align-items: center; justify-content: center; padding: 16px; }
 
@@ -130,7 +151,6 @@
         .sub-card { background: rgba(3, 7, 18, 0.6); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 16px; padding: 20px; transition: all 0.3s ease; width: 100%; min-width: 0; }
         .sub-card:hover { border-color: var(--neon-cyan); }
 
-        /* کارت‌های سرویس وریفای */
         .verify-card {
             background: rgba(15, 23, 42, 0.7); border: 1px solid var(--border-glow); border-radius: 16px;
             padding: 24px; display: flex; flex-direction: column; justify-content: space-between; text-align: center; transition: all 0.3s ease;
@@ -150,13 +170,14 @@
         .pill-rejected { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
 
         .address-box { background: rgba(3, 7, 18, 0.9); border: 1px dashed rgba(56, 189, 248, 0.4); padding: 12px; border-radius: 10px; font-family: monospace; font-size: 0.82rem; color: #67e8f9; direction: ltr; word-break: break-all; margin: 10px 0 0; }
-        
-        .guide-text-block { margin-top: 22px; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, 0.08); color: var(--text-muted); font-size: 0.9rem; line-height: 1.95; text-align: justify; }
-        
         .budget-summary-bar { background: rgba(6, 182, 212, 0.08); border: 1px solid rgba(6, 182, 212, 0.3); border-radius: 14px; padding: 16px 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; }
 
-        .ticket-item { background: rgba(3, 7, 18, 0.65); border: 1px solid rgba(56, 189, 248, 0.22); border-radius: 16px; padding: 18px; margin-bottom: 14px; }
-        .ticket-reply-box { margin-top: 12px; background: rgba(16, 185, 129, 0.08); border-right: 3px solid #34d399; padding: 12px 14px; border-radius: 8px; font-size: 0.88rem; color: #e2e8f0; }
+        .ticket-item { background: rgba(3, 7, 18, 0.65); border: 1px solid rgba(56, 189, 248, 0.22); border-radius: 16px; padding: 18px; margin-bottom: 16px; }
+        .ticket-chat-box { max-height: 350px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; padding-right: 6px; }
+        .chat-bubble { padding: 12px 14px; border-radius: 12px; font-size: 0.88rem; line-height: 1.7; width: fit-content; max-width: 90%; }
+        .chat-user { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); color: #cbd5e1; align-self: flex-start; border-top-right-radius: 0; }
+        .chat-admin { background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #e2e8f0; align-self: flex-end; border-top-left-radius: 0; }
+        .chat-meta { font-size: 0.7rem; opacity: 0.6; margin-bottom: 6px; font-weight: bold; }
 
         @media (max-width: 960px) {
             .dashboard-layout { grid-template-columns: minmax(0, 1fr); padding: 0 14px; margin: 16px auto; gap: 18px; }
@@ -170,6 +191,11 @@
             .nav-wrapper { padding: 0 14px; height: 64px; }
             .brand-logo { font-size: 0.95rem; }
         }
+
+        @media (max-width: 768px) {
+            .desktop-header-actions { display: none !important; }
+            .mobile-header-toggle { display: block !important; }
+        }
     </style>
 </head>
 <body>
@@ -180,38 +206,54 @@
                 <img src="favicon.png" alt="شبکه تبلیغات ایران" onerror="this.style.display='none'">
                 <span>شبکه تبلیغات ایران | پنل کاربری</span>
             </a>
-            <div style="display: flex; gap: 8px; align-items: center;">
-                <a href="index.html" class="btn btn-outline" style="padding: 7px 12px; font-size: 0.8rem;">
-                    <i class="fa-solid fa-house"></i> سایت اصلی
-                </a>
-                <button id="logout-btn" onclick="logout()" class="btn btn-outline hidden" style="padding: 7px 12px; font-size: 0.8rem; color: #f87171; border-color: rgba(248,113,113,0.3);">
-                    <i class="fa-solid fa-right-from-bracket"></i> خروج
+            
+            <div class="header-actions">
+                <div id="desktop-actions" class="desktop-header-actions hidden">
+                    <a href="index.html" class="btn btn-outline" style="padding: 7px 12px; font-size: 0.8rem;">
+                        <i class="fa-solid fa-house"></i> سایت اصلی
+                    </a>
+                    <button onclick="logout()" class="btn btn-outline" style="padding: 7px 12px; font-size: 0.8rem; color: #f87171; border-color: rgba(248,113,113,0.3);">
+                        <i class="fa-solid fa-right-from-bracket"></i> خروج
+                    </button>
+                </div>
+                
+                <button id="mobile-toggle-btn" class="mobile-header-toggle hidden" onclick="toggleMobileHeaderMenu()">
+                    <i class="fa-solid fa-ellipsis-vertical"></i>
                 </button>
+                
+                <div id="mobile-header-menu" class="mobile-header-menu">
+                    <a href="index.html" class="btn btn-outline" style="width:100%;">سایت اصلی</a>
+                    <button onclick="logout()" class="btn btn-outline" style="width:100%; color:#f87171; border-color: rgba(248,113,113,0.3);">خروج</button>
+                </div>
             </div>
         </div>
     </header>
 
+    <!-- صفحه ورود و ثبت‌نام -->
     <div id="login-view" class="auth-wrapper">
         <div class="glass-card auth-card">
             <div style="font-size: 2.3rem; color: var(--neon-cyan); margin-bottom: 8px;"><i class="fa-solid fa-user-shield"></i></div>
             <h1 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 6px;">حساب کاربری تبلیغات</h1>
             <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 18px;">وارد شوید یا با ایمیل خود حساب جدید بسازید</p>
+            
             <div class="auth-tabs">
                 <button type="button" id="tab-btn-login" class="auth-tab-btn active" onclick="switchAuthMode('login')">ورود به حساب</button>
                 <button type="button" id="tab-btn-register" class="auth-tab-btn" onclick="switchAuthMode('register')">ثبت‌نام با ایمیل</button>
             </div>
+
             <form id="form-login" onsubmit="handleUserLogin(event)">
-                <div class="form-group"><label>ایمیل یا نام کاربری</label><input type="text" id="login-identifier" class="form-input" required dir="ltr"></div>
-                <div class="form-group"><label>رمز عبور</label><input type="password" id="login-password" class="form-input" required dir="ltr"></div>
+                <div class="form-group"><label>ایمیل یا نام کاربری</label><input type="text" id="login-identifier" class="form-input" placeholder="مثلاً: you@example.com یا username" required dir="ltr"></div>
+                <div class="form-group"><label>رمز عبور</label><input type="password" id="login-password" class="form-input" placeholder="••••••••" required dir="ltr"></div>
                 <div id="login-err" style="color: #f87171; font-size: 0.85rem; margin-bottom: 14px;" class="hidden"></div>
                 <button type="submit" class="btn btn-primary" style="width: 100%;">ورود به پنل</button>
             </form>
+
             <form id="form-register" class="hidden" onsubmit="handleUserRegister(event)">
-                <div class="form-group"><label>نام کاربری دلخواه (انگلیسی)</label><input type="text" id="reg-username" class="form-input" required dir="ltr"></div>
-                <div class="form-group"><label>آدرس ایمیل</label><input type="email" id="reg-email" class="form-input" required dir="ltr"></div>
+                <div class="form-group"><label>نام کاربری دلخواه (انگلیسی)</label><input type="text" id="reg-username" class="form-input" placeholder="مثلاً: ali_ads" required dir="ltr"></div>
+                <div class="form-group"><label>آدرس ایمیل</label><input type="email" id="reg-email" class="form-input" placeholder="مثلاً: you@example.com" required dir="ltr"></div>
                 <div class="form-group">
                     <label>رمز عبور امن</label>
-                    <input type="password" id="reg-password" class="form-input" oninput="checkPasswordStrength()" placeholder="حداقل ۱۰ کاراکتر" required dir="ltr">
+                    <input type="password" id="reg-password" class="form-input" oninput="checkPasswordStrength()" placeholder="حداقل ۱۰ کاراکتر (حروف بزرگ، کوچک و علامت)" required dir="ltr">
                     <div class="pass-rules-box">
                         <div id="rule-len" class="pass-rule-item"><i class="fa-regular fa-circle"></i> حداقل ۱۰ کاراکتر</div>
                         <div id="rule-upper" class="pass-rule-item"><i class="fa-regular fa-circle"></i> شامل حرف بزرگ (A-Z)</div>
@@ -240,7 +282,7 @@
                 <li><button onclick="switchTab('google')" id="tab-google" class="tab-btn"><span><i class="fa-brands fa-google color-google" style="margin-left: 6px;"></i> کمپین گوگل</span></button></li>
                 <li><button onclick="switchTab('telegram')" id="tab-telegram" class="tab-btn"><span><i class="fa-brands fa-telegram color-telegram" style="margin-left: 6px;"></i> کمپین تلگرام</span></button></li>
                 <li><button onclick="switchTab('instagram')" id="tab-instagram" class="tab-btn"><span><i class="fa-brands fa-instagram" style="color: #E1306C; margin-left: 6px;"></i> کمپین اینستاگرام</span></button></li>
-                <li><button onclick="switchTab('verify')" id="tab-verify" class="tab-btn"><span><i class="fa-solid fa-shield-check" style="color: #a855f7; margin-left: 6px;"></i> خدمات وریفای</span></button></li>
+                <li><button onclick="switchTab('verify')" id="tab-verify" class="tab-btn"><span><i class="fa-solid fa-certificate" style="color: #a855f7; margin-left: 6px;"></i> خدمات وریفای</span></button></li>
                 <li><button onclick="switchTab('wallet')" id="tab-wallet" class="tab-btn"><span><i class="fa-solid fa-wallet" style="color: var(--neon-cyan); margin-left: 6px;"></i> کیف پول</span></button></li>
                 <li><button onclick="switchTab('tickets')" id="tab-tickets" class="tab-btn"><span><i class="fa-solid fa-headset" style="color: #34d399; margin-left: 6px;"></i> پشتیبانی</span></button></li>
             </ul>
@@ -284,10 +326,10 @@
                     </div>
 
                     <form onsubmit="submitGoogleCampaign(event)">
-                        <div class="form-group"><label>آدرس وب‌سایت مقصد (URL)</label><input type="url" id="camp-url" class="form-input" required dir="ltr"></div>
+                        <div class="form-group"><label>آدرس وب‌سایت مقصد (URL)</label><input type="url" id="camp-url" class="form-input" placeholder="مثلاً: https://yourwebsite.com" required dir="ltr"></div>
                         <div class="grid-2">
-                            <div class="form-group"><label>معرفی محصول یا خدمات شما</label><textarea id="camp-product" rows="3" class="form-input" required></textarea></div>
-                            <div class="form-group"><label>کلمات کلیدی مرتبط پیشنهادی</label><textarea id="camp-keywords" rows="3" class="form-input" required></textarea></div>
+                            <div class="form-group"><label>معرفی محصول یا خدمات شما</label><textarea id="camp-product" rows="3" class="form-input" placeholder="توضیح کوتاهی درباره مزیت محصول..." required></textarea></div>
+                            <div class="form-group"><label>کلمات کلیدی مرتبط پیشنهادی</label><textarea id="camp-keywords" rows="3" class="form-input" placeholder="کلمات را با ویرگول جدا کنید..." required></textarea></div>
                         </div>
 
                         <div class="grid-3" style="margin: 10px 0 22px;">
@@ -328,7 +370,7 @@
                         <h2 style="font-size: 1.25rem; font-weight: 800;"><i class="fa-brands fa-telegram color-telegram"></i> سفارش تبلیغات در تلگرام</h2>
                     </div>
 
-                    <div style="background: rgba(3,7,18,0.7); border: 1px solid rgba(34,158,217,0.3); padding: 14px 18px; border-radius: 12px; margin-bottom: 20px; font-size: 0.88rem; color: #f8fafc; line-height: 1.9;">
+                    <div style="background: rgba(3,7,18,0.7); border: 1px solid rgba(34,158,217,0.3); padding: 14px 18px; border-radius: 12px; margin-bottom: 20px; font-size: 0.85rem; color: #cbd5e1; line-height: 1.9;">
                         <i class="fa-solid fa-circle-info" style="color: #229ED9;"></i> پیش‌نیاز: داشتن کانال تلگرام است.<br>
                         در این سرویس، <strong>هر ۴ دلار معادل ۷۰۰ بازدید</strong> می‌باشد.<br>
                         <span style="color: #fbbf24;">نکته مهم: بعد از درخواست ایجاد کمپین، در قالب یک تیکت پشتیبانی بنر یا طراحی مورد پسند خودتان را ارسال کنید تا در آگهی استفاده شود.</span>
@@ -336,10 +378,10 @@
 
                     <form onsubmit="submitTelegramCampaign(event)">
                         <div class="grid-2">
-                            <div class="form-group"><label>آدرس کانال تلگرام شما</label><input type="text" id="tg-url" class="form-input" required dir="ltr"></div>
-                            <div class="form-group"><label>بودجه اختصاصی (دلار)</label><input type="number" step="0.1" min="4" id="tg-budget" oninput="checkTelegramBudget()" class="form-input" required dir="ltr"><div id="tg-budget-err" class="hidden" style="color: #f87171; font-size: 0.8rem; margin-top: 6px;">موجودی ناکافی است!</div></div>
+                            <div class="form-group"><label>آدرس کانال تلگرام شما</label><input type="text" id="tg-url" class="form-input" placeholder="مثلاً: https://t.me/yourchannel" required dir="ltr"></div>
+                            <div class="form-group"><label>بودجه اختصاصی (دلار)</label><input type="number" step="0.1" min="4" id="tg-budget" oninput="checkTelegramBudget()" class="form-input" placeholder="حداقل ۴ دلار" required dir="ltr"><div id="tg-budget-err" class="hidden" style="color: #f87171; font-size: 0.8rem; margin-top: 6px;">موجودی ناکافی است!</div></div>
                         </div>
-                        <div class="form-group"><label>توضیحات تکمیلی</label><textarea id="tg-desc" rows="3" class="form-input" required></textarea></div>
+                        <div class="form-group"><label>توضیحات تکمیلی</label><textarea id="tg-desc" rows="3" class="form-input" placeholder="توضیحات و متن تبلیغاتی خود را بنویسید..." required></textarea></div>
                         <button type="submit" id="tg-submit-btn" class="btn btn-primary" style="width: 100%;">ثبت کمپین تلگرام</button>
                     </form>
                 </div>
@@ -364,8 +406,8 @@
 
                     <form onsubmit="submitInstagramCampaign(event)">
                         <div class="grid-2">
-                            <div class="form-group"><label>لینک پست اینستاگرام</label><input type="url" id="ig-url" class="form-input" required dir="ltr"></div>
-                            <div class="form-group"><label>مبلغ شارژ درخواستی (حداقل ۲۰)</label><input type="number" step="0.1" min="20" id="ig-budget" oninput="calcInstagramCost()" class="form-input" required dir="ltr"></div>
+                            <div class="form-group"><label>لینک پست اینستاگرام</label><input type="url" id="ig-url" class="form-input" placeholder="مثلاً: https://instagram.com/p/..." required dir="ltr"></div>
+                            <div class="form-group"><label>مبلغ شارژ درخواستی (حداقل ۲۰)</label><input type="number" step="0.1" min="20" id="ig-budget" oninput="calcInstagramCost()" class="form-input" placeholder="مثلاً: 20" required dir="ltr"></div>
                         </div>
                         <div class="budget-summary-bar">
                             <div><span style="color: var(--text-muted); font-size: 0.9rem;">جمع مبلغ کسر شده (بودجه + کارمزد):</span> <strong id="ig-total-cost" style="font-size: 1.4rem; color: #f472b6; margin-right: 8px; direction: ltr; display: inline-block;">$0.00</strong><div id="ig-budget-err" class="hidden" style="color: #f87171; font-size: 0.8rem; margin-top: 4px;">موجودی ناکافی است!</div></div>
@@ -379,16 +421,15 @@
                 </div>
             </div>
 
-            <!-- تب خدمات وریفای (جدید) -->
+            <!-- تب خدمات وریفای -->
             <div id="content-verify" class="tab-section hidden">
                 <div class="glass-card">
                     <div style="margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 14px;">
-                        <h2 style="font-size: 1.25rem; font-weight: 800;"><i class="fa-solid fa-shield-check" style="color: #a855f7;"></i> خدمات وریفای و اشتراک پریمیوم</h2>
+                        <h2 style="font-size: 1.25rem; font-weight: 800;"><i class="fa-solid fa-certificate" style="color: #a855f7;"></i> خدمات وریفای و اشتراک پریمیوم</h2>
                         <p style="color: var(--text-muted); font-size: 0.88rem;">خرید سرویس با کسر مستقیم از موجودی کیف پول انجام می‌شود.</p>
                     </div>
 
                     <div class="grid-3">
-                        <!-- کارت 1 -->
                         <div class="verify-card">
                             <div>
                                 <i class="fa-brands fa-instagram" style="font-size: 2.5rem; color: #E1306C; margin-bottom: 12px;"></i>
@@ -399,7 +440,6 @@
                             <button onclick="purchaseVerify('اینستاگرام تیک آبی', 300)" class="btn btn-primary" style="width: 100%;">ثبت و کسر از حساب</button>
                         </div>
 
-                        <!-- کارت 2 -->
                         <div class="verify-card">
                             <div>
                                 <i class="fa-brands fa-telegram" style="font-size: 2.5rem; color: #229ED9; margin-bottom: 12px;"></i>
@@ -410,7 +450,6 @@
                             <button onclick="purchaseVerify('تلگرام پریمیوم ۳ ماهه', 15)" class="btn btn-primary" style="width: 100%;">ثبت و کسر از حساب</button>
                         </div>
 
-                        <!-- کارت 3 -->
                         <div class="verify-card">
                             <div>
                                 <i class="fa-brands fa-telegram" style="font-size: 2.5rem; color: #229ED9; margin-bottom: 12px;"></i>
@@ -421,7 +460,6 @@
                             <button onclick="purchaseVerify('تلگرام پریمیوم ۶ ماهه', 30)" class="btn btn-primary" style="width: 100%;">ثبت و کسر از حساب</button>
                         </div>
 
-                        <!-- کارت 4 -->
                         <div class="verify-card">
                             <div>
                                 <i class="fa-brands fa-telegram" style="font-size: 2.5rem; color: #229ED9; margin-bottom: 12px;"></i>
@@ -432,7 +470,6 @@
                             <button onclick="purchaseVerify('تلگرام پریمیوم ۱۲ ماهه', 60)" class="btn btn-primary" style="width: 100%;">ثبت و کسر از حساب</button>
                         </div>
 
-                        <!-- کارت 5 -->
                         <div class="verify-card">
                             <div>
                                 <i class="fa-brands fa-x-twitter" style="font-size: 2.5rem; color: #fff; margin-bottom: 12px;"></i>
@@ -444,7 +481,6 @@
                             <button onclick="purchaseVerify('اکانت X پریمیوم یکماهه + گراک', 25)" class="btn btn-primary" style="width: 100%;">ثبت و کسر از حساب</button>
                         </div>
 
-                        <!-- کارت 6 -->
                         <div class="verify-card">
                             <div>
                                 <i class="fa-solid fa-microchip" style="font-size: 2.5rem; color: #38bdf8; margin-bottom: 12px;"></i>
@@ -456,7 +492,6 @@
                             <button onclick="purchaseVerify('جمنای پرو ۱ ساله', 90)" class="btn btn-primary" style="width: 100%;">ثبت و کسر از حساب</button>
                         </div>
 
-                        <!-- کارت 7 -->
                         <div class="verify-card">
                             <div>
                                 <i class="fa-solid fa-robot" style="font-size: 2.5rem; color: #10b981; margin-bottom: 12px;"></i>
@@ -468,7 +503,6 @@
                             <button onclick="purchaseVerify('اشتراک چت‌جی‌پی‌تی پلاس ۱ ماهه', 25)" class="btn btn-primary" style="width: 100%;">ثبت و کسر از حساب</button>
                         </div>
 
-                        <!-- کارت 8 -->
                         <div class="verify-card">
                             <div>
                                 <i class="fa-solid fa-robot" style="font-size: 2.5rem; color: #10b981; margin-bottom: 12px;"></i>
@@ -486,7 +520,7 @@
                     <h3 style="font-size: 1.15rem; margin-bottom: 14px;"><i class="fa-solid fa-shield-check" style="color: #a855f7;"></i> تاریخچه خرید خدمات شما</h3>
                     <div class="table-responsive">
                         <table>
-                            <thead><tr><th>سرویس</th><th>مبلغ کسر شده</th><th>تاریخ</th><th>وضعیت</th></tr></thead>
+                            <thead><tr><th>سرویس</th><th>مبلغ کسر شده</th><th>وضعیت</th></tr></thead>
                             <tbody id="verify-tbody"></tbody>
                         </table>
                     </div>
@@ -538,20 +572,20 @@
                 </div>
             </div>
 
-            <!-- تب پشتیبانی -->
+            <!-- تب پشتیبانی (گفتگومحور) -->
             <div id="content-tickets" class="tab-section hidden">
                 <div class="glass-card">
                     <div style="margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 14px;">
-                        <h2 style="font-size: 1.25rem; font-weight: 800;"><i class="fa-solid fa-headset" style="color: #34d399;"></i> ارسال تیکت به پشتیبانی</h2>
+                        <h2 style="font-size: 1.25rem; font-weight: 800;"><i class="fa-solid fa-headset" style="color: #34d399;"></i> ثبت تیکت جدید</h2>
                     </div>
                     <form onsubmit="submitTicket(event)">
-                        <div class="form-group"><label>موضوع تیکت (مثلاً اطلاعات تلگرام پریمیوم)</label><input type="text" id="ticket-subject" class="form-input" required></div>
-                        <div class="form-group"><label>متن پیام شما</label><textarea id="ticket-message" rows="4" class="form-input" required></textarea></div>
-                        <button type="submit" class="btn btn-primary" style="width: 100%; max-width: 250px;">ثبت و ارسال تیکت</button>
+                        <div class="form-group"><label>موضوع تیکت</label><input type="text" id="ticket-subject" class="form-input" placeholder="مثلاً: ارسال اطلاعات فعال‌سازی تلگرام پریمیوم" required></div>
+                        <div class="form-group"><label>متن پیام شما</label><textarea id="ticket-message" rows="3" class="form-input" placeholder="پیام خود را بنویسید..." required></textarea></div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; max-width: 250px;">ثبت و ایجاد تیکت</button>
                     </form>
                 </div>
                 <div class="glass-card">
-                    <h3 style="font-size: 1.15rem; margin-bottom: 16px;"><i class="fa-solid fa-envelope-open-text" style="color: var(--neon-cyan);"></i> لیست تیکت‌ها</h3>
+                    <h3 style="font-size: 1.15rem; margin-bottom: 16px;"><i class="fa-solid fa-comments" style="color: var(--neon-cyan);"></i> گفتگوها و تیکت‌های شما</h3>
                     <div id="user-tickets-container"></div>
                 </div>
             </div>
@@ -561,6 +595,25 @@
 
     <script>
         let currentUser = JSON.parse(localStorage.getItem('iran_ad_user') || 'null');
+
+        // باز و بسته شدن منوی همبرگری موبایل در هدر
+        function toggleMobileHeaderMenu() {
+            const menu = document.getElementById('mobile-header-menu');
+            if(menu.classList.contains('active')) {
+                menu.classList.remove('active');
+            } else {
+                menu.classList.add('active');
+            }
+        }
+
+        // بستن منوی موبایل هنگام کلیک بیرون آن
+        document.addEventListener('click', function(event) {
+            const menu = document.getElementById('mobile-header-menu');
+            const btn = document.getElementById('mobile-toggle-btn');
+            if (menu && menu.classList.contains('active') && !menu.contains(event.target) && !btn.contains(event.target)) {
+                menu.classList.remove('active');
+            }
+        });
 
         function switchAuthMode(mode) {
             const loginForm = document.getElementById('form-login');
@@ -605,7 +658,8 @@
             if (currentUser) {
                 document.getElementById('login-view').classList.add('hidden');
                 document.getElementById('dashboard-view').classList.remove('hidden');
-                document.getElementById('logout-btn').classList.remove('hidden');
+                document.getElementById('desktop-actions').classList.remove('hidden');
+                document.getElementById('mobile-toggle-btn').classList.remove('hidden');
                 document.getElementById('ui-username').innerText = currentUser.username;
                 document.getElementById('ui-email').innerText = currentUser.email || '';
                 loadDashboardData();
@@ -706,6 +760,12 @@
             return `<span class="status-pill pill-pending">در انتظار بررسی</span>`;
         }
 
+        // تبدیل تاریخ به شمسی خوانا (اختیاری برای زیبایی)
+        function formatDate(isoString) {
+            try { return new Date(isoString).toLocaleString('fa-IR'); } 
+            catch(e) { return isoString; }
+        }
+
         async function loadDashboardData() {
             if (!currentUser) return;
             const res = await fetch(`/api/user/data?user_id=${currentUser.id}`);
@@ -739,8 +799,8 @@
             // ۴. لیست خدمات وریفای
             const vList = data.verify_services || [];
             document.getElementById('verify-tbody').innerHTML = vList.length ? vList.map(v => `
-                <tr><td style="font-weight:bold; color: #e2e8f0; white-space: nowrap;">${v.service_name}</td><td style="font-weight: 800; color: #a855f7; white-space: nowrap;">$${v.price}</td><td dir="ltr" style="font-size:0.8rem; white-space: nowrap;">${v.created_at}</td><td>${renderCampaignStatus(v.status)}</td></tr>
-            `).join('') : `<tr><td colspan="4" style="text-align: center;">هنوز سرویسی خریداری نکرده‌اید</td></tr>`;
+                <tr><td style="font-weight:bold; color: #e2e8f0; white-space: nowrap;">${v.service_name}</td><td style="font-weight: 800; color: #a855f7; white-space: nowrap;">$${v.price}</td><td>${renderCampaignStatus(v.status)}</td></tr>
+            `).join('') : `<tr><td colspan="3" style="text-align: center;">هنوز سرویسی خریداری نکرده‌اید</td></tr>`;
 
             // ۵. لیست واریزی‌ها
             const dBody = document.getElementById('deposits-tbody');
@@ -749,13 +809,41 @@
                 return `<tr><td style="white-space: nowrap;">#${d.id}</td><td style="white-space: nowrap;">${d.crypto_type}</td><td style="font-weight: 800; white-space: nowrap;">$${d.amount_usd}</td><td dir="ltr" style="font-family: monospace; font-size: 0.8rem; white-space: nowrap;">${d.tx_hash}</td><td>${statusHtml}</td></tr>`;
             }).join('') : `<tr><td colspan="5" style="text-align: center;">تراکنشی ثبت نشده است</td></tr>`;
 
-            // ۶. تیکت‌ها
+            // ۶. تیکت‌ها (رندر چت باکس)
             const tkContainer = document.getElementById('user-tickets-container');
             const tkList = data.tickets || [];
             tkContainer.innerHTML = tkList.length ? tkList.map(tk => {
                 const stBadge = tk.status === 'answered' ? `<span class="status-pill pill-approved">پاسخ داده شده</span>` : `<span class="status-pill pill-pending">در انتظار پاسخ</span>`;
-                const replyHtml = tk.admin_reply ? `<div class="ticket-reply-box"><div style="font-weight: 800; color: #34d399; margin-bottom: 4px;"><i class="fa-solid fa-reply"></i> پاسخ مدیریت:</div><div>${tk.admin_reply}</div></div>` : '';
-                return `<div class="ticket-item"><div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 8px;"><strong style="color: #fff;">#${tk.id} - ${tk.subject}</strong>${stBadge}</div><p style="font-size: 0.9rem; color: #cbd5e1; white-space: pre-wrap;">${tk.message}</p>${replyHtml}</div>`;
+                
+                let convArr = [];
+                try { convArr = JSON.parse(tk.conversation || '[]'); } catch(e){}
+                
+                let messagesHtml = convArr.map(m => {
+                    let time = formatDate(m.date);
+                    if (m.sender === 'admin') {
+                        return `<div class="chat-bubble chat-admin"><div class="chat-meta"><i class="fa-solid fa-headset"></i> پشتیبانی — ${time}</div>${m.text}</div>`;
+                    } else {
+                        return `<div class="chat-bubble chat-user"><div class="chat-meta"><i class="fa-solid fa-user"></i> شما — ${time}</div>${m.text}</div>`;
+                    }
+                }).join('');
+
+                return `
+                    <div class="ticket-item">
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px;">
+                            <strong style="color: #fff; font-size: 1.05rem;">#${tk.id} - ${tk.subject}</strong>
+                            ${stBadge}
+                        </div>
+                        
+                        <div class="ticket-chat-box">
+                            ${messagesHtml}
+                        </div>
+                        
+                        <div style="display: flex; gap: 8px; margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 12px;">
+                            <input type="text" id="reply-user-${tk.id}" class="form-input" placeholder="پاسخ جدید شما..." style="padding: 10px; font-size: 0.85rem;">
+                            <button onclick="replyToTicket(${tk.id})" class="btn btn-primary" style="padding: 10px 18px; font-size: 0.85rem;">ارسال پاسخ</button>
+                        </div>
+                    </div>
+                `;
             }).join('') : `<div style="text-align: center; color: var(--text-muted); padding: 20px;">تیکتی ثبت نکرده‌اید</div>`;
 
             updateCampTotal(); checkTelegramBudget(); calcInstagramCost();
@@ -838,6 +926,22 @@
             const data = await res.json();
             if (!res.ok) { alert(data.error); return; }
             alert('تیکت شما با موفقیت ثبت شد.'); e.target.reset(); loadDashboardData();
+        }
+
+        // تابع پاسخگویی کاربر به تیکت قبلی
+        async function replyToTicket(ticket_id) {
+            const inputEl = document.getElementById(`reply-user-${ticket_id}`);
+            const message = inputEl.value.trim();
+            if(!message) { alert('متن پیام خالی است!'); return; }
+
+            const res = await fetch('/api/user/ticket/reply', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_id: currentUser.id, ticket_id, message })
+            });
+            const data = await res.json();
+            if (!res.ok) { alert(data.error); return; }
+            inputEl.value = '';
+            loadDashboardData();
         }
 
         function copyText(elementId) { navigator.clipboard.writeText(document.getElementById(elementId).innerText); alert('آدرس کیف پول کپی شد.'); }
