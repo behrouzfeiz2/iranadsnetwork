@@ -100,21 +100,13 @@
             white-space: nowrap;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary-accent), var(--neon-cyan));
-            color: #030712;
-        }
-
+        .btn-primary { background: linear-gradient(135deg, var(--primary-accent), var(--neon-cyan)); color: #030712; }
         .btn-success { background: #10b981; color: #030712; }
         .btn-warning { background: #f59e0b; color: #030712; }
         .btn-danger { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.4); }
         .btn-danger:hover { background: rgba(239, 68, 68, 0.35); color: #fff; }
 
-        .grid-2 {
-            display: grid;
-            grid-template-columns: 340px minmax(0, 1fr);
-            gap: 24px;
-        }
+        .grid-2 { display: grid; grid-template-columns: 340px minmax(0, 1fr); gap: 24px; }
 
         .table-responsive {
             width: 100%;
@@ -129,12 +121,8 @@
         td { padding: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); vertical-align: middle; }
 
         .status-badge {
-            display: inline-block;
-            padding: 3px 10px;
-            border-radius: 999px;
-            font-size: 0.74rem;
-            font-weight: 700;
-            white-space: nowrap;
+            display: inline-block; padding: 3px 10px; border-radius: 999px;
+            font-size: 0.74rem; font-weight: 700; white-space: nowrap;
         }
         .st-pending { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
         .st-active { background: rgba(16, 185, 129, 0.15); color: #34d399; }
@@ -142,23 +130,13 @@
 
         /* پاپ‌آپ ویرایش موجودی */
         .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7); backdrop-filter: blur(5px);
+            z-index: 1000; display: flex; align-items: center; justify-content: center;
         }
-
         .modal-box {
-            background: var(--bg-card);
-            border: 1px solid var(--neon-cyan);
-            border-radius: 20px;
-            padding: 24px;
-            width: 100%;
-            max-width: 400px;
+            background: var(--bg-card); border: 1px solid var(--neon-cyan);
+            border-radius: 20px; padding: 24px; width: 100%; max-width: 400px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.8);
         }
 
@@ -302,7 +280,29 @@
             </div>
         </div>
 
-        <!-- ۴. لیست درخواست‌های کمپین اینستاگرام -->
+        <!-- ۴. لیست درخواست‌های خدمات وریفای (جدید) -->
+        <div class="glass-card">
+            <h2 style="font-size: 1.15rem; margin-bottom: 16px;">
+                <i class="fa-solid fa-shield-check" style="color: #a855f7;"></i> درخواست‌های خدمات وریفای و اشتراک پریمیوم
+            </h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>کاربر</th>
+                            <th>نام سرویس خریداری شده</th>
+                            <th>مبلغ کسر شده</th>
+                            <th>وضعیت</th>
+                            <th>عملیات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-verify-tbody"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ۵. لیست درخواست‌های کمپین اینستاگرام -->
         <div class="glass-card">
             <h2 style="font-size: 1.15rem; margin-bottom: 16px;">
                 <i class="fa-brands fa-instagram" style="color: #E1306C;"></i> درخواست‌های کمپین اینستاگرام مشتریان
@@ -315,7 +315,7 @@
                             <th>کاربر</th>
                             <th>لینک پست اینستاگرام</th>
                             <th>بودجه خالص</th>
-                            <th>کل هزینه (بودجه + کارمزد)</th>
+                            <th>کل هزینه کسر شده</th>
                             <th>وضعیت</th>
                             <th>عملیات</th>
                         </tr>
@@ -325,7 +325,7 @@
             </div>
         </div>
 
-        <!-- ۵. لیست درخواست‌های کمپین گوگل ادز -->
+        <!-- ۶. لیست درخواست‌های کمپین گوگل ادز -->
         <div class="glass-card">
             <h2 style="font-size: 1.15rem; margin-bottom: 16px;">
                 <i class="fa-brands fa-google" style="color: #4285F4;"></i> درخواست‌های کمپین گوگل ادز مشتریان
@@ -337,9 +337,8 @@
                             <th>#</th>
                             <th>کاربر</th>
                             <th>آدرس وب‌سایت</th>
-                            <th>معرفی محصول</th>
-                            <th>کلمات کلیدی پیشنهادی</th>
-                            <th>تفکیک بودجه (Search / GDN / YT)</th>
+                            <th>معرفی محصول و کلمات</th>
+                            <th>تفکیک بودجه (Search/GDN/YT)</th>
                             <th>کل بودجه</th>
                             <th>وضعیت</th>
                             <th>عملیات</th>
@@ -350,7 +349,7 @@
             </div>
         </div>
 
-        <!-- ۶. لیست درخواست‌های کمپین تلگرام -->
+        <!-- ۷. لیست درخواست‌های کمپین تلگرام -->
         <div class="glass-card">
             <h2 style="font-size: 1.15rem; margin-bottom: 16px;">
                 <i class="fa-brands fa-telegram" style="color: #229ED9;"></i> درخواست‌های کمپین تلگرام مشتریان
@@ -373,7 +372,7 @@
             </div>
         </div>
 
-        <!-- ۷. مدیریت و پاسخگویی به تیکت‌های پشتیبانی -->
+        <!-- ۸. مدیریت و پاسخگویی به تیکت‌های پشتیبانی -->
         <div class="glass-card">
             <h2 style="font-size: 1.15rem; margin-bottom: 16px;">
                 <i class="fa-solid fa-headset" style="color: #34d399;"></i> تیکت‌های پشتیبانی مشتریان و ارسال پاسخ
@@ -479,7 +478,7 @@
             document.getElementById('set-usdt').value = data.wallets.usdt || '';
             document.getElementById('set-trx').value = data.wallets.trx || '';
 
-            // ۱. جدول کاربران (همراه با دکمه حذف کاربر و ویرایش موجودی)
+            // ۱. جدول کاربران
             document.getElementById('admin-users-tbody').innerHTML = data.users.length ? data.users.map(u => `
                 <tr>
                     <td>#${u.id}</td>
@@ -525,7 +524,31 @@
                 `;
             }).join('') : `<tr><td colspan="7" style="text-align:center; color:var(--text-muted);">فیش واریزی ثبت نشده است</td></tr>`;
 
-            // ۳. جدول اینستاگرام
+            // ۳. جدول خدمات وریفای (جدید)
+            const vList = data.verify_services || [];
+            document.getElementById('admin-verify-tbody').innerHTML = vList.length ? vList.map(v => {
+                let btns = '-';
+                if (v.status === 'pending') {
+                    btns = `
+                        <div style="display: flex; gap: 6px;">
+                            <button onclick="VerifyCampaign('verify', ${v.id}, 'approve')" class="btn btn-success" style="padding: 5px 10px; font-size: 0.75rem;">تایید و تکمیل</button>
+                            <button onclick="VerifyCampaign('verify', ${v.id}, 'reject')" class="btn btn-danger" style="padding: 5px 10px; font-size: 0.75rem;">رد و عودت</button>
+                        </div>
+                    `;
+                }
+                return `
+                    <tr>
+                        <td>#${v.id}</td>
+                        <td style="color: var(--neon-blue); font-weight: 700;">${v.username}</td>
+                        <td style="font-weight: bold; color: #e2e8f0; white-space: nowrap;">${v.service_name}</td>
+                        <td style="font-weight: 800; color: #a855f7;">$${v.price}</td>
+                        <td>${formatStatusBadge(v.status)}</td>
+                        <td>${btns}</td>
+                    </tr>
+                `;
+            }).join('') : `<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">درخواست سرویس وریفای ثبت نشده است</td></tr>`;
+
+            // ۴. جدول اینستاگرام
             const igList = data.instagram_campaigns || [];
             document.getElementById('admin-instagram-tbody').innerHTML = igList.length ? igList.map(i => {
                 let btns = '-';
@@ -550,7 +573,7 @@
                 `;
             }).join('') : `<tr><td colspan="7" style="text-align:center; color:var(--text-muted);">درخواست کمپین اینستاگرام ثبت نشده است</td></tr>`;
 
-            // ۴. جدول کمپین‌های گوگل
+            // ۵. جدول گوگل
             const gList = data.google_campaigns || [];
             document.getElementById('admin-google-tbody').innerHTML = gList.length ? gList.map(c => {
                 let btns = '-';
@@ -567,17 +590,19 @@
                         <td>#${c.id}</td>
                         <td style="color: var(--neon-blue); font-weight: 700;">${c.username}</td>
                         <td dir="ltr" style="font-family: monospace; white-space: nowrap;">${c.website_url}</td>
-                        <td style="min-width: 180px;">${c.product_info || '-'}</td>
-                        <td style="min-width: 180px; color: #cbd5e1;">${c.keywords || '-'}</td>
+                        <td style="min-width: 200px; font-size: 0.8rem;">
+                            <strong>محصول:</strong> ${c.product_info || '-'}<br>
+                            <strong>کلمات:</strong> <span style="color:#cbd5e1;">${c.keywords || '-'}</span>
+                        </td>
                         <td dir="ltr" style="white-space: nowrap;">$${c.budget_search} / $${c.budget_display} / $${c.budget_youtube}</td>
                         <td style="font-weight: 800; color: #34d399;">$${c.total_budget}</td>
                         <td>${formatStatusBadge(c.status)}</td>
                         <td>${btns}</td>
                     </tr>
                 `;
-            }).join('') : `<tr><td colspan="9" style="text-align:center; color:var(--text-muted);">درخواست کمپین گوگل ثبت نشده است</td></tr>`;
+            }).join('') : `<tr><td colspan="8" style="text-align:center; color:var(--text-muted);">درخواست کمپین گوگل ثبت نشده است</td></tr>`;
 
-            // ۵. جدول کمپین‌های تلگرام
+            // ۶. جدول تلگرام
             const tgList = data.telegram_campaigns || [];
             document.getElementById('admin-telegram-tbody').innerHTML = tgList.length ? tgList.map(t => {
                 let btns = '-';
@@ -602,7 +627,7 @@
                 `;
             }).join('') : `<tr><td colspan="7" style="text-align:center; color:var(--text-muted);">درخواست کمپین تلگرام ثبت نشده است</td></tr>`;
 
-            // ۶. جدول تیکت‌های پشتیبانی
+            // ۷. جدول تیکت‌ها
             const tkList = data.tickets || [];
             document.getElementById('admin-tickets-tbody').innerHTML = tkList.length ? tkList.map(tk => `
                 <tr>
@@ -634,8 +659,7 @@
             const wallet_trx = document.getElementById('set-trx').value;
 
             const res = await fetch('/api/admin/settings/wallet', {
-                method: 'POST',
-                headers: getAdminHeaders(),
+                method: 'POST', headers: getAdminHeaders(),
                 body: JSON.stringify({ wallet_usdt, wallet_trx })
             });
             if (res.ok) alert('آدرس کیف پول‌ها با موفقیت ذخیره شد.');
@@ -649,36 +673,25 @@
             const initial_balance = document.getElementById('new-u-bal').value;
 
             const res = await fetch('/api/admin/users', {
-                method: 'POST',
-                headers: getAdminHeaders(),
+                method: 'POST', headers: getAdminHeaders(),
                 body: JSON.stringify({ username, email, password, initial_balance })
             });
             const data = await res.json();
-            if (!res.ok) {
-                alert(data.error);
-                return;
-            }
-            e.target.reset();
-            fetchAdminOverview();
+            if (!res.ok) { alert(data.error); return; }
+            e.target.reset(); fetchAdminOverview();
         }
 
         async function deleteUser(user_id, username) {
             if (!confirm(`آیا از حذف دائمی کاربر "${username}" و تمامی سوابق مالی، کمپین‌ها و تیکت‌های او مطمئن هستید؟`)) return;
 
             const res = await fetch('/api/admin/users/delete', {
-                method: 'POST',
-                headers: getAdminHeaders(),
+                method: 'POST', headers: getAdminHeaders(),
                 body: JSON.stringify({ user_id })
             });
-            const data = await res.json();
-            if (!res.ok) {
-                alert(data.error || 'خطا در حذف کاربر');
-                return;
-            }
+            if (!res.ok) { alert((await res.json()).error || 'خطا در حذف کاربر'); return; }
             fetchAdminOverview();
         }
 
-        // توابع مربوط به مدال ویرایش موجودی
         function openBalanceModal(id, username, currentBalance) {
             document.getElementById('edit-balance-id').value = id;
             document.getElementById('edit-balance-user').innerText = username;
@@ -686,78 +699,52 @@
             document.getElementById('balance-modal').classList.remove('hidden');
         }
 
-        function closeBalanceModal() {
-            document.getElementById('balance-modal').classList.add('hidden');
-        }
+        function closeBalanceModal() { document.getElementById('balance-modal').classList.add('hidden'); }
 
         async function submitEditBalance() {
             const user_id = document.getElementById('edit-balance-id').value;
             const new_balance = document.getElementById('edit-balance-input').value;
 
             const res = await fetch('/api/admin/users/update-balance', {
-                method: 'POST',
-                headers: getAdminHeaders(),
+                method: 'POST', headers: getAdminHeaders(),
                 body: JSON.stringify({ user_id, new_balance })
             });
-            const data = await res.json();
-            if (!res.ok) {
-                alert(data.error || 'خطا در ویرایش موجودی');
-                return;
-            }
-            closeBalanceModal();
-            fetchAdminOverview();
-            alert('موجودی با موفقیت تغییر کرد.');
+            if (!res.ok) { alert((await res.json()).error || 'خطا در ویرایش موجودی'); return; }
+            closeBalanceModal(); fetchAdminOverview(); alert('موجودی با موفقیت تغییر کرد.');
         }
 
         async function VerifyDeposit(deposit_id, action) {
             if (!confirm('آیا از انجام این عملیات مطمئن هستید؟')) return;
             const res = await fetch('/api/admin/deposits/action', {
-                method: 'POST',
-                headers: getAdminHeaders(),
+                method: 'POST', headers: getAdminHeaders(),
                 body: JSON.stringify({ deposit_id, action })
             });
             if (res.ok) fetchAdminOverview();
         }
 
         async function VerifyCampaign(campaign_type, campaign_id, action) {
-            const msg = action === 'approve' 
-                ? 'آیا از تایید و شروع این کمپین مطمئن هستید؟' 
-                : 'آیا از رد کردن این کمپین و بازگشت بودجه به کیف پول کاربر مطمئن هستید؟';
+            const msg = action === 'approve' ? 'آیا از تایید این مورد مطمئن هستید؟' : 'آیا از رد کردن این درخواست و بازگشت هزینه به کیف پول کاربر مطمئن هستید؟';
             if (!confirm(msg)) return;
 
             const res = await fetch('/api/admin/campaigns/action', {
-                method: 'POST',
-                headers: getAdminHeaders(),
+                method: 'POST', headers: getAdminHeaders(),
                 body: JSON.stringify({ campaign_type, campaign_id, action })
             });
-            const data = await res.json();
-            if (!res.ok) {
-                alert(data.error);
-                return;
-            }
+            if (!res.ok) { alert((await res.json()).error); return; }
             fetchAdminOverview();
         }
 
         async function sendTicketReply(ticket_id) {
             const inputEl = document.getElementById(`reply-input-${ticket_id}`);
             const admin_reply = inputEl.value.trim();
-            if (!admin_reply) {
-                alert('لطفاً متن پاسخ را وارد کنید.');
-                return;
-            }
+            if (!admin_reply) { alert('لطفاً متن پاسخ را وارد کنید.'); return; }
 
             const res = await fetch('/api/admin/tickets/reply', {
-                method: 'POST',
-                headers: getAdminHeaders(),
+                method: 'POST', headers: getAdminHeaders(),
                 body: JSON.stringify({ ticket_id, admin_reply })
             });
-            const data = await res.json();
-            if (!res.ok) {
-                alert(data.error);
-                return;
-            }
-            alert('پاسخ شما ثبت شد و در پنل کاربر قابل مشاهده است.');
-            fetchAdminOverview();
+            if (!res.ok) { alert((await res.json()).error); return; }
+            alert('پاسخ شما ثبت شد و در پنل کاربر قابل مشاهده است.'); fetchAdminOverview();
         }
 
         initAdmin();
