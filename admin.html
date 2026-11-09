@@ -37,29 +37,33 @@
         .hidden { display: none !important; }
 
         header {
-            position: sticky;
-            top: 0;
             backdrop-filter: blur(16px);
             background: rgba(3, 7, 18, 0.85);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             padding: 16px 20px;
+            position: sticky;
+            top: 0;
             z-index: 100;
         }
 
-        .container {
+        .nav-wrapper {
             max-width: 1340px;
-            width: 100%;
             margin: 0 auto;
-            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        /* ساختار کلی پنل ادمین (تب‌بندی شده) */
-        .admin-layout {
+        /* ساختار کلی پنل ادمین (تب‌بندی شده مشابه داشبورد کاربری) */
+        .admin-dashboard-layout {
+            max-width: 1340px;
+            width: 100%;
+            margin: 24px auto;
+            padding: 0 20px;
             display: grid;
             grid-template-columns: 270px minmax(0, 1fr);
             gap: 24px;
             align-items: start;
-            margin-top: 24px;
         }
 
         main { width: 100%; min-width: 0; display: grid; gap: 24px; }
@@ -84,7 +88,7 @@
             padding: 20px;
         }
 
-        .form-group { margin-bottom: 14px; text-align: right; }
+        .form-group { margin-bottom: 14px; text-align: right; width: 100%; }
         .form-group label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 6px; }
         .form-input {
             width: 100%;
@@ -142,7 +146,7 @@
         .st-active { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
         .st-rejected { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
 
-        /* استایل تیکت‌های گفتگومحور */
+        /* استایل تیکت‌های گفتگومحور در ادمین */
         .ticket-item { background: rgba(3, 7, 18, 0.65); border: 1px solid rgba(56, 189, 248, 0.22); border-radius: 16px; padding: 18px; margin-bottom: 16px; }
         .ticket-chat-box { max-height: 350px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding-right: 6px; }
         .chat-bubble { padding: 12px 14px; border-radius: 12px; font-size: 0.88rem; line-height: 1.7; width: fit-content; max-width: 90%; }
@@ -159,11 +163,9 @@
         .modal-box { background: var(--bg-card); border: 1px solid var(--neon-cyan); border-radius: 20px; padding: 24px; width: 100%; max-width: 400px; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
 
         @media (max-width: 960px) {
-            .admin-layout { grid-template-columns: minmax(0, 1fr); padding: 0 14px; margin: 16px auto; gap: 18px; }
+            .admin-dashboard-layout { grid-template-columns: minmax(0, 1fr); padding: 0 14px; margin: 16px auto; gap: 18px; }
             .grid-2 { grid-template-columns: minmax(0, 1fr); }
-            .container { padding: 0 14px; }
-            .glass-card { padding: 18px; }
-            .sidebar-menu { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 8px; padding-bottom: 6px; margin-bottom: 10px; }
+            .sidebar-menu { display: flex; overflow-x: auto; -webkit-overflow-scrolling: touch; gap: 8px; padding-bottom: 6px; }
             .sidebar-menu li { flex: 0 0 auto; }
             .tab-btn { width: auto; padding: 10px 14px; font-size: 0.85rem; gap: 8px; }
         }
@@ -172,7 +174,7 @@
 <body>
 
     <header>
-        <div class="container" style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+        <div class="nav-wrapper">
             <div style="font-size: 1.1rem; font-weight: 800; color: #fff;">
                 <i class="fa-solid fa-user-tie" style="color: var(--neon-cyan); margin-left: 6px;"></i>
                 پنل مدیریت ادمین
@@ -198,16 +200,20 @@
         </div>
     </div>
 
-    <!-- محیط اصلی پنل ادمین -->
-    <div id="admin-panel-view" class="container admin-layout hidden">
+    <!-- محیط اصلی پنل ادمین (تب‌بندی شده) -->
+    <div id="admin-panel-view" class="admin-dashboard-layout hidden">
         
         <!-- سایدبار ادمین -->
-        <aside>
+        <aside class="glass-card" style="padding: 20px;">
+            <div style="text-align: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08);">
+                <i class="fa-solid fa-shield-halved" style="font-size: 2.5rem; color: var(--neon-cyan);"></i>
+                <h3 style="margin-top: 10px; color: #fff; font-size: 1.1rem;">مدیریت کل سیستم</h3>
+            </div>
             <ul class="sidebar-menu">
-                <li><button onclick="switchAdminTab('users')" id="tab-users" class="tab-btn active"><i class="fa-solid fa-users" style="color: var(--neon-cyan); margin-left: 6px;"></i> مدیریت کاربران</button></li>
-                <li><button onclick="switchAdminTab('finances')" id="tab-finances" class="tab-btn"><i class="fa-solid fa-money-bill-transfer" style="color: #34d399; margin-left: 6px;"></i> مالی و پرداخت‌ها</button></li>
-                <li><button onclick="switchAdminTab('campaigns')" id="tab-campaigns" class="tab-btn"><i class="fa-solid fa-bullhorn" style="color: #f59e0b; margin-left: 6px;"></i> سفارشات و کمپین‌ها</button></li>
-                <li><button onclick="switchAdminTab('tickets')" id="tab-tickets" class="tab-btn"><i class="fa-solid fa-headset" style="color: #a855f7; margin-left: 6px;"></i> تیکت‌های پشتیبانی</button></li>
+                <li><button onclick="switchAdminTab('users')" id="tab-users" class="tab-btn active"><i class="fa-solid fa-users" style="color: var(--neon-cyan); margin-left: 8px;"></i> مدیریت کاربران</button></li>
+                <li><button onclick="switchAdminTab('finances')" id="tab-finances" class="tab-btn"><i class="fa-solid fa-money-bill-transfer" style="color: #34d399; margin-left: 8px;"></i> مالی و واریزی‌ها</button></li>
+                <li><button onclick="switchAdminTab('campaigns')" id="tab-campaigns" class="tab-btn"><i class="fa-solid fa-bullhorn" style="color: #f59e0b; margin-left: 8px;"></i> سفارشات و کمپین‌ها</button></li>
+                <li><button onclick="switchAdminTab('tickets')" id="tab-tickets" class="tab-btn"><i class="fa-solid fa-headset" style="color: #a855f7; margin-left: 8px;"></i> تیکت‌های پشتیبانی</button></li>
             </ul>
         </aside>
 
@@ -220,10 +226,10 @@
                     <div class="glass-card">
                         <h2 style="font-size: 1.15rem; margin-bottom: 16px;"><i class="fa-solid fa-user-plus" style="color: var(--neon-cyan);"></i> ساخت کاربر دستی</h2>
                         <form onsubmit="createNewUser(event)">
-                            <div class="form-group"><input type="text" id="new-u-name" class="form-input" placeholder="نام کاربری" required dir="ltr"></div>
-                            <div class="form-group"><input type="email" id="new-u-email" class="form-input" placeholder="ایمیل" required dir="ltr"></div>
-                            <div class="form-group"><input type="text" id="new-u-pass" class="form-input" placeholder="رمز عبور" required dir="ltr"></div>
-                            <div class="form-group"><input type="number" step="0.01" id="new-u-bal" value="0" class="form-input" placeholder="موجودی اولیه (اختیاری)" dir="ltr"></div>
+                            <div class="form-group"><input type="text" id="new-u-name" class="form-input" placeholder="نام کاربری مشتری" required dir="ltr"></div>
+                            <div class="form-group"><input type="email" id="new-u-email" class="form-input" placeholder="ایمیل مشتری" required dir="ltr"></div>
+                            <div class="form-group"><input type="text" id="new-u-pass" class="form-input" placeholder="رمز عبور کاربر" required dir="ltr"></div>
+                            <div class="form-group"><input type="number" step="0.01" id="new-u-bal" value="0" class="form-input" placeholder="موجودی اولیه (دلار)" dir="ltr"></div>
                             <button type="submit" class="btn btn-primary" style="width: 100%;">ثبت و ایجاد حساب</button>
                         </form>
                     </div>
@@ -289,6 +295,7 @@
             <!-- تب ۳: سفارشات و کمپین‌ها -->
             <div id="content-campaigns" class="tab-section hidden">
                 
+                <!-- وریفای -->
                 <div class="glass-card">
                     <h2 style="font-size: 1.15rem; margin-bottom: 16px;"><i class="fa-solid fa-shield-check" style="color: #a855f7;"></i> خدمات وریفای و اشتراک‌های خریداری شده</h2>
                     <div class="table-responsive">
@@ -308,6 +315,7 @@
                     </div>
                 </div>
 
+                <!-- اینستاگرام -->
                 <div class="glass-card">
                     <h2 style="font-size: 1.15rem; margin-bottom: 16px;"><i class="fa-brands fa-instagram" style="color: #E1306C;"></i> کمپین‌های اینستاگرام</h2>
                     <div class="table-responsive">
@@ -327,6 +335,7 @@
                     </div>
                 </div>
 
+                <!-- گوگل -->
                 <div class="glass-card">
                     <h2 style="font-size: 1.15rem; margin-bottom: 16px;"><i class="fa-brands fa-google" style="color: #4285F4;"></i> کمپین‌های گوگل ادز</h2>
                     <div class="table-responsive">
@@ -346,6 +355,7 @@
                     </div>
                 </div>
 
+                <!-- تلگرام -->
                 <div class="glass-card">
                     <h2 style="font-size: 1.15rem; margin-bottom: 16px;"><i class="fa-brands fa-telegram" style="color: #229ED9;"></i> کمپین‌های تلگرام</h2>
                     <div class="table-responsive">
