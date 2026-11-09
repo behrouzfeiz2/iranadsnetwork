@@ -22,7 +22,9 @@ export async function onRequest(context) {
         // ۱. ثبت‌نام
         if (path === 'register' && method === 'POST') {
             const { username, email, password } = await request.json();
-            if (!username || !email || !password) return new Response(JSON.stringify({ error: 'لطفاً نام کاربری، ایمیل و رمز عبور را کامل وارد کنید' }), { status: 400, headers: corsHeaders });
+            if (!username || !email || !password) {
+                return new Response(JSON.stringify({ error: 'لطفاً تمام فیلدها را وارد کنید' }), { status: 400, headers: corsHeaders });
+            }
 
             const cleanUser = username.trim();
             const cleanEmail = email.trim().toLowerCase();
@@ -34,11 +36,11 @@ export async function onRequest(context) {
             const hasSymbol = /[^A-Za-z0-9]/.test(cleanPass);
 
             if (!hasMinLen || !hasUpper || !hasLower || !hasSymbol) {
-                return new Response(JSON.stringify({ error: 'رمز عبور ضعیف است! رمز باید حداقل ۱۰ کاراکتر بوده و شامل حروف بزرگ، کوچک و علامت باشد.' }), { status: 400, headers: corsHeaders });
+                return new Response(JSON.stringify({ error: 'رمز عبور ضعیف است!' }), { status: 400, headers: corsHeaders });
             }
 
             const existing = await env.DB.prepare('SELECT id FROM users WHERE username = ? OR email = ?').bind(cleanUser, cleanEmail).first();
-            if (existing) return new Response(JSON.stringify({ error: 'این نام کاربری یا ایمیل قبلاً ثبت شده است' }), { status: 400, headers: corsHeaders });
+            if (existing) return new Response(JSON.stringify({ error: 'این نام کاربری یا ایمیل تکراری است' }), { status: 400, headers: corsHeaders });
 
             const result = await env.DB.prepare('INSERT INTO users (username, email, password, balance) VALUES (?, ?, ?, 0.0)').bind(cleanUser, cleanEmail, cleanPass).run();
             const newUser = await env.DB.prepare('SELECT id, username, email, balance FROM users WHERE id = ?').bind(result.meta.last_row_id).first();
@@ -48,13 +50,11 @@ export async function onRequest(context) {
         // ۲. ورود
         if (path === 'login' && method === 'POST') {
             const { identifier, password } = await request.json();
-            if (!identifier || !password) return new Response(JSON.stringify({ error: 'لطفاً اطلاعات ورود را کامل وارد کنید' }), { status: 400, headers: corsHeaders });
-
             const cleanId = identifier.trim();
             const cleanEmail = cleanId.toLowerCase();
 
             const user = await env.DB.prepare('SELECT id, username, email, balance FROM users WHERE (username = ? OR email = ?) AND password = ?').bind(cleanId, cleanEmail, String(password)).first();
-            if (!user) return new Response(JSON.stringify({ error: 'ایمیل/نام کاربری یا رمز عبور اشتباه است' }), { status: 401, headers: corsHeaders });
+            if (!user) return new Response(JSON.stringify({ error: 'اطلاعات ورود اشتباه است' }), { status: 401, headers: corsHeaders });
             
             return new Response(JSON.stringify({ user }), { headers: corsHeaders });
         }
@@ -89,8 +89,6 @@ export async function onRequest(context) {
         // ۴. ثبت فیش واریزی
         if (path === 'user/deposit' && method === 'POST') {
             const { user_id, amount_usd, crypto_type, tx_hash } = await request.json();
-            if (!amount_usd || amount_usd <= 0 || !tx_hash) return new Response(JSON.stringify({ error: 'لطفاً مبلغ و کد هش تراکنش را به درستی وارد کنید' }), { status: 400, headers: corsHeaders });
-
             await env.DB.prepare('INSERT INTO deposits (user_id, amount_usd, crypto_type, tx_hash) VALUES (?, ?, ?, ?)').bind(user_id, parseFloat(amount_usd), crypto_type, tx_hash.trim()).run();
             return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
         }
@@ -100,10 +98,8 @@ export async function onRequest(context) {
             const { user_id, website_url, product_info, keywords, budget_search, budget_display, budget_youtube } = await request.json();
             const total = (parseFloat(budget_search) || 0) + (parseFloat(budget_display) || 0) + (parseFloat(budget_youtube) || 0);
 
-            if (total <= 0 || !website_url || !product_info || !keywords) return new Response(JSON.stringify({ error: 'لطفاً تمام فیلدها و حداقل یکی از بودجه‌ها را وارد کنید' }), { status: 400, headers: corsHeaders });
-
             const user = await env.DB.prepare('SELECT balance FROM users WHERE id = ?').bind(user_id).first();
-            if (!user || user.balance < total) return new Response(JSON.stringify({ error: 'مجموع بودجه انتخابی از موجودی کیف پول شما بیشتر است.' }), { status: 400, headers: corsHeaders });
+            if (!user || user.balance < total) return new Response(JSON.stringify({ error: 'موجودی ناکافی است.' }), { status: 400, headers: corsHeaders });
 
             await env.DB.batch([
                 env.DB.prepare('UPDATE users SET balance = balance - ? WHERE id = ?').bind(total, user_id),
@@ -117,10 +113,8 @@ export async function onRequest(context) {
             const { user_id, channel_url, budget, description } = await request.json();
             const total = parseFloat(budget) || 0;
 
-            if (total <= 0 || !channel_url || !description) return new Response(JSON.stringify({ error: 'لطفاً فیلدها را کامل وارد کنید' }), { status: 400, headers: corsHeaders });
-
             const user = await env.DB.prepare('SELECT balance FROM users WHERE id = ?').bind(user_id).first();
-            if (!user || user.balance < total) return new Response(JSON.stringify({ error: 'بودجه وارد شده از موجودی شما بیشتر است.' }), { status: 400, headers: corsHeaders });
+            if (!user || user.balance < total) return new Response(JSON.stringify({ error: 'موجودی ناکافی است.' }), { status: 400, headers: corsHeaders });
 
             await env.DB.batch([
                 env.DB.prepare('UPDATE users SET balance = balance - ? WHERE id = ?').bind(total, user_id),
@@ -133,12 +127,9 @@ export async function onRequest(context) {
         if (path === 'user/campaign/instagram' && method === 'POST') {
             const { user_id, post_link, budget } = await request.json();
             const advBudget = parseFloat(budget) || 0;
+            const totalCost = advBudget * 2; 
 
-            if (advBudget < 20 || !post_link) return new Response(JSON.stringify({ error: 'حداقل بودجه ۲۰ دلار است.' }), { status: 400, headers: corsHeaders });
-
-            const totalCost = advBudget * 2; // ۱۰۰٪ کارمزد
             const user = await env.DB.prepare('SELECT balance FROM users WHERE id = ?').bind(user_id).first();
-            
             if (!user || user.balance < totalCost) return new Response(JSON.stringify({ error: 'موجودی ناکافی است.' }), { status: 400, headers: corsHeaders });
 
             await env.DB.batch([
@@ -148,15 +139,13 @@ export async function onRequest(context) {
             return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
         }
 
-        // ۸. خدمات وریفای (جدید)
+        // ۸. خدمات وریفای
         if (path === 'user/verify/purchase' && method === 'POST') {
             const { user_id, service_name, price } = await request.json();
             const cost = parseFloat(price);
 
-            if (!user_id || !service_name || isNaN(cost) || cost <= 0) return new Response(JSON.stringify({ error: 'اطلاعات سرویس نامعتبر است' }), { status: 400, headers: corsHeaders });
-
             const user = await env.DB.prepare('SELECT balance FROM users WHERE id = ?').bind(user_id).first();
-            if (!user || user.balance < cost) return new Response(JSON.stringify({ error: 'موجودی کیف پول برای خرید این سرویس کافی نیست.' }), { status: 400, headers: corsHeaders });
+            if (!user || user.balance < cost) return new Response(JSON.stringify({ error: 'موجودی کافی نیست.' }), { status: 400, headers: corsHeaders });
 
             await env.DB.batch([
                 env.DB.prepare('UPDATE users SET balance = balance - ? WHERE id = ?').bind(cost, user_id),
@@ -165,22 +154,38 @@ export async function onRequest(context) {
             return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
         }
 
-        // ۹. تیکت پشتیبانی
+        // ۹. سیستم تیکت پشتیبانی (ایجاد تیکت جدید)
         if (path === 'user/ticket' && method === 'POST') {
             const { user_id, subject, message } = await request.json();
             if (!subject || !message) return new Response(JSON.stringify({ error: 'موضوع و متن پیام الزامی است' }), { status: 400, headers: corsHeaders });
+            
+            const conv = JSON.stringify([{ sender: 'user', text: message.trim(), date: new Date().toISOString() }]);
+            await env.DB.prepare('INSERT INTO tickets (user_id, subject, conversation, status) VALUES (?, ?, ?, ?)').bind(user_id, subject.trim(), conv, 'open').run();
+            return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
+        }
 
-            await env.DB.prepare('INSERT INTO tickets (user_id, subject, message, status) VALUES (?, ?, ?, ?)').bind(user_id, subject.trim(), message.trim(), 'open').run();
+        // ۱۰. سیستم تیکت پشتیبانی (پاسخ کاربر به تیکت موجود)
+        if (path === 'user/ticket/reply' && method === 'POST') {
+            const { user_id, ticket_id, message } = await request.json();
+            if (!ticket_id || !message) return new Response(JSON.stringify({ error: 'متن پیام الزامی است' }), { status: 400, headers: corsHeaders });
+            
+            const tk = await env.DB.prepare('SELECT conversation FROM tickets WHERE id = ? AND user_id = ?').bind(ticket_id, user_id).first();
+            if(!tk) return new Response(JSON.stringify({ error: 'تیکت یافت نشد' }), { status: 404, headers: corsHeaders });
+            
+            let conv = JSON.parse(tk.conversation || '[]');
+            conv.push({ sender: 'user', text: message.trim(), date: new Date().toISOString() });
+            
+            await env.DB.prepare("UPDATE tickets SET conversation = ?, status = 'open' WHERE id = ?").bind(JSON.stringify(conv), ticket_id).run();
             return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
         }
 
         // ==========================================
-        // ۱۰. مسیرهای پنل ادمین
+        // مسیرهای پنل ادمین
         // ==========================================
         if (path === 'admin/login' && method === 'POST') {
             const { username, password } = await request.json();
             if (username === ADMIN_USER && password === ADMIN_PASS) return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
-            return new Response(JSON.stringify({ error: 'نام کاربری یا رمز عبور ادمین اشتباه است' }), { status: 401, headers: corsHeaders });
+            return new Response(JSON.stringify({ error: 'اطلاعات ادمین اشتباه است' }), { status: 401, headers: corsHeaders });
         }
 
         if (path.startsWith('admin/')) {
@@ -260,7 +265,6 @@ export async function onRequest(context) {
                 return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
             }
 
-            // اکشن یکپارچه برای تایید یا رد تمام درخواست‌های مالی (کمپین‌ها و خدمات)
             if (path === 'admin/campaigns/action' && method === 'POST') {
                 const { campaign_type, campaign_id, action } = await request.json();
                 let table, refundAmountField;
@@ -269,7 +273,7 @@ export async function onRequest(context) {
                 else if (campaign_type === 'telegram') { table = 'telegram_campaigns'; refundAmountField = 'budget'; }
                 else if (campaign_type === 'instagram') { table = 'instagram_campaigns'; refundAmountField = 'total_cost'; }
                 else if (campaign_type === 'verify') { table = 'verify_services'; refundAmountField = 'price'; }
-                else { return new Response(JSON.stringify({ error: 'نوع سرویس نامعتبر است' }), { status: 400, headers: corsHeaders }); }
+                else return new Response(JSON.stringify({ error: 'نوع سرویس نامعتبر است' }), { status: 400, headers: corsHeaders });
 
                 const camp = await env.DB.prepare(`SELECT * FROM ${table} WHERE id = ?`).bind(campaign_id).first();
 
@@ -284,9 +288,18 @@ export async function onRequest(context) {
                 return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
             }
 
+            // ادمین ریپلای به تیکت
             if (path === 'admin/tickets/reply' && method === 'POST') {
                 const { ticket_id, admin_reply } = await request.json();
-                await env.DB.prepare("UPDATE tickets SET admin_reply = ?, status = 'answered' WHERE id = ?").bind(admin_reply.trim(), ticket_id).run();
+                if (!ticket_id || !admin_reply) return new Response(JSON.stringify({ error: 'متن پاسخ نمی‌تواند خالی باشد' }), { status: 400, headers: corsHeaders });
+
+                const tk = await env.DB.prepare('SELECT conversation FROM tickets WHERE id = ?').bind(ticket_id).first();
+                if(!tk) return new Response(JSON.stringify({ error: 'تیکت یافت نشد' }), { status: 404, headers: corsHeaders });
+
+                let conv = JSON.parse(tk.conversation || '[]');
+                conv.push({ sender: 'admin', text: admin_reply.trim(), date: new Date().toISOString() });
+                
+                await env.DB.prepare("UPDATE tickets SET conversation = ?, status = 'answered' WHERE id = ?").bind(JSON.stringify(conv), ticket_id).run();
                 return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
             }
         }
