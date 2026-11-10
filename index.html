@@ -874,6 +874,12 @@
                 const translated = currentLanguage === 'en' ? translations[trimmed] : reverse[trimmed];
                 if (translated) node.nodeValue = value.replace(trimmed, translated);
             }
+            const aboutIntro = document.querySelector('#about .about-box > p');
+            if (aboutIntro) aboutIntro.innerHTML = currentLanguage === 'en'
+                ? '<strong>Iran Ads Network</strong> provides comprehensive, integrated, and intelligent digital marketing and advertising solutions on international platforms. Our mission is to help Iranian brands expand into global markets by combining the reach of online advertising with modern data analytics and a deep understanding of audience behavior. We connect brands with potential customers and target markets, helping turn audiences into loyal customers.'
+                : '<strong>شبکه تبلیغات ایران</strong> با هدف توسعه بازار برندهای ایرانی و ایجاد فرصت‌های جدید برای حضور مؤثر کسب‌وکارهای داخلی در عرصه بین‌المللی، راهکارهای جامع، یکپارچه و هوشمند بازاریابی و تبلیغات دیجیتال را در پلتفرم‌های بین‌المللی ارائه می‌کند. این مجموعه با بهره‌گیری از ظرفیت‌های گسترده تبلیغات آنلاین، ابزارهای نوین تحلیل داده و شناخت دقیق رفتار مخاطبان ایرانی، تلاش می‌کند ارتباطی مؤثر میان برندها، مشتریان بالقوه و بازارهای هدف ایجاد کند و مسیر تبدیل مخاطب به مشتری وفادار را هموار سازد.';
+            document.querySelectorAll('meta[property="og:title"], meta[name="twitter:title"]').forEach(m => m.content = currentLanguage === 'en' ? 'Iran Ads Network | International Digital Advertising' : 'شبکه تبلیغات ایران | تبلیغات بین‌المللی');
+            document.querySelectorAll('meta[property="og:description"], meta[name="twitter:description"]').forEach(m => m.content = currentLanguage === 'en' ? 'Targeted Google, Meta, and Telegram campaigns with transparent pricing and crypto payments.' : 'اجرای کمپین‌های هدفمند گوگل، متا و تلگرام با تعرفه شفاف و پرداخت رمزارزی.');
             document.documentElement.lang = currentLanguage;
             document.documentElement.dir = currentLanguage === 'en' ? 'ltr' : 'rtl';
             document.getElementById('language-toggle').textContent = currentLanguage === 'en' ? 'فارسی' : 'English';
