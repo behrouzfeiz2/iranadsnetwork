@@ -194,6 +194,7 @@
             <form onsubmit="handleAdminLogin(event)">
                 <div class="form-group"><input type="text" id="adm-user" class="form-input" placeholder="نام کاربری ادمین" required dir="ltr"></div>
                 <div class="form-group"><input type="password" id="adm-pass" class="form-input" placeholder="رمز عبور" required dir="ltr"></div>
+                <div id="admin-turnstile" style="display:flex;justify-content:center;margin:12px 0;"></div>
                 <div id="adm-err" style="color: #f87171; font-size: 0.85rem; margin-bottom: 12px;" class="hidden"></div>
                 <button type="submit" class="btn btn-primary" style="width: 100%;">ورود به پنل مدیریت</button>
             </form>
@@ -407,6 +408,34 @@
 
     <script>
         let adminCreds = JSON.parse(localStorage.getItem('iran_ad_admin') || 'null');
+        let adminTurnstileToken = '';
+        let adminTurnstileWidget = null;
+
+        async function initLoginCaptcha() {
+            try {
+                const response = await fetch('/api/auth/config', { cache: 'no-store' });
+                const config = await response.json();
+                if (!config.turnstile_enabled || !config.turnstile_site_key) return;
+                const script = document.createElement('script');
+                script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+                script.async = true;
+                script.defer = true;
+                script.onload = () => {
+                    adminTurnstileWidget = window.turnstile.render('#admin-turnstile', {
+                        sitekey: config.turnstile_site_key,
+                        callback: token => { adminTurnstileToken = token; },
+                        'expired-callback': () => { adminTurnstileToken = ''; },
+                        'error-callback': () => { adminTurnstileToken = ''; }
+                    });
+                };
+                document.head.appendChild(script);
+            } catch (error) { console.error('Turnstile initialization failed', error); }
+        }
+
+        function resetAdminCaptcha() {
+            adminTurnstileToken = '';
+            if (adminTurnstileWidget !== null && window.turnstile) window.turnstile.reset(adminTurnstileWidget);
+        }
 
         function switchAdminTab(tab) {
             ['users', 'finances', 'campaigns', 'tickets'].forEach(t => {
@@ -436,12 +465,13 @@
             const res = await fetch('/api/admin/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify({ username, password, turnstileToken: adminTurnstileToken })
             });
             const data = await res.json();
             if (!res.ok) {
                 errEl.innerText = data.error || 'اطلاعات ورود اشتباه است';
                 errEl.classList.remove('hidden');
+                resetAdminCaptcha();
                 return;
             }
             adminCreds = { username, password };
@@ -695,6 +725,7 @@
         }
 
         initAdmin();
+        initLoginCaptcha();
     </script>
 </body>
 </html>
