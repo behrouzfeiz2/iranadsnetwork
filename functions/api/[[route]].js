@@ -316,6 +316,9 @@ export async function onRequest(context) {
                 const { deposit_id, action } = await request.json();
                 const dep = await env.DB.prepare('SELECT * FROM deposits WHERE id = ?').bind(deposit_id).first();
                 if (action === 'approve') {
+                    if (String(dep.crypto_type).toUpperCase().includes('TRX') && !(Number(dep.amount_crypto) > 0)) {
+                        return new Response(JSON.stringify({ error: 'این واریزی ترون با نسخه قدیمی ثبت شده و مقدار TRX/معادل دلاری معتبر ندارد؛ پیش از تایید باید دستی بررسی شود.' }), { status: 400, headers: corsHeaders });
+                    }
                     await env.DB.batch([
                         env.DB.prepare("UPDATE deposits SET status = 'approved' WHERE id = ?").bind(deposit_id),
                         env.DB.prepare("UPDATE users SET balance = balance + ? WHERE id = ?").bind(dep.amount_usd, dep.user_id)
