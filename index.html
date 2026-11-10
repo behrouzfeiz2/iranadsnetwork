@@ -98,6 +98,12 @@
             padding: 6px 14px; border-radius: 8px; color: var(--neon-cyan) !important; font-weight: 600 !important;
         }
 
+        .language-toggle { border: 1px solid rgba(56,189,248,.35); background: rgba(56,189,248,.08); color: var(--neon-blue); border-radius: 9px; padding: 8px 13px; font: 700 .85rem Arial,sans-serif; cursor: pointer; margin-inline-start: 12px; }
+        html[lang="en"] body { font-family: Arial, Helvetica, sans-serif; direction: ltr; }
+        html[lang="en"] .monitor-screen, html[lang="en"] .iphone-screen { text-align: left; }
+        html[lang="en"] .partner-content p, html[lang="en"] .why-card-new p, html[lang="en"] .stats-content p { text-align: left; }
+        @media (max-width: 768px) { .language-toggle { margin-inline-start: auto; margin-inline-end: 8px; } }
+
         .menu-toggle {
             display: none; width: 40px; height: 40px; border: 1px solid rgba(56, 189, 248, 0.28);
             border-radius: 10px; background: rgba(56, 189, 248, 0.08); color: var(--neon-blue);
@@ -351,6 +357,7 @@
                 <li><a href="#contact">تماس با ما</a></li>
                 <li><a href="dashboard.html" class="nav-dashboard-btn"><i class="fa-solid fa-gauge"></i> ورود به پنل</a></li>
             </ul>
+            <button id="language-toggle" class="language-toggle" type="button" onclick="setLanguage(currentLanguage === 'fa' ? 'en' : 'fa')" aria-label="Switch language">English</button>
             <button class="menu-toggle" type="button" aria-label="منو">
                 <i class="fa-solid fa-bars"></i>
             </button>
@@ -775,7 +782,7 @@
                         </a>
                     </div>
                     <div class="map-wrapper">
-                        <iframe 
+                        <iframe id="map-frame"
                             title="موقعیت دفتر مرکزی شبکه تبلیغات ایران در دبی"
                             src="https://maps.google.com/maps?q=25.0683251,55.1450851&t=&z=16&ie=UTF8&iwloc=&output=embed" 
                             allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
@@ -795,6 +802,99 @@
 
     <!-- Scripts -->
     <script>
+
+        let currentLanguage = 'fa';
+        const translations = {
+          'شبکه تبلیغات ایران':'Iran Ads Network',
+          'خدمات ما':'Our Services','تعرفه‌ها':'Pricing','درباره ما':'About Us','تماس با ما':'Contact Us','ورود به پنل':'Client Dashboard','منو':'Menu',
+          'نسل آینده تبلیغات دیجیتال':'The Next Generation of Digital Advertising',
+          'انجام تبلیغات هدفمند در شبکه های اجتماعی برای برندهای ایرانی با به‌کارگیری دقیق‌ترین ابزارهای بازاریابی داده‌محور و هدف‌گیری مخاطبان بالقوه.':'Targeted social media advertising for Iranian brands, powered by data-driven marketing tools and precise audience targeting.',
+          'نتایج جستجوی گوگل':'Google Search Results','رتبه ۱ گوگل':'#1 on Google','خرید کیف چرم — رتبه ۱ گوگل | چرم طبیعی دست‌دوز':'Buy Leather Bags — #1 on Google | Handmade Genuine Leather',
+          'کلکسیون جدید کیف چرم طبیعی مردانه و زنانه با ضمانت اصالت، ارسال سریع و تخفیف ویژه خرید آنلاین. همین حالا مشاهده کنید.':'Discover our new collection of genuine leather bags for men and women, with authenticity guaranteed, fast shipping, and special online discounts.',
+          'کیف چرم دست‌دوز لوکس':'Luxury Handmade Leather Bag','خرید از وب‌سایت':'Shop on Website','مشاهده و سفارش آنلاین':'View & Order Online',
+          'شروع همکاری':'Get Started','مشاهده تعرفه‌ها':'View Pricing',
+          'چرا تبلیغات در موتور جستجو و سوشال مدیا؟':'Why Advertise on Search Engines and Social Media?',
+          'مزایای استراتژیک کمپین‌های دیجیتال برای رشد و توسعه پایدار کسب‌وکار شما':'Strategic benefits of digital campaigns for sustainable business growth',
+          'تبلیغات هدفمند در موتور جستجوی گوگل':'Targeted Advertising on Google Search',
+          'با تبلیغات در موتور جستجوی گوگل، درست در لحظه‌ای با مخاطب ارتباط برقرار کنید که به دنبال محصول یا خدمات شماست.':'Reach potential customers at the exact moment they are searching for your products or services on Google.',
+          'بازاریابی و تبلیغات ویدئویی در یوتیوب':'Video Marketing and Advertising on YouTube',
+          'یوتیوب یکی از قدرتمندترین بسترهای جهان برای معرفی برند از طریق محتوای ویدئویی است.':'YouTube is one of the world’s most powerful platforms for building brand awareness through video content.',
+          'تبلیغات در وب‌سایت‌های همکار گوگل':'Advertising Across Google Partner Websites',
+          'انتشار بنرها و تبلیغات تصویری در میلیون‌ها وب‌سایت و اپلیکیشن همکار گوگل برای بازاریابی مجدد (Remarketing).':'Run display and banner ads across millions of Google partner websites and apps, including remarketing campaigns.',
+          'تبلیغ و پروموت محتوا در اینستاگرام':'Instagram Content Promotion',
+          'پیام برند خود را فراتر از دنبال‌کنندگان فعلی منتشر کرده و بازار هدف خود را با ابزارهای دقیق توسعه دهید.':'Reach beyond your existing followers and grow your target audience with precise Instagram advertising tools.',
+          'کاربران جهان':'Internet Users','آمار قابل توجه جهانی':'A Remarkable Global Statistic',
+          'طبق نظرسنجی گوگل و':'According to a survey by Google and','ایپسوس':'Ipsos',
+          '، ۸۳٪ مصرف‌کنندگان در سطح جهان اعلام کرده‌اند که روزانه از گوگل و/یا یوتیوب استفاده می‌کنند.':', 83% of consumers worldwide say they use Google and/or YouTube every day.',
+          'می‌دانستید شبکه تبلیغات ایران همکار رسمی گوگل است؟':'Did You Know Iran Ads Network Is a Google Partner?',
+          'ما با افتخار نشان':'We are proud to have earned the','را دریافت کرده‌ایم. این سطح از همکاری تنها به ۳٪ از برترین آژانس‌های تبلیغاتی در هر کشور اعطا می‌شود که توانسته‌اند بالاترین استانداردهای گوگل را رعایت کنند.':' badge. This distinction is awarded to only the top 3% of advertising agencies in each country that meet Google’s highest standards.',
+          'به‌زودی ...':'Coming Soon',
+          'تبلیغات هوشمند در ChatGPT؛ آینده بازاریابی دیجیتال':'Advertising in ChatGPT: The Future of Digital Marketing',
+          'مفتخریم اعلام کنیم که شبکه تبلیغات ایران در حال دریافت تاییدیه رسمی همکاری با OpenAI است. با فعال شدن این قابلیت به زودی، شما می‌توانید تبلیغات کسب‌وکار خود را مستقیماً در پاسخ‌های هوش مصنوعی ChatGPT به مخاطبان نمایش دهید.':'We are proud to announce that Iran Ads Network is in the process of obtaining official partnership approval from OpenAI. Once this capability becomes available, you will be able to display your business ads directly within ChatGPT AI responses.',
+          'بهترین برند کیف چرم ایرانی چیست؟':'What is the best Iranian leather bag brand?','برندهای متعددی در زمینه چرم طبیعی فعال هستند...':'Many brands specialize in genuine leather products...',
+          'ارسال رایگان و تخفیف ویژه خرید آنلاین.':'Free shipping and special online discounts.','مشاهده وب‌سایت':'Visit Website',
+          'خدمات تخصصی ما':'Our Advertising Services','پوشش یکپارچه و بهینه‌سازی شده در پربازده‌ترین بسترهای تبلیغاتی جهان':'Integrated campaigns across the world’s highest-performing advertising platforms',
+          'تبلیغات در موتور جستجوی گوگل':'Google Search Advertising',
+          'تبلیغات گوگل (Google Ads) ابزاری کارآمد است که کسب‌وکار شما را دقیقاً در لحظه‌ای که کاربران به دنبال محصولات یا خدمات هستند، نمایش می‌دهد.':'Google Ads puts your business in front of people at the exact moment they search for products or services like yours.',
+          'تبلیغات در ویدئوهای یوتیوب':'YouTube Video Advertising','تثبیت نام برند در ذهن مخاطب با پلتفرم ویدئویی بزرگ جهان.':'Build lasting brand awareness on the world’s largest video platform.',
+          'تبلیغات در کانال‌های تلگرام':'Telegram Channel Advertising','انتشار پیام‌های برند در کانال‌های بزرگ و تخصصی.':'Promote your brand through large, niche Telegram channels.',
+          'تبلیغات در اینستاگرام':'Instagram Advertising','استفاده از استوری، پست و ریلز متناسب با جامعه ایرانی.':'Reach Iranian audiences through Stories, posts, and Reels.',
+          'تبلیغات در شبکه اجتماعی X':'Advertising on X','بستری گفتگومحور و جریان‌ساز برای مطرح شدن در ترندها.':'Join conversations, build momentum, and put your brand in the spotlight.',
+          'نرخ و هزینه تبلیغات':'Advertising Rates & Pricing','شفاف‌ترین تعرفه‌ها با کمترین نرخ هزینه تبلیغات در فضای مجازی':'Transparent pricing and competitive rates for digital advertising',
+          'تضمین بهترین قیمت:':'Best Price Guarantee:','پایین‌ترین و اقتصادی‌ترین تعرفه اجرای کمپین‌ها.':'Competitive, cost-effective campaign management rates.',
+          'مبلغ کل شامل شارژ حساب به‌اضافه ۱۰٪ هزینه کارمزد مدیریت و اجرای کمپین است.':'The total includes your advertising budget plus a 10% fee for campaign management and execution.',
+          'پکیج استارتر':'Starter Package','معادل ۵۰ دلار شارژ + ۵ دلار کارمزد':'Includes $50 ad credit + $5 service fee','حداقل شارژ':'Minimum top-up',
+          'پکیج رشد تجاری':'Business Growth Package','معادل ۲۵۰ دلار شارژ + ۲۵ دلار کارمزد':'Includes $250 ad credit + $25 service fee','حداقل ۶ ماه':'Minimum 6 months',
+          'پکیج حرفه‌ای':'Professional Package','معادل ۵۰۰ دلار شارژ + ۵۰ دلار کارمزد':'Includes $500 ad credit + $50 service fee','۶ تا ۱۰ ماه':'6–10 months',
+          'پکیج سازمانی VIP':'VIP Corporate Package','معادل ۱۰۰۰ دلار شارژ + ۱۰۰ دلار کارمزد':'Includes $1,000 ad credit + $100 service fee','۱ ساله':'1 year',
+          'پرداخت سریع با کریپتو':'Fast crypto payments','دسترسی به کمپین گوگل ادز':'Access to Google Ads campaigns','دسترسی به کمپین متا ادز':'Access to Meta Ads campaigns',
+          'دسترسی به پنل تلگرام ادز':'Access to Telegram Ads','دسترسی به فروشگاه':'Access to the advertising store',
+          'پیشنهاد ویژه':'Special Offer','دسترسی به تیک آبی اینستاگرام':'Instagram verification badge access','ورود به پنل و شارژ':'Open Dashboard & Add Funds',
+          'هویت و مأموریت شبکه تبلیغات ایران':'The Identity and Mission of Iran Ads Network',
+          'شبکه تبلیغات ایران با هدف توسعه بازار برندهای ایرانی و ایجاد فرصت‌های جدید برای حضور مؤثر کسب‌وکارهای داخلی در عرصه بین‌المللی، راهکارهای جامع، یکپارچه و هوشمند بازاریابی و تبلیغات دیجیتال را در پلتفرم‌های بین‌المللی ارائه می‌کند. این مجموعه با بهره‌گیری از ظرفیت‌های گسترده تبلیغات آنلاین، ابزارهای نوین تحلیل داده و شناخت دقیق رفتار مخاطبان ایرانی، تلاش می‌کند ارتباطی مؤثر میان برندها، مشتریان بالقوه و بازارهای هدف ایجاد کند و مسیر تبدیل مخاطب به مشتری وفادار را هموار سازد.':'Iran Ads Network provides comprehensive, integrated, and intelligent digital marketing and advertising solutions on international platforms. Our mission is to help Iranian brands expand into global markets by combining the reach of online advertising with modern data analytics and a deep understanding of audience behavior. We connect brands with potential customers and target markets, helping turn audiences into loyal customers.',
+          'مقر اصلی شبکه تبلیغات ایران در شهر دبی، امارات متحده عربی قرار دارد؛ شهری که به‌عنوان یکی از مهم‌ترین شاهراه‌های اقتصادی، تجاری و ارتباطی جهان، نقطه اتصال بازارهای خاورمیانه، آسیا، اروپا و آفریقا به شمار می‌رود. استقرار در این مرکز تجاری بین‌المللی، امکان بهره‌مندی از ظرفیت‌های اقتصادی، زیرساخت‌های ارتباطی و فرصت‌های همکاری فرامرزی را فراهم کرده و بستری مناسب برای توسعه خدمات تبلیغاتی در مقیاس بین‌المللی ایجاد می‌کند.':'Our headquarters are in Dubai, United Arab Emirates, a major global hub connecting the markets of the Middle East, Asia, Europe, and Africa. This international business location gives us access to strong commercial networks, communications infrastructure, and cross-border partnership opportunities, providing a solid base for delivering advertising services worldwide.',
+          'رویکرد ما در اجرای کمپین‌های تبلیغاتی بر پایه شفافیت در قیمت‌گذاری، تخصیص هوشمندانه بودجه و استفاده بهینه از منابع استوار است. اعتقاد داریم تبلیغات مؤثر الزاماً به معنای صرف هزینه‌های بیشتر نیست؛ بلکه نتیجه شناخت صحیح بازار، انتخاب کانال‌های مناسب، هدف‌گذاری دقیق و مدیریت اصولی منابع مالی است. به همین دلیل، تلاش می‌کنیم با ارائه ساختارهای شفاف هزینه‌ای و مشخص کردن جایگاه هر بخش از بودجه تبلیغاتی، امکان تصمیم‌گیری آگاهانه و ارزیابی دقیق عملکرد را برای مشتریان فراهم کنیم.':'Our campaign management approach is built on transparent pricing, intelligent budget allocation, and efficient use of resources. Effective advertising is not necessarily about spending more; it is about understanding the market, choosing the right channels, precise targeting, and responsible budget management. We provide clear cost structures and explain how each part of the advertising budget is used, helping clients make informed decisions and evaluate performance.',
+          'تیم تخصصی ما با بهره‌گیری از ابزارهای پیشرفته تحلیل رفتار کاربران، بررسی کلمات کلیدی، ارزیابی نرخ تبدیل، سنجش نرخ تعامل و محاسبه شاخص بازگشت سرمایه (ROI)، عملکرد کمپین‌ها را به‌صورت مستمر پایش و بهینه‌سازی می‌کند. هدف این فرآیند، شناسایی اثربخش‌ترین مسیرهای دسترسی به مخاطبان و جلوگیری از هدررفت بودجه در کانال‌های کم‌بازده است.':'Our specialists continuously monitor and optimize campaigns using advanced tools for audience behavior analysis, keyword research, conversion tracking, engagement measurement, and return on investment (ROI) analysis. This process identifies the most effective ways to reach your audience and helps prevent budget waste on underperforming channels.',
+          'در شبکه تبلیغات ایران، هر کمپین یک سرمایه‌گذاری هدفمند برای رشد کسب‌وکار محسوب می‌شود. ما تلاش می‌کنیم با تلفیق دانش بازاریابی دیجیتال، فناوری‌های روز، تحلیل داده و شناخت بازارهای بین‌المللی، راهکارهایی متناسب با اهداف و ظرفیت اقتصادی هر مجموعه ارائه دهیم؛ راهکارهایی که علاوه بر افزایش دیده‌شدن برند، به توسعه بازار، جذب مشتریان جدید و ایجاد ارزش اقتصادی پایدار منجر شوند.':'At Iran Ads Network, every campaign is a strategic investment in business growth. By combining digital marketing expertise, modern technology, data analysis, and knowledge of international markets, we develop solutions tailored to each client’s goals and budget. Our aim is not only to increase brand visibility, but also to expand markets, attract new customers, and create sustainable business value.',
+          'شبکه تبلیغات ایران؛ پیوند هوشمند برندهای ایرانی با فرصت‌های تبلیغاتی و بازارهای بین‌المللی.':'Iran Ads Network — intelligently connecting Iranian brands with global advertising opportunities and international markets.',
+          'مشاهده کامل متن':'Read More','بستن متن':'Show Less','ارتباط با ما':'Contact Us','جهت دریافت مشاوره رایگان با کارشناسان ما در ارتباط باشید.':'Contact our team for a free consultation.',
+          'ایمیل':'Email','تماس بین‌المللی':'International Phone','دفتر مرکزی':'Head Office','دوبی، برج تجاری BB2، خیابان خیابان مزایا، ۳۵':'BB2 Business Tower, Mazaya Street 35, Dubai',
+          'موقعیت دفتر مرکزی شبکه تبلیغات ایران در دبی':'Location of Iran Ads Network headquarters in Dubai',
+          '© تمامی حقوق محفوظ است — شبکه تبلیغات ایران':'© All rights reserved — Iran Ads Network','طراحی و توسعه توسط':'Designed and developed by'
+        };
+        function setLanguage(lang) {
+            currentLanguage = lang === 'en' ? 'en' : 'fa';
+            const reverse = Object.fromEntries(Object.entries(translations).map(([fa,en]) => [en,fa]));
+            const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+            let node;
+            while ((node = walker.nextNode())) {
+                const value = node.nodeValue;
+                const trimmed = value.trim();
+                if (!trimmed) continue;
+                const translated = currentLanguage === 'en' ? translations[trimmed] : reverse[trimmed];
+                if (translated) node.nodeValue = value.replace(trimmed, translated);
+            }
+            document.documentElement.lang = currentLanguage;
+            document.documentElement.dir = currentLanguage === 'en' ? 'ltr' : 'rtl';
+            document.getElementById('language-toggle').textContent = currentLanguage === 'en' ? 'فارسی' : 'English';
+            document.getElementById('language-toggle').setAttribute('aria-label', currentLanguage === 'en' ? 'Switch to Persian' : 'Switch to English');
+            document.title = currentLanguage === 'en' ? 'Iran Ads Network | International Digital Advertising' : 'شبکه تبلیغات ایران | تبلیغات بین‌المللی و کمپین‌های هدفمند';
+            const description = document.querySelector('meta[name="description"]');
+            if (description) description.content = currentLanguage === 'en' ? 'Targeted international campaigns across Google Ads, Meta Ads, and Telegram Ads, with crypto payments, expert management, and transparent pricing.' : 'اجرای کمپین‌های تبلیغات دیجیتال در گوگل ادز، متا ادز و تلگرام ادز با پرداخت سریع رمزارزی، مدیریت تخصصی و تعرفه شفاف.';
+            document.querySelectorAll('meta[property="og:locale"]').forEach(m => m.content = currentLanguage === 'en' ? 'en_US' : 'fa_IR');
+            document.getElementById('read-more-toggle')?.setAttribute('aria-label', currentLanguage === 'en' ? 'Read more about us' : 'مشاهده کامل متن');
+            document.getElementById('map-frame')?.setAttribute('title', currentLanguage === 'en' ? 'Iran Ads Network headquarters in Dubai' : 'موقعیت دفتر مرکزی شبکه تبلیغات ایران در دبی');
+            if (document.getElementById('about-more')?.classList.contains('expanded')) {
+                const btnText = document.querySelector('#read-more-toggle span');
+                if (btnText) btnText.textContent = currentLanguage === 'en' ? 'Show Less' : 'بستن متن';
+            }
+            try { localStorage.setItem('iranads-language', currentLanguage); } catch(e) {}
+        }
+        try {
+            const preferredLanguage = localStorage.getItem('iranads-language');
+            if (preferredLanguage === 'en') setLanguage('en');
+        } catch(e) {}
+
         const sceneOuter = document.getElementById('scene-outer');
         const sceneStage = document.getElementById('scene-stage');
         const group = document.getElementById('device-group');
@@ -837,10 +937,10 @@
             moreContent.classList.toggle('expanded');
             document.getElementById('read-more-toggle').setAttribute('aria-expanded', moreContent.classList.contains('expanded') ? 'true' : 'false');
             if (moreContent.classList.contains('expanded')) {
-                btnText.innerText = 'بستن متن';
+                btnText.innerText = currentLanguage === 'en' ? 'Show Less' : 'بستن متن';
                 btnIcon.className = 'fa-solid fa-chevron-up';
             } else {
-                btnText.innerText = 'مشاهده کامل متن';
+                btnText.innerText = currentLanguage === 'en' ? 'Read More' : 'مشاهده کامل متن';
                 btnIcon.className = 'fa-solid fa-chevron-down';
             }
         }
