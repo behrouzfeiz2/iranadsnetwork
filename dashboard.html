@@ -285,6 +285,7 @@
                 <li><button onclick="switchTab('verify')" id="tab-verify" class="tab-btn"><span><i class="fa-solid fa-certificate" style="color: #a855f7; margin-left: 6px;"></i> خدمات وریفای</span></button></li>
                 <li><button onclick="switchTab('wallet')" id="tab-wallet" class="tab-btn"><span><i class="fa-solid fa-wallet" style="color: var(--neon-cyan); margin-left: 6px;"></i> کیف پول</span></button></li>
                 <li><button onclick="switchTab('tickets')" id="tab-tickets" class="tab-btn"><span><i class="fa-solid fa-headset" style="color: #34d399; margin-left: 6px;"></i> پشتیبانی</span></button></li>
+                <li><button onclick="switchTab('settings')" id="tab-settings" class="tab-btn"><span><i class="fa-solid fa-gear" style="color: #fbbf24; margin-left: 6px;"></i> تنظیمات پروفایل</span></button></li>
             </ul>
         </aside>
 
@@ -559,7 +560,7 @@
                                         <option value="TRX (TRON)">ترون - TRX</option>
                                     </select>
                                 </div>
-                                <div class="form-group"><label>مبلغ واریز شده (USD)</label><input type="number" step="0.01" min="1" id="dep-amount" class="form-input" required dir="ltr"></div>
+                                <div class="form-group"><label id="dep-amount-label">مبلغ واریزی (USDT)</label><input type="number" step="0.01" min="0.01" id="dep-amount" class="form-input" placeholder="مقدار ارز واریزی" required dir="ltr"><div id="trx-conversion" style="display:none; margin-top:8px; padding:10px 12px; border-radius:10px; background:rgba(6,182,212,.08); border:1px solid rgba(6,182,212,.2); color:#bae6fd; font-size:.82rem; line-height:1.8;"><span id="trx-price-text">در حال دریافت نرخ ترون...</span><br><strong id="trx-usd-estimate" style="color:#34d399;"></strong></div></div>
                                 <div class="form-group"><label>کد پیگیری تراکنش (TxID)</label><input type="text" id="dep-hash" class="form-input" required dir="ltr"></div>
                                 <button type="submit" class="btn btn-primary" style="width: 100%;">ثبت و ارسال فیش</button>
                             </form>
@@ -569,6 +570,25 @@
                 <div class="glass-card">
                     <h3 style="font-size: 1.15rem; margin-bottom: 14px;"><i class="fa-solid fa-clock-rotate-left" style="color: var(--neon-cyan);"></i> تاریخچه تراکنش‌ها</h3>
                     <div class="table-responsive"><table><thead><tr><th>شناسه</th><th>ارز</th><th>مبلغ</th><th>کد هش</th><th>وضعیت</th></tr></thead><tbody id="deposits-tbody"></tbody></table></div>
+                </div>
+            </div>
+
+            <!-- تنظیمات پروفایل -->
+            <div id="content-settings" class="tab-section hidden">
+                <div class="glass-card">
+                    <h2 style="font-size:1.25rem; font-weight:800; margin-bottom:8px;"><i class="fa-solid fa-user-gear" style="color:#fbbf24;"></i> تنظیمات و تکمیل پروفایل</h2>
+                    <p style="color:var(--text-muted); font-size:.88rem; margin-bottom:20px;">اطلاعات تماس و نشانی خود را ثبت کنید تا در سفارش‌ها و پیگیری‌های بعدی در دسترس باشد.</p>
+                    <form id="profile-form" onsubmit="saveProfile(event)">
+                        <div class="grid-2">
+                            <div class="form-group"><label for="profile-first-name">نام</label><input id="profile-first-name" class="form-input" autocomplete="given-name" maxlength="80" required></div>
+                            <div class="form-group"><label for="profile-last-name">نام خانوادگی</label><input id="profile-last-name" class="form-input" autocomplete="family-name" maxlength="100" required></div>
+                            <div class="form-group"><label for="profile-mobile">تلفن همراه</label><input id="profile-mobile" class="form-input" type="tel" autocomplete="tel" inputmode="tel" placeholder="مثلاً 0912..." required dir="ltr"></div>
+                            <div class="form-group"><label for="profile-postal-code">کد پستی</label><input id="profile-postal-code" class="form-input" autocomplete="postal-code" maxlength="20" dir="ltr"></div>
+                        </div>
+                        <div class="form-group"><label for="profile-address">آدرس کامل</label><textarea id="profile-address" class="form-input" rows="3" autocomplete="street-address" maxlength="1000" required></textarea></div>
+                        <div id="profile-message" class="hidden" style="font-size:.85rem; margin-bottom:12px;"></div>
+                        <button type="submit" id="profile-save-btn" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> ذخیره اطلاعات پروفایل</button>
+                    </form>
                 </div>
             </div>
 
@@ -682,7 +702,11 @@
             
             currentUser = data.user;
             localStorage.setItem('iran_ad_user', JSON.stringify(currentUser));
-            checkSession();
+            document.getElementById('dep-crypto').addEventListener('change', updateDepositCurrencyUI);
+        document.getElementById('dep-amount').addEventListener('input', updateDepositCurrencyUI);
+        updateDepositCurrencyUI();
+        refreshTrxPrice();
+        checkSession();
         }
 
         async function handleUserRegister(e) {
@@ -714,7 +738,7 @@
         function logout() { localStorage.removeItem('iran_ad_user'); location.reload(); }
 
         function switchTab(tab) {
-            ['home', 'google', 'telegram', 'instagram', 'verify', 'wallet', 'tickets'].forEach(t => {
+            ['home', 'google', 'telegram', 'instagram', 'verify', 'wallet', 'tickets', 'settings'].forEach(t => {
                 document.getElementById(`content-${t}`).classList.add('hidden');
                 document.getElementById(`tab-${t}`).classList.remove('active');
             });
@@ -774,7 +798,12 @@
 
             currentUser = data.user;
             localStorage.setItem('iran_ad_user', JSON.stringify(currentUser));
-            document.getElementById('ui-balance').innerText = `$${Number(currentUser.balance).toFixed(2)}`;
+            document.getElementById('ui-balance').innerText = `${Number(currentUser.balance).toFixed(2)}`;
+            document.getElementById('profile-first-name').value = currentUser.first_name || '';
+            document.getElementById('profile-last-name').value = currentUser.last_name || '';
+            document.getElementById('profile-mobile').value = currentUser.mobile || '';
+            document.getElementById('profile-address').value = currentUser.address || '';
+            document.getElementById('profile-postal-code').value = currentUser.postal_code || '';
             document.getElementById('wallet-usdt-addr').innerText = data.wallets.usdt || 'خالی';
             document.getElementById('wallet-trx-addr').innerText = data.wallets.trx || 'خالی';
 
@@ -806,7 +835,10 @@
             const dBody = document.getElementById('deposits-tbody');
             dBody.innerHTML = data.deposits.length ? data.deposits.map(d => {
                 let statusHtml = d.status === 'approved' ? `<span class="status-pill pill-approved">تایید شد</span>` : (d.status === 'rejected' ? `<span class="status-pill pill-rejected">رد شد</span>` : `<span class="status-pill pill-pending">در انتظار</span>`);
-                return `<tr><td style="white-space: nowrap;">#${d.id}</td><td style="white-space: nowrap;">${d.crypto_type}</td><td style="font-weight: 800; white-space: nowrap;">$${d.amount_usd}</td><td dir="ltr" style="font-family: monospace; font-size: 0.8rem; white-space: nowrap;">${d.tx_hash}</td><td>${statusHtml}</td></tr>`;
+                const depositAmount = Number(d.amount_crypto) > 0 && String(d.crypto_type).toUpperCase().includes('TRX')
+                    ? `${Number(d.amount_crypto).toFixed(4)} TRX <small style="color:var(--text-muted);">≈ ${Number(d.amount_usd).toFixed(2)}</small>`
+                    : `${Number(d.amount_usd).toFixed(2)} USDT`;
+                return `<tr><td style="white-space: nowrap;">#${d.id}</td><td style="white-space: nowrap;">${d.crypto_type}</td><td style="font-weight: 800; white-space: nowrap;">${depositAmount}</td><td dir="ltr" style="font-family: monospace; font-size: 0.8rem; white-space: nowrap;">${d.tx_hash}</td><td>${statusHtml}</td></tr>`;
             }).join('') : `<tr><td colspan="5" style="text-align: center;">تراکنشی ثبت نشده است</td></tr>`;
 
             // ۶. تیکت‌ها (رندر چت باکس)
@@ -906,15 +938,97 @@
             alert('پروموشن اینستاگرام شما ثبت و مبلغ کل از کیف پول کسر شد.'); e.target.reset(); calcInstagramCost(); loadDashboardData();
         }
 
+        let trxUsdPrice = 0;
+
+        async function refreshTrxPrice() {
+            const priceText = document.getElementById('trx-price-text');
+            try {
+                const res = await fetch('/api/crypto/trx-price');
+                const data = await res.json();
+                if (!res.ok || !Number(data.price_usd)) throw new Error(data.error || 'نرخ ترون در دسترس نیست');
+                trxUsdPrice = Number(data.price_usd);
+                priceText.innerText = `هر TRX ≈ ${trxUsdPrice.toFixed(5)} (منبع: CoinGecko)`;
+                updateDepositCurrencyUI();
+            } catch (err) {
+                trxUsdPrice = 0;
+                priceText.innerText = 'دریافت نرخ زنده ترون ممکن نشد؛ لطفاً کمی بعد تلاش کنید.';
+                document.getElementById('trx-usd-estimate').innerText = '';
+            }
+        }
+
+        function updateDepositCurrencyUI() {
+            const isTrx = document.getElementById('dep-crypto').value.toUpperCase().includes('TRX');
+            const amount = document.getElementById('dep-amount');
+            const label = document.getElementById('dep-amount-label');
+            const preview = document.getElementById('trx-conversion');
+            amount.step = isTrx ? '0.000001' : '0.01';
+            amount.min = isTrx ? '0.000001' : '0.01';
+            amount.placeholder = isTrx ? 'مثلاً 250' : 'مثلاً 50';
+            label.innerText = isTrx ? 'مقدار واریزی (TRX)' : 'مبلغ واریزی (USDT)';
+            preview.style.display = isTrx ? 'block' : 'none';
+            if (isTrx) {
+                const qty = Number(amount.value) || 0;
+                document.getElementById('trx-usd-estimate').innerText = trxUsdPrice && qty > 0
+                    ? `معادل تقریبی: ${(qty * trxUsdPrice).toFixed(2)} USDT`
+                    : (qty > 0 ? 'برای محاسبه معادل دلاری، نرخ زنده لازم است.' : '');
+            }
+        }
+
         async function submitDeposit(e) {
             e.preventDefault();
+            const cryptoType = document.getElementById('dep-crypto').value;
+            const amount = Number(document.getElementById('dep-amount').value);
+            const isTrx = cryptoType.toUpperCase().includes('TRX');
+            if (!Number.isFinite(amount) || amount <= 0) { alert('مقدار واریزی معتبر نیست.'); return; }
+            if (isTrx && !trxUsdPrice) { await refreshTrxPrice(); if (!trxUsdPrice) { alert('نرخ زنده ترون در دسترس نیست؛ ثبت واریز انجام نشد.'); return; } }
+            const payload = { user_id: currentUser.id, crypto_type: cryptoType, tx_hash: document.getElementById('dep-hash').value.trim() };
+            if (isTrx) payload.amount_crypto = amount;
+            else payload.amount_usd = amount;
             const res = await fetch('/api/user/deposit', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ user_id: currentUser.id, crypto_type: document.getElementById('dep-crypto').value, amount_usd: document.getElementById('dep-amount').value, tx_hash: document.getElementById('dep-hash').value })
+                body: JSON.stringify(payload)
             });
             const data = await res.json();
-            if (!res.ok) { alert(data.error); return; }
-            alert('فیش واریزی ثبت شد.'); e.target.reset(); loadDashboardData();
+            if (!res.ok) { alert(data.error || 'ثبت واریز ناموفق بود.'); return; }
+            alert(isTrx ? `فیش واریزی ثبت شد. معادل برآوردی: ${Number(data.amount_usd).toFixed(2)}` : 'فیش واریزی ثبت شد.');
+            e.target.reset();
+            updateDepositCurrencyUI();
+            loadDashboardData();
+        }
+
+        async function saveProfile(e) {
+            e.preventDefault();
+            const message = document.getElementById('profile-message');
+            const button = document.getElementById('profile-save-btn');
+            message.classList.add('hidden');
+            button.disabled = true;
+            const payload = {
+                user_id: currentUser.id,
+                first_name: document.getElementById('profile-first-name').value.trim(),
+                last_name: document.getElementById('profile-last-name').value.trim(),
+                mobile: document.getElementById('profile-mobile').value.trim(),
+                address: document.getElementById('profile-address').value.trim(),
+                postal_code: document.getElementById('profile-postal-code').value.trim()
+            };
+            try {
+                const res = await fetch('/api/user/profile', {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const data = await res.json();
+                if (!res.ok) throw new Error(data.error || 'ذخیره پروفایل انجام نشد');
+                currentUser = data.user;
+                localStorage.setItem('iran_ad_user', JSON.stringify(currentUser));
+                message.innerText = 'اطلاعات پروفایل با موفقیت ذخیره شد.';
+                message.style.color = '#34d399';
+                message.classList.remove('hidden');
+            } catch (err) {
+                message.innerText = err.message;
+                message.style.color = '#f87171';
+                message.classList.remove('hidden');
+            } finally {
+                button.disabled = false;
+            }
         }
 
         async function submitTicket(e) {
