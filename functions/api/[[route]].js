@@ -102,7 +102,35 @@ export async function onRequest(context) {
         headers: { ...corsHeaders, 'Retry-After': String(minutes * 60) }
     });
 
+    const verifyTurnstile = async token => {
+        if (!env.TURNSTILE_SECRET_KEY) return { enabled: false, valid: true };
+        if (!token) return { enabled: true, valid: false };
+        try {
+            const form = new FormData();
+            form.append('secret', env.TURNSTILE_SECRET_KEY);
+            form.append('response', token);
+            const ip = request.headers.get('CF-Connecting-IP');
+            if (ip) form.append('remoteip', ip);
+            const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+                method: 'POST',
+                body: form
+            });
+            const result = await response.json();
+            return { enabled: true, valid: response.ok && result.success === true };
+        } catch (_) {
+            return { enabled: true, valid: false };
+        }
+    };
+
+
     try {
+        if (path === 'auth/config' && method === 'GET') {
+            return new Response(JSON.stringify({
+                turnstile_enabled: Boolean(env.TURNSTILE_SITE_KEY && env.TURNSTILE_SECRET_KEY),
+                turnstile_site_key: env.TURNSTILE_SITE_KEY || ''
+            }), { headers: corsHeaders });
+        }
+
         // دریافت نرخ TRX با چند منبع مستقل؛ خطای یک سرویس نباید کل نرخ را از دسترس خارج کند.
         if (path === 'crypto/trx-price' && method === 'GET') {
             const providers = [
@@ -212,13 +240,16 @@ export async function onRequest(context) {
 
         // ۲. ورود مشتری با محدودیت تلاش ناموفق
         if (path === 'login' && method === 'POST') {
-            const { identifier, password } = await request.json();
+            const { identifier, password, turnstileToken } = await request.json();
             const cleanId = String(identifier || '').trim();
             if (!cleanId || !password) return new Response(JSON.stringify({ error: 'نام کاربری و رمز عبور الزامی است' }), { status: 400, headers: corsHeaders });
 
             const keys = await getLoginKeys(cleanId);
             const lockedMinutes = await getLoginLock(keys);
             if (lockedMinutes) return lockedResponse(lockedMinutes);
+
+            const captcha = await verifyTurnstile(turnstileToken);
+            if (!captcha.valid) return new Response(JSON.stringify({ error: 'لطفاً تأیید امنیتی Cloudflare را تکمیل کنید.' }), { status: 403, headers: corsHeaders });
 
             const cleanEmail = cleanId.toLowerCase();
             const user = await env.DB.prepare(
@@ -409,8 +440,10 @@ export async function onRequest(context) {
             if (!ADMIN_USER || !ADMIN_PASS) {
                 return new Response(JSON.stringify({ error: 'اطلاعات ورود ادمین در تنظیمات محیطی سرور تعریف نشده است.' }), { status: 503, headers: corsHeaders });
             }
-            const { username, password } = await request.json();
+            const { username, password, turnstileToken } = await request.json();
             const cleanUsername = String(username || '').trim();
+            const captcha = await verifyTurnstile(turnstileToken);
+            if (!captcha.valid) return new Response(JSON.stringify({ error: 'لطفاً تأیید امنیتی Cloudflare را تکمیل کنید.' }), { status: 403, headers: corsHeaders });
             const keys = await getLoginKeys('admin:' + cleanUsername);
             const lockedMinutes = await getLoginLock(keys);
             if (lockedMinutes) return lockedResponse(lockedMinutes);
