@@ -823,7 +823,7 @@
 
             currentUser = data.user;
             localStorage.setItem('iran_ad_user', JSON.stringify(currentUser));
-            document.getElementById('ui-balance').innerText = `${Number(currentUser.balance).toFixed(2)}`;
+            document.getElementById('ui-balance').innerText = `${Number(currentUser.balance).toFixed(2)} USD`;
             document.getElementById('profile-first-name').value = currentUser.first_name || '';
             document.getElementById('profile-last-name').value = currentUser.last_name || '';
             document.getElementById('profile-mobile').value = currentUser.mobile || '';
