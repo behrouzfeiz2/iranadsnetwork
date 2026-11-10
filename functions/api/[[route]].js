@@ -35,36 +35,83 @@ export async function onRequest(context) {
     const ADMIN_PASS = env.ADMIN_PASS || "admin123456";
 
     try {
-        // نرخ لحظه‌ای ترون به دلار (قیمت عمومی بازار، صرفاً برای برآورد و نمایش)
+        // دریافت نرخ TRX با چند منبع مستقل؛ خطای یک سرویس نباید کل نرخ را از دسترس خارج کند.
         if (path === 'crypto/trx-price' && method === 'GET') {
+            const providers = [
+                {
+                    name: 'CoinGecko',
+                    url: 'https://api.coingecko.com/api/v3/simple/price?ids=tron&vs_currencies=usd',
+                    read: data => data?.tron?.usd
+                },
+                {
+                    name: 'Binance TRX/USDT',
+                    url: 'https://api.binance.com/api/v3/ticker/price?symbol=TRXUSDT',
+                    read: data => data?.price
+                },
+                {
+                    name: 'CryptoCompare',
+                    url: 'https://min-api.cryptocompare.com/data/price?fsym=TRX&tsyms=USD',
+                    read: data => data?.USD
+                },
+                {
+                    name: 'CoinCap',
+                    url: 'https://api.coincap.io/v2/assets/tron',
+                    read: data => data?.data?.priceUsd
+                },
+                {
+                    name: 'CoinPaprika',
+                    url: 'https://api.coinpaprika.com/v1/tickers/trx-tron',
+                    read: data => data?.quotes?.USD?.price
+                }
+            ];
+
             let price = 0;
             let source = '';
-            // Primary source: CoinGecko USD spot price.
-            try {
-                const priceRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tron&vs_currencies=usd', {
-                    headers: { 'Accept': 'application/json' }
-                });
-                if (priceRes.ok) {
-                    const priceData = await priceRes.json();
-                    price = Number(priceData?.tron?.usd);
-                    if (Number.isFinite(price) && price > 0) source = 'CoinGecko';
-                }
-            } catch (_) {}
-            // Fallback source: Binance TRX/USDT spot ticker (USDT ≈ USD).
-            if (!(price > 0)) {
+            const providerErrors = [];
+
+            for (const provider of providers) {
                 try {
-                    const fallbackRes = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=TRXUSDT', {
-                        headers: { 'Accept': 'application/json' }
+                    const response = await fetch(provider.url, {
+                        headers: { 'Accept': 'application/json' },
+                        signal: AbortSignal.timeout(4500)
                     });
-                    if (fallbackRes.ok) {
-                        const fallbackData = await fallbackRes.json();
-                        price = Number(fallbackData?.price);
-                        if (Number.isFinite(price) && price > 0) source = 'Binance TRX/USDT';
+                    if (!response.ok) {
+                        providerErrors.push(provider.name + ': HTTP ' + response.status);
+                        continue;
                     }
-                } catch (_) {}
+                    const payload = await response.json();
+                    const candidate = Number(provider.read(payload));
+                    if (Number.isFinite(candidate) && candidate > 0) {
+                        price = candidate;
+                        source = provider.name;
+                        break;
+                    }
+                    providerErrors.push(provider.name + ': invalid price');
+                } catch (error) {
+                    providerErrors.push(provider.name + ': ' + (error?.name || 'fetch error'));
+                }
             }
-            if (!(price > 0)) throw new Error('دریافت نرخ زنده TRX از منابع قیمت ممکن نشد');
-            return new Response(JSON.stringify({ price_usd: price, usdt_per_trx: price, trx_per_usd: 1 / price, source, updated_at: new Date().toISOString() }), { headers: corsHeaders });
+
+            if (!(price > 0)) {
+                return new Response(JSON.stringify({
+                    error: 'در حال حاضر دریافت نرخ از سرویس‌های قیمت امکان‌پذیر نیست.',
+                    providers_checked: providers.length,
+                    diagnostics: providerErrors
+                }), {
+                    status: 503,
+                    headers: { ...corsHeaders, 'Cache-Control': 'no-store' }
+                });
+            }
+
+            return new Response(JSON.stringify({
+                price_usd: price,
+                usdt_per_trx: price,
+                trx_per_usd: 1 / price,
+                source,
+                updated_at: new Date().toISOString()
+            }), {
+                headers: { ...corsHeaders, 'Cache-Control': 'public, max-age=30, s-maxage=30' }
+            });
         }
 
         // ۱. ثبت‌نام
