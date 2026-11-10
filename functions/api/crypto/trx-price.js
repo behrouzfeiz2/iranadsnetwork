@@ -16,6 +16,13 @@ export async function onRequest({ request }) {
         });
     }
 
+    // CoinGecko requires a descriptive User-Agent. Other sources are public
+    // market endpoints and do not require a personal API key.
+    const headers = {
+        'Accept': 'application/json',
+        'User-Agent': 'IranAdsNetwork/1.0 (https://iranadsnetwork.ir; TRX price widget)'
+    };
+
     const providers = [
         {
             name: 'CoinGecko',
@@ -23,66 +30,91 @@ export async function onRequest({ request }) {
             read: data => data?.tron?.usd
         },
         {
-            name: 'Binance TRX/USDT',
-            url: 'https://api.binance.com/api/v3/ticker/price?symbol=TRXUSDT',
-            read: data => data?.price
+            name: 'Kraken TRX/USD',
+            url: 'https://api.kraken.com/0/public/Ticker?pair=TRXUSD',
+            read: data => {
+                const ticker = data?.result?.TRXUSD || Object.values(data?.result || {})[0];
+                return ticker?.c?.[0];
+            }
         },
         {
-            name: 'CryptoCompare',
-            url: 'https://min-api.cryptocompare.com/data/price?fsym=TRX&tsyms=USD',
-            read: data => data?.USD
+            name: 'OKX TRX/USDT',
+            url: 'https://www.okx.com/api/v5/market/ticker?instId=TRX-USDT',
+            read: data => data?.data?.[0]?.last
         },
         {
-            name: 'CoinCap',
-            url: 'https://api.coincap.io/v2/assets/tron',
-            read: data => data?.data?.priceUsd
+            name: 'Bybit TRX/USDT',
+            url: 'https://api.bybit.com/v5/market/tickers?category=spot&symbol=TRXUSDT',
+            read: data => data?.result?.list?.[0]?.lastPrice
         },
         {
-            name: 'CoinPaprika',
-            url: 'https://api.coinpaprika.com/v1/tickers/trx-tron',
-            read: data => data?.quotes?.USD?.price
+            name: 'DefiLlama',
+            url: 'https://coins.llama.fi/prices/current/coingecko:tron',
+            read: data => data?.coins?.['coingecko:tron']?.price
         }
     ];
 
-    const diagnostics = [];
-    for (const provider of providers) {
+    const results = await Promise.all(providers.map(async provider => {
         try {
             const response = await fetch(provider.url, {
-                headers: { 'Accept': 'application/json' },
+                headers,
                 signal: AbortSignal.timeout(5000)
             });
+            const body = await response.text();
             if (!response.ok) {
-                let responseBody = '';
-                try { responseBody = (await response.text()).slice(0, 350); } catch (_) {}
-                diagnostics.push({
+                return {
                     provider: provider.name,
+                    ok: false,
                     status: response.status,
-                    status_text: response.statusText,
-                    error: responseBody || 'Provider returned a non-success HTTP status'
-                });
-                continue;
+                    error: body.slice(0, 300) || response.statusText
+                };
             }
-            const data = await response.json();
+
+            let data;
+            try { data = JSON.parse(body); }
+            catch (_) {
+                return { provider: provider.name, ok: false, error: 'Invalid JSON response' };
+            }
+
             const price = Number(provider.read(data));
-            if (Number.isFinite(price) && price > 0) {
-                return new Response(JSON.stringify({
-                    success: true,
-                    price_usd: price,
-                    usdt_per_trx: price,
-                    trx_per_usd: 1 / price,
-                    source: provider.name,
-                    updated_at: new Date().toISOString()
-                }), { headers: { ...corsHeaders, 'Cache-Control': 'public, max-age=30, s-maxage=30' } });
+            if (!Number.isFinite(price) || price <= 0) {
+                return {
+                    provider: provider.name,
+                    ok: false,
+                    error: data?.error || data?.msg || 'Price field missing or invalid'
+                };
             }
-            diagnostics.push({ provider: provider.name, error: 'Invalid price response' });
+
+            return { provider: provider.name, ok: true, price };
         } catch (error) {
-            diagnostics.push({ provider: provider.name, error: error?.message || String(error), error_name: error?.name || 'Error' });
+            return {
+                provider: provider.name,
+                ok: false,
+                error: error?.message || String(error),
+                error_name: error?.name || 'Error'
+            };
         }
+    }));
+
+    // Preserve provider priority while querying all sources concurrently.
+    const winner = results.find(result => result.ok);
+    if (winner) {
+        const price = winner.price;
+        return new Response(JSON.stringify({
+            success: true,
+            price_usd: price,
+            usdt_per_trx: price,
+            trx_per_usd: 1 / price,
+            source: winner.provider,
+            updated_at: new Date().toISOString()
+        }), {
+            headers: { ...corsHeaders, 'Cache-Control': 'public, max-age=30, s-maxage=30' }
+        });
     }
 
     return new Response(JSON.stringify({
         success: false,
         error: 'دریافت نرخ از تمام منابع قیمت ناموفق بود.',
-        diagnostics
+        diagnostics: results
     }), { status: 503, headers: corsHeaders });
 }
