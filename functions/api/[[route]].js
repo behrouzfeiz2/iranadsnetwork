@@ -121,26 +121,30 @@ export async function onRequest(context) {
 
     const verifyPassword = async (password, stored) => {
         const value = String(stored || '');
-        if (!value.startsWith('pbkdf2_sha256
-        if (!env.TURNSTILE_SECRET_KEY) return { enabled: false, valid: true };
-        if (!token) return { enabled: true, valid: false };
+        if (!value.startsWith('pbkdf2_sha256$')) {
+            return { valid: value === String(password), needsUpgrade: value === String(password) };
+        }
         try {
-            const form = new FormData();
-            form.append('secret', env.TURNSTILE_SECRET_KEY);
-            form.append('response', token);
-            const ip = request.headers.get('CF-Connecting-IP');
-            if (ip) form.append('remoteip', ip);
-            const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-                method: 'POST',
-                body: form
-            });
-            const result = await response.json();
-            return { enabled: true, valid: response.ok && result.success === true };
+            const parts = value.split('$');
+            if (parts.length !== 4 || parts[0] !== 'pbkdf2_sha256') return { valid: false, needsUpgrade: false };
+            const iterations = Number(parts[1]);
+            if (!Number.isInteger(iterations) || iterations < 100000 || iterations > 1000000) return { valid: false, needsUpgrade: false };
+            const salt = base64ToBytes(parts[2]);
+            const expected = base64ToBytes(parts[3]);
+            const key = await crypto.subtle.importKey(
+                'raw', new TextEncoder().encode(String(password)), 'PBKDF2', false, ['deriveBits']
+            );
+            const actual = new Uint8Array(await crypto.subtle.deriveBits(
+                { name: 'PBKDF2', salt, iterations, hash: 'SHA-256' }, key, expected.length * 8
+            ));
+            if (actual.length !== expected.length) return { valid: false, needsUpgrade: false };
+            let diff = 0;
+            for (let i = 0; i < actual.length; i++) diff |= actual[i] ^ expected[i];
+            return { valid: diff === 0, needsUpgrade: false };
         } catch (_) {
-            return { enabled: true, valid: false };
+            return { valid: false, needsUpgrade: false };
         }
     };
-
 
     try {
         if (path === 'auth/config' && method === 'GET') {
@@ -1105,25 +1109,6 @@ export async function onRequest(context) {
         return new Response(JSON.stringify({ error: err.message }), { status: 500, headers: corsHeaders });
     }
 }
-);
-            const iterations = Number(iterationsText);
-            if (!Number.isInteger(iterations) || iterations < 100000 || iterations > 1000000) return { valid: false, needsUpgrade: false };
-            const salt = base64ToBytes(saltText);
-            const expected = base64ToBytes(hashText);
-            const key = await crypto.subtle.importKey(
-                'raw', new TextEncoder().encode(String(password)), 'PBKDF2', false, ['deriveBits']
-            );
-            const actual = new Uint8Array(await crypto.subtle.deriveBits(
-                { name: 'PBKDF2', salt, iterations, hash: 'SHA-256' }, key, expected.length * 8
-            ));
-            if (actual.length !== expected.length) return { valid: false, needsUpgrade: false };
-            let diff = 0;
-            for (let i = 0; i < actual.length; i++) diff |= actual[i] ^ expected[i];
-            return { valid: diff === 0, needsUpgrade: false };
-        } catch (_) {
-            return { valid: false, needsUpgrade: false };
-        }
-    };
 
     const verifyTurnstile = async token => {
         if (!env.TURNSTILE_SECRET_KEY) return { enabled: false, valid: true };
