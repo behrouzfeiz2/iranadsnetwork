@@ -835,9 +835,12 @@
             const dBody = document.getElementById('deposits-tbody');
             dBody.innerHTML = data.deposits.length ? data.deposits.map(d => {
                 let statusHtml = d.status === 'approved' ? `<span class="status-pill pill-approved">تایید شد</span>` : (d.status === 'rejected' ? `<span class="status-pill pill-rejected">رد شد</span>` : `<span class="status-pill pill-pending">در انتظار</span>`);
-                const depositAmount = Number(d.amount_crypto) > 0 && String(d.crypto_type).toUpperCase().includes('TRX')
-                    ? `${Number(d.amount_crypto).toFixed(4)} TRX <small style="color:var(--text-muted);">≈ ${Number(d.amount_usd).toFixed(2)}</small>`
-                    : `${Number(d.amount_usd).toFixed(2)} USDT`;
+                const isTrxDeposit = String(d.crypto_type).toUpperCase().includes('TRX');
+                const depositAmount = isTrxDeposit
+                    ? (Number(d.amount_crypto) > 0
+                        ? `${Number(d.amount_crypto).toFixed(4)} TRX <small style="color:var(--text-muted);">≈ $${Number(d.amount_usd).toFixed(2)}</small>`
+                        : `<small style="color:#fbbf24;">واریز قدیمی؛ نیازمند بررسی دستی</small>`)
+                    : `$${Number(d.amount_usd).toFixed(2)} USDT`;
                 return `<tr><td style="white-space: nowrap;">#${d.id}</td><td style="white-space: nowrap;">${d.crypto_type}</td><td style="font-weight: 800; white-space: nowrap;">${depositAmount}</td><td dir="ltr" style="font-family: monospace; font-size: 0.8rem; white-space: nowrap;">${d.tx_hash}</td><td>${statusHtml}</td></tr>`;
             }).join('') : `<tr><td colspan="5" style="text-align: center;">تراکنشی ثبت نشده است</td></tr>`;
 
