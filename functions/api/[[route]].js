@@ -31,8 +31,76 @@ export async function onRequest(context) {
         await ensureColumn('deposits', 'trx_usd_rate', 'REAL');
     };
 
-    const ADMIN_USER = env.ADMIN_USER || "admin";
-    const ADMIN_PASS = env.ADMIN_PASS || "admin123456";
+    const ADMIN_USER = env.ADMIN_USER || "";
+    const ADMIN_PASS = env.ADMIN_PASS || "";
+
+    // Server-side brute-force protection shared by customer and admin login.
+    const ensureLoginAttemptsTable = async () => {
+        await env.DB.prepare(`
+            CREATE TABLE IF NOT EXISTS login_attempts (
+                attempt_key TEXT PRIMARY KEY,
+                attempts INTEGER NOT NULL DEFAULT 0,
+                lock_until TEXT,
+                updated_at TEXT NOT NULL
+            )
+        `).run();
+    };
+
+    const getLoginKeys = async identifier => {
+        const normalized = String(identifier || '').trim().toLowerCase().slice(0, 190);
+        const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+        const ipHash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(ip));
+        const ipHex = [...new Uint8Array(ipHash)].map(v => v.toString(16).padStart(2, '0')).join('');
+        return ['identity:' + normalized, 'ip:' + ipHex];
+    };
+
+    const getLoginLock = async keys => {
+        await ensureLoginAttemptsTable();
+        const now = new Date().toISOString();
+        for (const key of keys) {
+            const row = await env.DB.prepare(
+                'SELECT attempts, lock_until FROM login_attempts WHERE attempt_key = ?'
+            ).bind(key).first();
+            if (row?.lock_until && row.lock_until > now) {
+                const remainingMs = new Date(row.lock_until).getTime() - Date.now();
+                return Math.max(1, Math.ceil(remainingMs / 60000));
+            }
+        }
+        return 0;
+    };
+
+    const recordLoginFailure = async keys => {
+        const now = new Date().toISOString();
+        const lockUntil = new Date(Date.now() + 48 * 60 * 60 * 1000).toISOString();
+        for (const key of keys) {
+            await env.DB.prepare(`
+                INSERT INTO login_attempts (attempt_key, attempts, lock_until, updated_at)
+                VALUES (?, 1, NULL, ?)
+                ON CONFLICT(attempt_key) DO UPDATE SET
+                    attempts = login_attempts.attempts + 1,
+                    lock_until = CASE
+                        WHEN login_attempts.attempts + 1 >= 3 THEN ?
+                        ELSE login_attempts.lock_until
+                    END,
+                    updated_at = excluded.updated_at
+            `).bind(key, now, lockUntil).run();
+        }
+    };
+
+    const clearLoginFailures = async keys => {
+        for (const key of keys) {
+            await env.DB.prepare('DELETE FROM login_attempts WHERE attempt_key = ?').bind(key).run();
+        }
+    };
+
+    const lockedResponse = minutes => new Response(JSON.stringify({
+        error: `به دلیل ۳ تلاش ناموفق، ورود موقتاً مسدود شده است. ${minutes} دقیقه دیگر دوباره تلاش کنید.`,
+        locked: true,
+        retry_after_minutes: minutes
+    }), {
+        status: 429,
+        headers: { ...corsHeaders, 'Retry-After': String(minutes * 60) }
+    });
 
     try {
         // دریافت نرخ TRX با چند منبع مستقل؛ خطای یک سرویس نباید کل نرخ را از دسترس خارج کند.
@@ -142,15 +210,29 @@ export async function onRequest(context) {
             return new Response(JSON.stringify({ user: newUser }), { headers: corsHeaders });
         }
 
-        // ۲. ورود
+        // ۲. ورود مشتری با محدودیت تلاش ناموفق
         if (path === 'login' && method === 'POST') {
             const { identifier, password } = await request.json();
-            const cleanId = identifier.trim();
-            const cleanEmail = cleanId.toLowerCase();
+            const cleanId = String(identifier || '').trim();
+            if (!cleanId || !password) return new Response(JSON.stringify({ error: 'نام کاربری و رمز عبور الزامی است' }), { status: 400, headers: corsHeaders });
 
-            const user = await env.DB.prepare('SELECT id, username, email, balance FROM users WHERE (username = ? OR email = ?) AND password = ?').bind(cleanId, cleanEmail, String(password)).first();
-            if (!user) return new Response(JSON.stringify({ error: 'اطلاعات ورود اشتباه است' }), { status: 401, headers: corsHeaders });
-            
+            const keys = await getLoginKeys(cleanId);
+            const lockedMinutes = await getLoginLock(keys);
+            if (lockedMinutes) return lockedResponse(lockedMinutes);
+
+            const cleanEmail = cleanId.toLowerCase();
+            const user = await env.DB.prepare(
+                'SELECT id, username, email, balance FROM users WHERE (username = ? OR email = ?) AND password = ?'
+            ).bind(cleanId, cleanEmail, String(password)).first();
+
+            if (!user) {
+                await recordLoginFailure(keys);
+                const remainingLock = await getLoginLock(keys);
+                if (remainingLock) return lockedResponse(remainingLock);
+                return new Response(JSON.stringify({ error: 'اطلاعات ورود اشتباه است؛ پس از ۳ تلاش ناموفق، ورود تا ۴۸ ساعت مسدود می‌شود.' }), { status: 401, headers: corsHeaders });
+            }
+
+            await clearLoginFailures(keys);
             return new Response(JSON.stringify({ user }), { headers: corsHeaders });
         }
 
@@ -324,9 +406,24 @@ export async function onRequest(context) {
         // مسیرهای پنل ادمین
         // ==========================================
         if (path === 'admin/login' && method === 'POST') {
+            if (!ADMIN_USER || !ADMIN_PASS) {
+                return new Response(JSON.stringify({ error: 'اطلاعات ورود ادمین در تنظیمات محیطی سرور تعریف نشده است.' }), { status: 503, headers: corsHeaders });
+            }
             const { username, password } = await request.json();
-            if (username === ADMIN_USER && password === ADMIN_PASS) return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
-            return new Response(JSON.stringify({ error: 'اطلاعات ادمین اشتباه است' }), { status: 401, headers: corsHeaders });
+            const cleanUsername = String(username || '').trim();
+            const keys = await getLoginKeys('admin:' + cleanUsername);
+            const lockedMinutes = await getLoginLock(keys);
+            if (lockedMinutes) return lockedResponse(lockedMinutes);
+
+            if (cleanUsername === ADMIN_USER && String(password || '') === ADMIN_PASS) {
+                await clearLoginFailures(keys);
+                return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
+            }
+
+            await recordLoginFailure(keys);
+            const remainingLock = await getLoginLock(keys);
+            if (remainingLock) return lockedResponse(remainingLock);
+            return new Response(JSON.stringify({ error: 'اطلاعات ادمین اشتباه است؛ پس از ۳ تلاش ناموفق، ورود تا ۴۸ ساعت مسدود می‌شود.' }), { status: 401, headers: corsHeaders });
         }
 
         if (path.startsWith('admin/')) {
