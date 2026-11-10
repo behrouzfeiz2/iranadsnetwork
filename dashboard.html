@@ -954,7 +954,11 @@
 
                 if (!res.ok || !Number(data.price_usd)) {
                     const details = Array.isArray(data.diagnostics)
-                        ? data.diagnostics.map(item => `${item.provider}: ${item.error || ('HTTP ' + item.status)}`).join(' | ')
+                        ? data.diagnostics.map(item => {
+                            const status = item.status ? `HTTP ${item.status}` : (item.error_name || '');
+                            const reason = item.error || item.status_text || '';
+                            return `${item.provider}: ${status}${reason ? ' — ' + reason : ''}`;
+                        }).join(' | ')
                         : '';
                     throw new Error(`${data.error || 'نرخ ترون در دسترس نیست'} (HTTP ${res.status})${details ? ' — ' + details : ''}`);
                 }
