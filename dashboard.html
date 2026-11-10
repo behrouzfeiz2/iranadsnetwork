@@ -557,10 +557,10 @@
                                     <label>نوع ارز واریزی</label>
                                     <select id="dep-crypto" class="form-input">
                                         <option value="USDT (TRC20)">تتر - USDT</option>
-                                        <option value="TRX (TRON)">ترون - TRX</option>
+                                        <option value="TRX (TRON)">ترون (TRX) — شبکه TRON / TRC20</option>
                                     </select>
                                 </div>
-                                <div class="form-group"><label id="dep-amount-label">مبلغ واریزی (USDT)</label><input type="number" step="0.01" min="0.01" id="dep-amount" class="form-input" placeholder="مقدار ارز واریزی" required dir="ltr"><div id="trx-conversion" style="display:none; margin-top:8px; padding:10px 12px; border-radius:10px; background:rgba(6,182,212,.08); border:1px solid rgba(6,182,212,.2); color:#bae6fd; font-size:.82rem; line-height:1.8;"><span id="trx-price-text">در حال دریافت نرخ ترون...</span><br><strong id="trx-usd-estimate" style="color:#34d399;"></strong></div></div>
+                                <div class="form-group"><label id="dep-amount-label" for="dep-amount">مبلغ واریزی (USDT)</label><input type="number" step="0.01" min="0.01" id="dep-amount" class="form-input" placeholder="مقدار ارز واریزی" required dir="ltr"><div id="trx-conversion" style="display:none; margin-top:8px; padding:12px; border-radius:10px; background:rgba(6,182,212,.08); border:1px solid rgba(6,182,212,.2); color:#bae6fd; font-size:.82rem; line-height:1.9;"><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;"><strong style="color:#fff;"><i class="fa-solid fa-arrow-right-arrow-left"></i> نرخ لحظه‌ای TRX / USD</strong><button type="button" onclick="refreshTrxPrice()" class="btn btn-outline" style="padding:4px 9px;font-size:.72rem;"><i class="fa-solid fa-rotate"></i> بروزرسانی نرخ</button></div><div id="trx-price-text" style="margin-top:6px;">در حال دریافت نرخ ترون...</div><div id="trx-reverse-rate" style="color:#bae6fd;"></div><strong id="trx-usd-estimate" style="display:block;color:#34d399;margin-top:5px;"></strong><small id="trx-price-updated" style="display:block;color:#94a3b8;margin-top:3px;"></small><small style="display:block;color:#94a3b8;margin-top:4px;">شبکه انتقال: TRON Mainnet (TRC20) · دارایی: TRX · نرخ‌ها تقریبی و بر اساس بازار جهانی هستند.</small></div></div>
                                 <div class="form-group"><label>کد پیگیری تراکنش (TxID)</label><input type="text" id="dep-hash" class="form-input" required dir="ltr"></div>
                                 <button type="submit" class="btn btn-primary" style="width: 100%;">ثبت و ارسال فیش</button>
                             </form>
@@ -702,11 +702,7 @@
             
             currentUser = data.user;
             localStorage.setItem('iran_ad_user', JSON.stringify(currentUser));
-            document.getElementById('dep-crypto').addEventListener('change', updateDepositCurrencyUI);
-        document.getElementById('dep-amount').addEventListener('input', updateDepositCurrencyUI);
-        updateDepositCurrencyUI();
-        refreshTrxPrice();
-        checkSession();
+            checkSession();
         }
 
         async function handleUserRegister(e) {
@@ -950,11 +946,19 @@
                 const data = await res.json();
                 if (!res.ok || !Number(data.price_usd)) throw new Error(data.error || 'نرخ ترون در دسترس نیست');
                 trxUsdPrice = Number(data.price_usd);
-                priceText.innerText = `هر TRX ≈ ${trxUsdPrice.toFixed(5)} (منبع: CoinGecko)`;
+                priceText.innerText = `1 TRX = ${trxUsdPrice.toFixed(6)} USD (تقریباً ${trxUsdPrice.toFixed(6)} USDT)`;
+                const reverse = document.getElementById('trx-reverse-rate');
+                if (reverse) reverse.innerText = `1 USD ≈ ${(1 / trxUsdPrice).toFixed(4)} TRX  |  1 USDT ≈ ${(1 / trxUsdPrice).toFixed(4)} TRX`;
+                const updated = document.getElementById('trx-price-updated');
+                if (updated) updated.innerText = `منبع: ${data.source || 'بازار جهانی'} · بروزرسانی: ${new Date(data.updated_at || Date.now()).toLocaleTimeString('fa-IR')}`;
                 updateDepositCurrencyUI();
             } catch (err) {
                 trxUsdPrice = 0;
-                priceText.innerText = 'دریافت نرخ زنده ترون ممکن نشد؛ لطفاً کمی بعد تلاش کنید.';
+                priceText.innerText = 'نرخ زنده در دسترس نیست؛ لطفاً دوباره تلاش کنید.';
+                const reverse = document.getElementById('trx-reverse-rate');
+                if (reverse) reverse.innerText = '';
+                const updated = document.getElementById('trx-price-updated');
+                if (updated) updated.innerText = '';
                 document.getElementById('trx-usd-estimate').innerText = '';
             }
         }
@@ -967,7 +971,7 @@
             amount.step = isTrx ? '0.000001' : '0.01';
             amount.min = isTrx ? '0.000001' : '0.01';
             amount.placeholder = isTrx ? 'مثلاً 250' : 'مثلاً 50';
-            label.innerText = isTrx ? 'مقدار واریزی (TRX)' : 'مبلغ واریزی (USDT)';
+            label.innerText = isTrx ? 'مقدار واریزی (TRX) — شبکه TRON (TRC20)' : 'مبلغ واریزی (USDT) — شبکه TRON (TRC20)';
             preview.style.display = isTrx ? 'block' : 'none';
             if (isTrx) {
                 const qty = Number(amount.value) || 0;
@@ -1062,6 +1066,16 @@
         }
 
         function copyText(elementId) { navigator.clipboard.writeText(document.getElementById(elementId).innerText); alert('آدرس کیف پول کپی شد.'); }
+
+        // Bind wallet currency controls globally: works for existing sessions,
+        // fresh logins and registrations (not only the login handler).
+        const depositCurrencySelect = document.getElementById('dep-crypto');
+        const depositAmountInput = document.getElementById('dep-amount');
+        if (depositCurrencySelect) depositCurrencySelect.addEventListener('change', updateDepositCurrencyUI);
+        if (depositAmountInput) depositAmountInput.addEventListener('input', updateDepositCurrencyUI);
+        updateDepositCurrencyUI();
+        refreshTrxPrice();
+        setInterval(refreshTrxPrice, 60000);
 
         checkSession();
     </script>
