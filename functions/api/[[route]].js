@@ -37,14 +37,34 @@ export async function onRequest(context) {
     try {
         // نرخ لحظه‌ای ترون به دلار (قیمت عمومی بازار، صرفاً برای برآورد و نمایش)
         if (path === 'crypto/trx-price' && method === 'GET') {
-            const priceRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tron&vs_currencies=usd', {
-                headers: { 'Accept': 'application/json' }
-            });
-            if (!priceRes.ok) throw new Error('دریافت نرخ لحظه‌ای TRX موقتاً امکان‌پذیر نیست');
-            const priceData = await priceRes.json();
-            const price = Number(priceData?.tron?.usd);
-            if (!Number.isFinite(price) || price <= 0) throw new Error('نرخ معتبر TRX دریافت نشد');
-            return new Response(JSON.stringify({ price_usd: price, source: 'CoinGecko', updated_at: new Date().toISOString() }), { headers: corsHeaders });
+            let price = 0;
+            let source = '';
+            // Primary source: CoinGecko USD spot price.
+            try {
+                const priceRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tron&vs_currencies=usd', {
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (priceRes.ok) {
+                    const priceData = await priceRes.json();
+                    price = Number(priceData?.tron?.usd);
+                    if (Number.isFinite(price) && price > 0) source = 'CoinGecko';
+                }
+            } catch (_) {}
+            // Fallback source: Binance TRX/USDT spot ticker (USDT ≈ USD).
+            if (!(price > 0)) {
+                try {
+                    const fallbackRes = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=TRXUSDT', {
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    if (fallbackRes.ok) {
+                        const fallbackData = await fallbackRes.json();
+                        price = Number(fallbackData?.price);
+                        if (Number.isFinite(price) && price > 0) source = 'Binance TRX/USDT';
+                    }
+                } catch (_) {}
+            }
+            if (!(price > 0)) throw new Error('دریافت نرخ زنده TRX از منابع قیمت ممکن نشد');
+            return new Response(JSON.stringify({ price_usd: price, usdt_per_trx: price, trx_per_usd: 1 / price, source, updated_at: new Date().toISOString() }), { headers: corsHeaders });
         }
 
         // ۱. ثبت‌نام
@@ -139,11 +159,24 @@ export async function onRequest(context) {
             if (isTrx) {
                 cryptoValue = Number(amount_crypto);
                 if (!Number.isFinite(cryptoValue) || cryptoValue <= 0) return new Response(JSON.stringify({ error: 'مقدار TRX معتبر نیست' }), { status: 400, headers: corsHeaders });
-                const priceRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tron&vs_currencies=usd', { headers: { 'Accept': 'application/json' } });
-                if (!priceRes.ok) throw new Error('دریافت نرخ لحظه‌ای TRX ممکن نشد؛ کمی بعد دوباره تلاش کنید');
-                const priceData = await priceRes.json();
-                trxRate = Number(priceData?.tron?.usd);
-                if (!Number.isFinite(trxRate) || trxRate <= 0) throw new Error('نرخ معتبر TRX دریافت نشد');
+                // Match the same live-price sources used by the wallet quote endpoint.
+                try {
+                    const priceRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tron&vs_currencies=usd', { headers: { 'Accept': 'application/json' } });
+                    if (priceRes.ok) {
+                        const priceData = await priceRes.json();
+                        trxRate = Number(priceData?.tron?.usd);
+                    }
+                } catch (_) {}
+                if (!(trxRate > 0)) {
+                    try {
+                        const fallbackRes = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=TRXUSDT', { headers: { 'Accept': 'application/json' } });
+                        if (fallbackRes.ok) {
+                            const fallbackData = await fallbackRes.json();
+                            trxRate = Number(fallbackData?.price);
+                        }
+                    } catch (_) {}
+                }
+                if (!Number.isFinite(trxRate) || trxRate <= 0) throw new Error('دریافت نرخ زنده TRX ممکن نشد؛ کمی بعد دوباره تلاش کنید');
                 usdValue = cryptoValue * trxRate;
             } else {
                 usdValue = Number(amount_usd);
