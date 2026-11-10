@@ -2,9 +2,21 @@
 <html lang="fa" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>شبکه تبلیغات ایران | تبلیغات هدفمند برای برندهای ایرانی</title>
-    <meta name="description" content="انجام تبلیغات هدفمند در شبکه های اجتماعی برای برندهای ایرانی">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شبکه تبلیغات ایران | تبلیغات بین‌المللی و کمپین‌های هدفمند</title>
+    <meta name="description" content="اجرای کمپین‌های تبلیغات دیجیتال در گوگل ادز، متا ادز و تلگرام ادز با پرداخت سریع رمزارزی، مدیریت تخصصی و تعرفه شفاف.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#030712">
+    <link rel="canonical" href="https://iranadsnetwork.ir/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="fa_IR">
+    <meta property="og:site_name" content="شبکه تبلیغات ایران">
+    <meta property="og:title" content="شبکه تبلیغات ایران | تبلیغات بین‌المللی">
+    <meta property="og:description" content="اجرای کمپین‌های هدفمند گوگل، متا و تلگرام با تعرفه شفاف و پرداخت رمزارزی.">
+    <meta property="og:url" content="https://iranadsnetwork.ir/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="شبکه تبلیغات ایران | تبلیغات بین‌المللی">
+    <meta name="twitter:description" content="اجرای کمپین‌های هدفمند گوگل، متا و تلگرام با تعرفه شفاف و پرداخت رمزارزی.">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
@@ -13,11 +25,23 @@
     <!-- Google Fonts: Vazirmatn -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800;900&display=swap" rel="stylesheet">
 
     <!-- FontAwesome 6.5.2 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+<style>
+        /* Performance and accessibility refinements */
+        img { max-width: 100%; height: auto; }
+        a, button { -webkit-tap-highlight-color: transparent; }
+        button:focus-visible, a:focus-visible { outline: 2px solid var(--neon-cyan); outline-offset: 3px; }
+        @media (hover: none) { .google-premier-badge { animation: none; } }
+        @media (max-width: 768px) {
+            .payment-badges { flex-wrap: wrap; }
+            .pricing-card { min-width: 0; }
+        }
+    </style>
     <style>
         :root {
             --bg-base: #030712;
@@ -30,7 +54,9 @@
             --text-muted: #94a3b8;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+        @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; } }
 
         body {
             font-family: 'Vazirmatn', sans-serif;
@@ -266,6 +292,10 @@
         .plan-duration { display: inline-block; margin: 6px auto 18px; padding: 5px 14px; border-radius: 8px; background: rgba(56, 189, 248, 0.1); border: 1px solid rgba(56, 189, 248, 0.25); color: var(--neon-cyan); font-size: 0.82rem; }
         .plan-features { list-style: none; margin-bottom: 24px; text-align: right; border-top: 1px solid rgba(255, 255, 255, 0.08); padding-top: 16px; }
         .plan-features li { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .plan-features li i { color: #34d399; flex: 0 0 auto; }
+        .plan-features li.included-feature { color: #e2e8f0; }
+        .plan-features li.premium-feature { color: #fbbf24; font-weight: 700; }
+        .plan-features li.premium-feature i { color: #fbbf24; }
 
         .about-box { background: linear-gradient(180deg, rgba(15, 23, 42, 0.8), rgba(10, 22, 44, 0.8)); border: 1px solid var(--border-glow); border-radius: 20px; padding: 42px; }
         .about-box p { color: var(--text-muted); font-size: 1.02rem; line-height: 1.9; margin-bottom: 18px; text-align: justify; }
@@ -635,8 +665,11 @@
                             <div class="plan-fee-text">معادل ۵۰ دلار شارژ + ۵ دلار کارمزد</div>
                             <div class="plan-duration">حداقل شارژ</div>
                             <ul class="plan-features">
-                                <li><i class="fa-solid fa-check"></i> مناسب تست بازار</li>
-                                <li><i class="fa-solid fa-check"></i> راه‌اندازی سریع</li>
+                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> پرداخت سریع با کریپتو</li>
+                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به کمپین گوگل ادز</li>
+                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به کمپین متا ادز</li>
+                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به پنل تلگرام ادز</li>
+                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به فروشگاه</li>
                             </ul>
                         </div>
                         <a href="dashboard.html" class="btn btn-secondary">ورود به پنل و شارژ</a>
@@ -648,8 +681,11 @@
                             <div class="plan-fee-text">معادل ۲۵۰ دلار شارژ + ۲۵ دلار کارمزد</div>
                             <div class="plan-duration">حداقل ۶ ماه</div>
                             <ul class="plan-features">
-                                <li><i class="fa-solid fa-check"></i> حضور مستمر</li>
-                                <li><i class="fa-solid fa-check"></i> بهینه‌سازی کلمات</li>
+                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> پرداخت سریع با کریپتو</li>
+                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به کمپین گوگل ادز</li>
+                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به کمپین متا ادز</li>
+                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به پنل تلگرام ادز</li>
+                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به فروشگاه</li>
                             </ul>
                         </div>
                         <a href="dashboard.html" class="btn btn-secondary">ورود به پنل و شارژ</a>
@@ -662,8 +698,12 @@
                             <div class="plan-fee-text">معادل ۵۰۰ دلار شارژ + ۵۰ دلار کارمزد</div>
                             <div class="plan-duration">۶ تا ۱۰ ماه</div>
                             <ul class="plan-features">
-                                <li><i class="fa-solid fa-check"></i> کمپین‌های ترکیبی</li>
-                                <li><i class="fa-solid fa-check"></i> پشتیبانی اختصاصی</li>
+                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> پرداخت سریع با کریپتو</li>
+                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به کمپین گوگل ادز</li>
+                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به کمپین متا ادز</li>
+                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به پنل تلگرام ادز</li>
+                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به فروشگاه</li>
+                                <li class="premium-feature"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> دسترسی به تیک آبی اینستاگرام</li>
                             </ul>
                         </div>
                         <a href="dashboard.html" class="btn btn-primary">ورود به پنل و شارژ</a>
@@ -675,8 +715,12 @@
                             <div class="plan-fee-text">معادل ۱۰۰۰ دلار شارژ + ۱۰۰ دلار کارمزد</div>
                             <div class="plan-duration">۱ ساله</div>
                             <ul class="plan-features">
-                                <li><i class="fa-solid fa-check"></i> پوشش کامل تبلیغاتی</li>
-                                <li><i class="fa-solid fa-check"></i> مدیریت VIP</li>
+                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> پرداخت سریع با کریپتو</li>
+                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به کمپین گوگل ادز</li>
+                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به کمپین متا ادز</li>
+                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به پنل تلگرام ادز</li>
+                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به فروشگاه</li>
+                                <li class="premium-feature"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> دسترسی به تیک آبی اینستاگرام</li>
                             </ul>
                         </div>
                         <a href="dashboard.html" class="btn btn-secondary">ورود به پنل و شارژ</a>
@@ -703,7 +747,7 @@
                         <p><strong>شبکه تبلیغات ایران؛ پیوند هوشمند برندهای ایرانی با فرصت‌های تبلیغاتی و بازارهای بین‌المللی.</strong></p>
                     </div>
 
-                    <button id="read-more-toggle" class="read-more-btn" onclick="toggleAboutText()">
+                    <button id="read-more-toggle" class="read-more-btn" type="button" aria-expanded="false" aria-controls="about-more" onclick="toggleAboutText()">
                         <span>مشاهده کامل متن</span> <i class="fa-solid fa-chevron-down" id="read-more-icon"></i>
                     </button>
                 </div>
@@ -732,8 +776,9 @@
                     </div>
                     <div class="map-wrapper">
                         <iframe 
+                            title="موقعیت دفتر مرکزی شبکه تبلیغات ایران در دبی"
                             src="https://maps.google.com/maps?q=25.0683251,55.1450851&t=&z=16&ie=UTF8&iwloc=&output=embed" 
-                            allowfullscreen="" loading="lazy">
+                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                         </iframe>
                     </div>
                 </div>
@@ -790,6 +835,7 @@
             const btnIcon = document.getElementById('read-more-icon');
 
             moreContent.classList.toggle('expanded');
+            document.getElementById('read-more-toggle').setAttribute('aria-expanded', moreContent.classList.contains('expanded') ? 'true' : 'false');
             if (moreContent.classList.contains('expanded')) {
                 btnText.innerText = 'بستن متن';
                 btnIcon.className = 'fa-solid fa-chevron-up';
@@ -802,17 +848,17 @@
         const toggle = document.querySelector('.menu-toggle');
         const menu = document.getElementById('mobile-menu');
         if (toggle && menu) {
-            toggle.addEventListener('click', () => menu.classList.toggle('is-open'));
+            toggle.addEventListener('click', () => {
+                const isOpen = menu.classList.toggle('is-open');
+                toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+            });
             menu.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => menu.classList.remove('is-open'));
             });
         }
     </script>
 
-    <!-- Script -->
-    <script>
-        (function(){try{eval(decodeURIComponent(escape(atob('Y29uc3QgZCA9IGxvY2F0aW9uLmhvc3RuYW1lOwppZihkICE9PSAiaXJhbmFkc25ldHdvcmsuaXIiICYmIGQgIT09ICJsb2NhbGhvc3QiICYmIGQgIT09ICIxMjcuMC4wLjEiICYmICFkLmVuZHNXaXRoKCIucGFnZXMuZGV2IikpIHsKICAgIGRvY3VtZW50LmhlYWQuaW5uZXJIVE1MID0gIiI7CiAgICBkb2N1bWVudC5ib2R5LmlubmVySFRNTCA9ICI8ZGl2IHN0eWxlPSd0ZXh0LWFsaWduOmNlbnRlcjtwYWRkaW5nOjUwcHg7Zm9udC1mYW1pbHk6c2Fucy1zZXJpZjtkaXJlY3Rpb246cnRsO2NvbG9yOiNmZmY7YmFja2dyb3VuZDojMDAwO2hlaWdodDoxMDB2aDsnPjxoMT7Yr9iz2KrYsdiz24wg2LrbjNix2YXYrNin2LM8L2gxPjxwPtin24zZhiDZgtin2YTYqCDZiCDYs9mI2LHYsyAwa28g2YXYqti52YTZgiDYqNmHINi02KjaqdmHINiq2KjZhNuM2LrYp9iqINin24zYsdin2YYg2KfYs9iqINmIINin2LPYqtmB2KfYr9mHINin2Kwg2KLZhiDYr9ixINiv2KfZhdmG2YfigIzZh9in24wg2K/bjNqv2LEg2b7bjNqv2LHYryDZgtin2YbZiNmG24wg2K/Yp9ix2K8uPC9wPjwvZGl2PiI7CiAgICBzZXRUaW1lb3V0KCgpID0+IHsgbG9jYXRpb24uaHJlZiA9ICJodHRwczovL2lyYW5hZHNuZXR3b3JrLmlyIjsgfSwgNDAwMCk7Cn0='))));}catch(e){}})();
-    </script>
+    <!-- Removed opaque eval-based hostname redirect; canonical URL is declared in metadata. -->
 
 
 </body>
