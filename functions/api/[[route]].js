@@ -120,7 +120,7 @@ export async function onRequest(context) {
             await ensureProfileAndDepositColumns();
             const { user_id, first_name, last_name, mobile, address, postal_code } = await request.json();
             if (!user_id) return new Response(JSON.stringify({ error: 'شناسه کاربر معتبر نیست' }), { status: 400, headers: corsHeaders });
-            if (mobile && !/^[+0-9()\\-\\s]{7,20}$/.test(String(mobile))) {
+            if (mobile && !/^[0-9+()\\s-]{7,20}$/.test(String(mobile))) {
                 return new Response(JSON.stringify({ error: 'شماره همراه معتبر نیست' }), { status: 400, headers: corsHeaders });
             }
             await env.DB.prepare('UPDATE users SET first_name = ?, last_name = ?, mobile = ?, address = ?, postal_code = ? WHERE id = ?')
