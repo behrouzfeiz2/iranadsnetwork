@@ -509,9 +509,12 @@
                 if (d.status === 'pending') {
                     btns = `<div style="display: flex; gap: 6px;"><button onclick="VerifyDeposit(${d.id}, 'approve')" class="btn btn-success" style="padding: 5px; font-size: 0.7rem;">تایید و شارژ</button><button onclick="VerifyDeposit(${d.id}, 'reject')" class="btn btn-danger" style="padding: 5px; font-size: 0.7rem;">رد</button></div>`;
                 }
-                const depositAmount = Number(d.amount_crypto) > 0 && String(d.crypto_type).toUpperCase().includes('TRX')
-                    ? `${Number(d.amount_crypto).toFixed(4)} TRX <small style="color:#94a3b8;">≈ ${Number(d.amount_usd).toFixed(2)}</small>`
-                    : `${Number(d.amount_usd).toFixed(2)} USDT`;
+                const isTrxDeposit = String(d.crypto_type).toUpperCase().includes('TRX');
+                const depositAmount = isTrxDeposit
+                    ? (Number(d.amount_crypto) > 0
+                        ? `${Number(d.amount_crypto).toFixed(4)} TRX <small style="color:#94a3b8;">≈ $${Number(d.amount_usd).toFixed(2)}</small>`
+                        : `<small style="color:#fbbf24;">واریز قدیمی؛ نیازمند بررسی دستی</small>`)
+                    : `$${Number(d.amount_usd).toFixed(2)} USDT`;
                 return `<tr><td>#${d.id}</td><td style="color: var(--neon-blue); font-weight: 700;">${d.username}</td><td>${d.crypto_type}</td><td style="font-weight: 800; color: #34d399;">${depositAmount}</td><td dir="ltr" style="font-family: monospace; font-size: 0.75rem;">${d.tx_hash}</td><td>${formatStatusBadge(d.status)}</td><td>${btns}</td></tr>`;
             }).join('') : `<tr><td colspan="7" style="text-align:center;">تراکنشی نیست</td></tr>`;
 
