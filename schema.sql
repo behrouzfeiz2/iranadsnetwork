@@ -14,6 +14,11 @@ CREATE TABLE users (
     username TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
     balance REAL DEFAULT 0.0,
+    first_name TEXT DEFAULT '',
+    last_name TEXT DEFAULT '',
+    mobile TEXT DEFAULT '',
+    address TEXT DEFAULT '',
+    postal_code TEXT DEFAULT '',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -22,6 +27,8 @@ CREATE TABLE deposits (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
     amount_usd REAL NOT NULL,
+    amount_crypto REAL,
+    trx_usd_rate REAL,
     crypto_type TEXT NOT NULL,
     tx_hash TEXT NOT NULL,
     status TEXT DEFAULT 'pending',
