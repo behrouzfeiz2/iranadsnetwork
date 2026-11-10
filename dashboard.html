@@ -942,9 +942,23 @@
         async function refreshTrxPrice() {
             const priceText = document.getElementById('trx-price-text');
             try {
-                const res = await fetch('/api/crypto/trx-price');
-                const data = await res.json();
-                if (!res.ok || !Number(data.price_usd)) throw new Error(data.error || 'نرخ ترون در دسترس نیست');
+                const res = await fetch('/api/crypto/trx-price', {
+                    method: 'GET',
+                    headers: { 'Accept': 'application/json' },
+                    cache: 'no-store'
+                });
+                const raw = await res.text();
+                let data;
+                try { data = JSON.parse(raw); }
+                catch (_) { throw new Error(`پاسخ API معتبر نیست (HTTP ${res.status}). احتمالاً مسیر Function منتشر نشده است.`); }
+
+                if (!res.ok || !Number(data.price_usd)) {
+                    const details = Array.isArray(data.diagnostics)
+                        ? data.diagnostics.map(item => `${item.provider}: ${item.error || ('HTTP ' + item.status)}`).join(' | ')
+                        : '';
+                    throw new Error(`${data.error || 'نرخ ترون در دسترس نیست'} (HTTP ${res.status})${details ? ' — ' + details : ''}`);
+                }
+
                 trxUsdPrice = Number(data.price_usd);
                 priceText.innerText = `1 TRX = ${trxUsdPrice.toFixed(6)} USD (تقریباً ${trxUsdPrice.toFixed(6)} USDT)`;
                 const reverse = document.getElementById('trx-reverse-rate');
@@ -954,12 +968,13 @@
                 updateDepositCurrencyUI();
             } catch (err) {
                 trxUsdPrice = 0;
-                priceText.innerText = 'نرخ زنده در دسترس نیست؛ لطفاً دوباره تلاش کنید.';
+                priceText.innerText = err.message || 'نرخ زنده در دسترس نیست؛ لطفاً دوباره تلاش کنید.';
                 const reverse = document.getElementById('trx-reverse-rate');
                 if (reverse) reverse.innerText = '';
                 const updated = document.getElementById('trx-price-updated');
                 if (updated) updated.innerText = '';
-                document.getElementById('trx-usd-estimate').innerText = '';
+                const estimate = document.getElementById('trx-usd-estimate');
+                if (estimate) estimate.innerText = '';
             }
         }
 
