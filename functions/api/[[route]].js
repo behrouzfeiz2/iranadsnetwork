@@ -15,10 +15,38 @@ export async function onRequest(context) {
         return new Response(null, { headers: corsHeaders });
     }
 
+    const ensureColumn = async (table, column, definition) => {
+        const info = await env.DB.prepare(`PRAGMA table_info(${table})`).all();
+        if (!info.results.some(col => col.name === column)) {
+            await env.DB.prepare(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`).run();
+        }
+    };
+    const ensureProfileAndDepositColumns = async () => {
+        await ensureColumn('users', 'first_name', "TEXT DEFAULT ''");
+        await ensureColumn('users', 'last_name', "TEXT DEFAULT ''");
+        await ensureColumn('users', 'mobile', "TEXT DEFAULT ''");
+        await ensureColumn('users', 'address', "TEXT DEFAULT ''");
+        await ensureColumn('users', 'postal_code', "TEXT DEFAULT ''");
+        await ensureColumn('deposits', 'amount_crypto', 'REAL');
+        await ensureColumn('deposits', 'trx_usd_rate', 'REAL');
+    };
+
     const ADMIN_USER = env.ADMIN_USER || "admin";
     const ADMIN_PASS = env.ADMIN_PASS || "admin123456";
 
     try {
+        // نرخ لحظه‌ای ترون به دلار (قیمت عمومی بازار، صرفاً برای برآورد و نمایش)
+        if (path === 'crypto/trx-price' && method === 'GET') {
+            const priceRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tron&vs_currencies=usd', {
+                headers: { 'Accept': 'application/json' }
+            });
+            if (!priceRes.ok) throw new Error('دریافت نرخ لحظه‌ای TRX موقتاً امکان‌پذیر نیست');
+            const priceData = await priceRes.json();
+            const price = Number(priceData?.tron?.usd);
+            if (!Number.isFinite(price) || price <= 0) throw new Error('نرخ معتبر TRX دریافت نشد');
+            return new Response(JSON.stringify({ price_usd: price, source: 'CoinGecko', updated_at: new Date().toISOString() }), { headers: corsHeaders });
+        }
+
         // ۱. ثبت‌نام
         if (path === 'register' && method === 'POST') {
             const { username, email, password } = await request.json();
@@ -61,8 +89,9 @@ export async function onRequest(context) {
 
         // ۳. دریافت اطلاعات داشبورد مشتری
         if (path === 'user/data' && method === 'GET') {
+            await ensureProfileAndDepositColumns();
             const userId = url.searchParams.get('user_id');
-            const user = await env.DB.prepare('SELECT id, username, email, balance FROM users WHERE id = ?').bind(userId).first();
+            const user = await env.DB.prepare('SELECT id, username, email, balance, first_name, last_name, mobile, address, postal_code FROM users WHERE id = ?').bind(userId).first();
             if (!user) return new Response(JSON.stringify({ error: 'کاربر یافت نشد' }), { status: 404, headers: corsHeaders });
 
             const deposits = await env.DB.prepare('SELECT * FROM deposits WHERE user_id = ? ORDER BY id DESC').bind(userId).all();
@@ -86,11 +115,43 @@ export async function onRequest(context) {
             }), { headers: corsHeaders });
         }
 
-        // ۴. ثبت فیش واریزی
+        // ذخیره و به‌روزرسانی اطلاعات تکمیلی پروفایل کاربر
+        if (path === 'user/profile' && method === 'POST') {
+            await ensureProfileAndDepositColumns();
+            const { user_id, first_name, last_name, mobile, address, postal_code } = await request.json();
+            if (!user_id) return new Response(JSON.stringify({ error: 'شناسه کاربر معتبر نیست' }), { status: 400, headers: corsHeaders });
+            if (mobile && !/^[+0-9()\\-\\s]{7,20}$/.test(String(mobile))) {
+                return new Response(JSON.stringify({ error: 'شماره همراه معتبر نیست' }), { status: 400, headers: corsHeaders });
+            }
+            await env.DB.prepare('UPDATE users SET first_name = ?, last_name = ?, mobile = ?, address = ?, postal_code = ? WHERE id = ?')
+                .bind(String(first_name || '').trim(), String(last_name || '').trim(), String(mobile || '').trim(), String(address || '').trim(), String(postal_code || '').trim(), user_id).run();
+            const user = await env.DB.prepare('SELECT id, username, email, balance, first_name, last_name, mobile, address, postal_code FROM users WHERE id = ?').bind(user_id).first();
+            return new Response(JSON.stringify({ success: true, user }), { headers: corsHeaders });
+        }
+
+        // ۴. ثبت فیش واریزی؛ مبلغ TRX و معادل دلاری آن جداگانه ذخیره می‌شود
         if (path === 'user/deposit' && method === 'POST') {
-            const { user_id, amount_usd, crypto_type, tx_hash } = await request.json();
-            await env.DB.prepare('INSERT INTO deposits (user_id, amount_usd, crypto_type, tx_hash) VALUES (?, ?, ?, ?)').bind(user_id, parseFloat(amount_usd), crypto_type, tx_hash.trim()).run();
-            return new Response(JSON.stringify({ success: true }), { headers: corsHeaders });
+            await ensureProfileAndDepositColumns();
+            const { user_id, amount_usd, amount_crypto, crypto_type, tx_hash } = await request.json();
+            if (!user_id || !tx_hash || !crypto_type) return new Response(JSON.stringify({ error: 'اطلاعات واریز ناقص است' }), { status: 400, headers: corsHeaders });
+            const isTrx = String(crypto_type).toUpperCase().includes('TRX');
+            let usdValue, cryptoValue = null, trxRate = null;
+            if (isTrx) {
+                cryptoValue = Number(amount_crypto);
+                if (!Number.isFinite(cryptoValue) || cryptoValue <= 0) return new Response(JSON.stringify({ error: 'مقدار TRX معتبر نیست' }), { status: 400, headers: corsHeaders });
+                const priceRes = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=tron&vs_currencies=usd', { headers: { 'Accept': 'application/json' } });
+                if (!priceRes.ok) throw new Error('دریافت نرخ لحظه‌ای TRX ممکن نشد؛ کمی بعد دوباره تلاش کنید');
+                const priceData = await priceRes.json();
+                trxRate = Number(priceData?.tron?.usd);
+                if (!Number.isFinite(trxRate) || trxRate <= 0) throw new Error('نرخ معتبر TRX دریافت نشد');
+                usdValue = cryptoValue * trxRate;
+            } else {
+                usdValue = Number(amount_usd);
+                if (!Number.isFinite(usdValue) || usdValue <= 0) return new Response(JSON.stringify({ error: 'مبلغ USDT معتبر نیست' }), { status: 400, headers: corsHeaders });
+            }
+            await env.DB.prepare('INSERT INTO deposits (user_id, amount_usd, crypto_type, tx_hash, amount_crypto, trx_usd_rate) VALUES (?, ?, ?, ?, ?, ?)')
+                .bind(user_id, usdValue, crypto_type, String(tx_hash).trim(), cryptoValue, trxRate).run();
+            return new Response(JSON.stringify({ success: true, amount_usd: usdValue, amount_crypto: cryptoValue, trx_usd_rate: trxRate }), { headers: corsHeaders });
         }
 
         // ۵. کمپین گوگل
