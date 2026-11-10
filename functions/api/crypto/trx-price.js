@@ -52,7 +52,14 @@ export async function onRequest({ request }) {
                 signal: AbortSignal.timeout(5000)
             });
             if (!response.ok) {
-                diagnostics.push({ provider: provider.name, status: response.status, error: 'HTTP error' });
+                let responseBody = '';
+                try { responseBody = (await response.text()).slice(0, 350); } catch (_) {}
+                diagnostics.push({
+                    provider: provider.name,
+                    status: response.status,
+                    status_text: response.statusText,
+                    error: responseBody || 'Provider returned a non-success HTTP status'
+                });
                 continue;
             }
             const data = await response.json();
@@ -69,7 +76,7 @@ export async function onRequest({ request }) {
             }
             diagnostics.push({ provider: provider.name, error: 'Invalid price response' });
         } catch (error) {
-            diagnostics.push({ provider: provider.name, error: error?.message || String(error) });
+            diagnostics.push({ provider: provider.name, error: error?.message || String(error), error_name: error?.name || 'Error' });
         }
     }
 
