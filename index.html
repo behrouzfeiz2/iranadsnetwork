@@ -275,7 +275,10 @@
         }
 
         /* Services, Pricing, About */
-        .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .services-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; align-items: stretch; }
+        .service-card { height: 100%; }
+        @media (max-width: 992px) { .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        @media (max-width: 600px) { .services-grid { grid-template-columns: minmax(0, 1fr); } }
         .service-card { background: var(--bg-card); border: 1px solid var(--border-glow); border-radius: 16px; padding: 30px; transition: all 0.3s ease; }
         .service-card:hover { border-color: var(--neon-cyan); transform: translateY(-4px); }
         .threed-icon-container { width: 65px; height: 65px; background: radial-gradient(circle, rgba(6,182,212,0.15) 0%, rgba(3,7,18,0) 70%); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; border-radius: 16px; border: 1.5px solid rgba(255,255,255,0.08); }
@@ -634,9 +637,29 @@
                         <p>استفاده از استوری، پست و ریلز متناسب با جامعه ایرانی.</p>
                     </div>
                     <div class="service-card">
-                        <div class="threed-icon-container" style="border-color: rgba(255,255,255,0.2);"><i class="fa-solid fa-bullhorn threed-icon" style="color: #fff;"></i></div>
+                        <div class="threed-icon-container" style="border-color: rgba(255,255,255,0.2);"><i class="fa-brands fa-x-twitter threed-icon" style="color: #fff;"></i></div>
                         <h3>تبلیغات در شبکه اجتماعی X</h3>
                         <p>بستری گفتگومحور و جریان‌ساز برای مطرح شدن در ترندها.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="threed-icon-container"><i class="fa-solid fa-robot threed-icon" style="color: #10a37f;"></i></div>
+                        <h3>خرید اشتراک ChatGPT</h3>
+                        <p>دسترسی به امکانات پیشرفته ChatGPT برای گفتگو، تولید محتوا و انجام کارهای حرفه‌ای.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="threed-icon-container"><i class="fa-solid fa-wand-magic-sparkles threed-icon" style="color: #8ab4f8;"></i></div>
+                        <h3>خرید اشتراک Gemini Pro</h3>
+                        <p>استفاده از قابلیت‌های پیشرفته هوش مصنوعی Gemini برای پژوهش، تولید محتوا و کارهای روزمره.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="threed-icon-container"><i class="fa-brands fa-x-twitter threed-icon" style="color: #fff;"></i></div>
+                        <h3>خرید اشتراک X</h3>
+                        <p>تهیه اشتراک پریمیوم X و بهره‌مندی از امکانات ویژه این شبکه اجتماعی.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="threed-icon-container"><i class="fa-brands fa-instagram threed-icon" style="color: #E1306C;"></i><i class="fa-solid fa-circle-check" style="color: #38bdf8; font-size: 1rem; margin-right: -9px; align-self: flex-end;"></i></div>
+                        <h3>خرید تیک آبی Instagram</h3>
+                        <p>دریافت نشان تأیید هویت اینستاگرام برای حساب‌های واجد شرایط.</p>
                     </div>
                 </div>
             </div>
@@ -840,6 +863,10 @@
           'تبلیغات در کانال‌های تلگرام':'Telegram Channel Advertising','انتشار پیام‌های برند در کانال‌های بزرگ و تخصصی.':'Promote your brand through large, niche Telegram channels.',
           'تبلیغات در اینستاگرام':'Instagram Advertising','استفاده از استوری، پست و ریلز متناسب با جامعه ایرانی.':'Reach Iranian audiences through Stories, posts, and Reels.',
           'تبلیغات در شبکه اجتماعی X':'Advertising on X','بستری گفتگومحور و جریان‌ساز برای مطرح شدن در ترندها.':'Join conversations, build momentum, and put your brand in the spotlight.',
+          'خرید اشتراک ChatGPT':'Buy a ChatGPT Subscription','دسترسی به امکانات پیشرفته ChatGPT برای گفتگو، تولید محتوا و انجام کارهای حرفه‌ای.':'Access advanced ChatGPT features for conversations, content creation, and professional work.',
+          'خرید اشتراک Gemini Pro':'Buy a Gemini Pro Subscription','استفاده از قابلیت‌های پیشرفته هوش مصنوعی Gemini برای پژوهش، تولید محتوا و کارهای روزمره.':'Use advanced Gemini AI features for research, content creation, and everyday tasks.',
+          'خرید اشتراک X':'Buy an X Subscription','تهیه اشتراک پریمیوم X و بهره‌مندی از امکانات ویژه این شبکه اجتماعی.':'Get an X Premium subscription and enjoy the platform’s enhanced features.',
+          'خرید تیک آبی Instagram':'Buy an Instagram Verified Badge','دریافت نشان تأیید هویت اینستاگرام برای حساب‌های واجد شرایط.':'Get Instagram’s verification badge for eligible accounts.',
           'نرخ و هزینه تبلیغات':'Advertising Rates & Pricing','شفاف‌ترین تعرفه‌ها با کمترین نرخ هزینه تبلیغات در فضای مجازی':'Transparent pricing and competitive rates for digital advertising',
           'تضمین بهترین قیمت:':'Best Price Guarantee:','پایین‌ترین و اقتصادی‌ترین تعرفه اجرای کمپین‌ها.':'Competitive, cost-effective campaign management rates.',
           'مبلغ کل شامل شارژ حساب به‌اضافه ۱۰٪ هزینه کارمزد مدیریت و اجرای کمپین است.':'The total includes your advertising budget plus a 10% fee for campaign management and execution.',
