@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+# صفحات مدیریتی و پنل کاربران
+Disallow: /admin.html
+Disallow: /dashboard.html
+
+# مسیرهای API محتوای قابل ایندکس نیستند
+Disallow: /api/
+
+Sitemap: https://iranadsnetwork.ir/sitemap.xml
