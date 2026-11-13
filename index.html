@@ -218,6 +218,51 @@
         }
         .why-card-new:hover { border-color: var(--neon-blue); transform: translateY(-6px); box-shadow: 0 15px 40px -10px rgba(6, 182, 212, 0.25); }
 
+        /* پویانمایی ظریف گرافیک‌های بخش مزایای تبلیغات */
+        @keyframes whyMockupFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        @keyframes whySearchSweep {
+            0%, 100% { background-position: 100% 0; }
+            50% { background-position: 0 0; }
+        }
+        @keyframes whyIconPulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(239,68,68,0)); }
+            50% { transform: scale(1.13); filter: drop-shadow(0 0 9px rgba(239,68,68,.55)); }
+        }
+        @keyframes whyBannerGlow {
+            0%, 100% { box-shadow: 0 0 0 rgba(6,182,212,0); }
+            50% { box-shadow: 0 0 13px rgba(6,182,212,.5); }
+        }
+        @keyframes whyPhoneMedia {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+        .why-card-new:nth-child(1) .mini-browser,
+        .why-card-new:nth-child(3) .mini-browser { animation: whyMockupFloat 5.2s ease-in-out infinite; }
+        .why-card-new:nth-child(2) .mini-browser { animation: whyMockupFloat 4.7s ease-in-out .6s infinite; }
+        .why-card-new:nth-child(4) .mini-phone { animation: whyMockupFloat 4.9s ease-in-out .3s infinite; }
+        .why-card-new:nth-child(1) .mockup-line-title,
+        .why-card-new:nth-child(1) .mockup-line-badge,
+        .why-card-new:nth-child(1) .mockup-line-text {
+            background-image: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.32) 48%, transparent 100%);
+            background-size: 220% 100%;
+            animation: whySearchSweep 3.8s ease-in-out infinite;
+        }
+        .why-card-new:nth-child(2) .mockup-yt-body i { animation: whyIconPulse 2.8s ease-in-out infinite; }
+        .why-card-new:nth-child(3) .mockup-display-banner { animation: whyBannerGlow 3.2s ease-in-out infinite; }
+        .why-card-new:nth-child(4) .mini-phone-body > div:nth-child(2) { animation: whyPhoneMedia 3.4s ease-in-out infinite; }
+        .stats-orb { animation: whyMockupFloat 5.5s ease-in-out infinite; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .why-ads-section .why-card-new *,
+            .why-ads-section .stats-orb {
+                animation: none !important;
+                transition: none !important;
+            }
+        }
+
         .mockup-container { height: 110px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; }
         .mini-browser, .mini-phone { background: #0f172a; border: 2px solid #334155; border-radius: 8px; overflow: hidden; position: relative; box-shadow: 0 8px 16px rgba(0,0,0,0.4); width: 100%; }
         .mini-browser { height: 100px; display: flex; flex-direction: column; }
