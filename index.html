@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>شبکه تبلیغات ایران | تبلیغات بین‌المللی و کمپین‌های هدفمند</title>
-    <meta name="description" content="اجرای کمپین‌های تبلیغات دیجیتال در گوگل ادز، متا ادز و تلگرام ادز با پرداخت سریع رمزارزی، مدیریت تخصصی و تعرفه شفاف.">
+    <meta name="description" content="هزینه خدمات کمپین‌های تبلیغاتی گوگل، اینستاگرام و تلگرام، فروش اکانت و خدمات وریفای با پرداخت USDT و TRX.">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="theme-color" content="#030712">
     <link rel="canonical" href="https://iranadsnetwork.ir/">
@@ -12,11 +12,11 @@
     <meta property="og:locale" content="fa_IR">
     <meta property="og:site_name" content="شبکه تبلیغات ایران">
     <meta property="og:title" content="شبکه تبلیغات ایران | تبلیغات بین‌المللی">
-    <meta property="og:description" content="اجرای کمپین‌های هدفمند گوگل، متا و تلگرام با تعرفه شفاف و پرداخت رمزارزی.">
+    <meta property="og:description" content="تعرفه کمپین‌های گوگل، اینستاگرام و تلگرام، بونوس تبلیغاتی، فروش اکانت و خدمات وریفای با پرداخت رمزارزی.">
     <meta property="og:url" content="https://iranadsnetwork.ir/">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="شبکه تبلیغات ایران | تبلیغات بین‌المللی">
-    <meta name="twitter:description" content="اجرای کمپین‌های هدفمند گوگل، متا و تلگرام با تعرفه شفاف و پرداخت رمزارزی.">
+    <meta name="twitter:description" content="تعرفه کمپین‌های گوگل، اینستاگرام و تلگرام، بونوس تبلیغاتی، فروش اکانت و خدمات وریفای با پرداخت رمزارزی.">
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png" sizes="32x32">
@@ -335,6 +335,37 @@
         .plan-features li.included-feature { color: #e2e8f0; }
         .plan-features li.premium-feature { color: #fbbf24; font-weight: 700; }
         .plan-features li.premium-feature i { color: #fbbf24; }
+
+        /* Homepage service pricing cards */
+        .service-pricing-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
+        .service-pricing-card {
+            min-width: 0; padding: 25px 21px 22px; display: flex; flex-direction: column;
+            background: linear-gradient(180deg, rgba(15, 30, 58, .78), rgba(7, 17, 35, .92));
+            border: 1px solid rgba(56, 189, 248, .22); border-top: 3px solid var(--service-accent, var(--neon-cyan));
+            border-radius: 18px; box-shadow: 0 12px 28px rgba(0,0,0,.18); transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+        }
+        .service-pricing-card:hover { transform: translateY(-5px); border-color: var(--service-accent, var(--neon-cyan)); box-shadow: 0 18px 36px rgba(0,0,0,.28); }
+        .service-pricing-card.google { --service-accent: #60a5fa; }
+        .service-pricing-card.instagram { --service-accent: #ec4899; }
+        .service-pricing-card.telegram { --service-accent: #38bdf8; }
+        .service-pricing-card.accounts { --service-accent: #a78bfa; }
+        .service-pricing-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 17px; text-align: right; }
+        .service-pricing-icon { width: 46px; height: 46px; flex: 0 0 46px; display: inline-flex; align-items: center; justify-content: center; border-radius: 13px; color: var(--service-accent); background: color-mix(in srgb, var(--service-accent) 13%, transparent); border: 1px solid color-mix(in srgb, var(--service-accent) 30%, transparent); font-size: 1.35rem; }
+        .service-pricing-heading h3 { color: #fff; font-size: 1.08rem; font-weight: 800; line-height: 1.5; margin: 0; }
+        .service-price-block { padding: 14px 13px 13px; margin-bottom: 15px; border: 1px solid color-mix(in srgb, var(--service-accent) 24%, transparent); border-radius: 13px; background: color-mix(in srgb, var(--service-accent) 7%, transparent); text-align: center; }
+        .service-start-label { display: block; color: #cbd5e1; font-size: .76rem; margin-bottom: 3px; }
+        .service-price { display: block; color: #fff; font-size: 2.05rem; font-weight: 900; line-height: 1.25; direction: ltr; }
+        .service-bonus { display: inline-flex; align-items: center; justify-content: center; margin-top: 8px; padding: 5px 11px; border-radius: 999px; background: rgba(16,185,129,.12); border: 1px solid rgba(52,211,153,.3); color: #6ee7b7; font-size: .78rem; font-weight: 800; }
+        .service-price-context { color: var(--text-muted); font-size: .75rem; line-height: 1.8; margin: 8px 0 0; }
+        .service-pricing-features { list-style: none; padding: 15px 0 0; margin: 0 0 21px; border-top: 1px solid rgba(255,255,255,.09); text-align: right; }
+        .service-pricing-features li { display: flex; align-items: flex-start; gap: 8px; color: #cbd5e1; font-size: .79rem; line-height: 1.8; margin-bottom: 9px; }
+        .service-pricing-features li i { color: var(--service-accent); flex: 0 0 14px; margin-top: 5px; font-size: .7rem; }
+        .service-item-price-note { display: block; color: #67e8f9; font-size: .68rem; margin-top: 1px; }
+        .service-pricing-action { width: 100%; margin-top: auto; padding: 10px 12px; font-size: .83rem; }
+        .service-pricing-footnote { margin: 14px 0 0; color: var(--text-muted); font-size: .74rem; line-height: 1.8; text-align: center; }
+        .service-pricing-footnote a { color: var(--neon-blue); text-decoration: underline; text-underline-offset: 3px; }
+        @media (max-width: 1100px) { .service-pricing-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        @media (max-width: 600px) { .service-pricing-grid { grid-template-columns: minmax(0, 1fr); gap: 14px; } .service-pricing-card { padding: 22px 19px; } }
 
         .about-box { background: linear-gradient(180deg, rgba(15, 23, 42, 0.8), rgba(10, 22, 44, 0.8)); border: 1px solid var(--border-glow); border-radius: 20px; padding: 42px; }
         .about-box p { color: var(--text-muted); font-size: 1.02rem; line-height: 1.9; margin-bottom: 18px; text-align: justify; }
@@ -751,96 +782,106 @@
             </div>
         </section>
 
-        <!-- Pricing -->
-        <section id="pricing">
+        <!-- Pricing / Service Costs -->
+        <section id="pricing" aria-labelledby="pricing-heading">
             <div class="container">
                 <div class="section-header">
-                    <h2>نرخ و هزینه تبلیغات</h2>
-                    <p>شفاف‌ترین تعرفه‌ها با کمترین نرخ هزینه تبلیغات در فضای مجازی</p>
+                    <h2 id="pricing-heading">هزینه خدمات</h2>
+                    <p>تعرفه شروع کمپین‌های تبلیغاتی، بونوس‌های ویژه و خدمات فروش اکانت و وریفای</p>
                 </div>
 
                 <div class="pricing-meta">
-                    <div style="font-size: 0.92rem; color: #e2e8f0;">
-                        <i class="fa-solid fa-bolt" style="color: var(--neon-cyan);"></i>
-                        <strong>تضمین بهترین قیمت:</strong> پایین‌ترین و اقتصادی‌ترین تعرفه اجرای کمپین‌ها.
+                    <div class="pricing-payment-copy" style="font-size: 0.92rem; color: #e2e8f0;">
+                        <i class="fa-solid fa-shield-halved" style="color: var(--neon-cyan);"></i>
+                        <strong>پرداخت امن با رمزارز:</strong> امکان پرداخت با تتر و ترون از طریق شبکه TRON
                     </div>
                     <div class="payment-badges">
-                        <span class="pay-badge"><i class="fa-solid fa-coins"></i> تتر و ترون (USDT / TRX)</span>
+                        <span class="pay-badge"><i class="fa-solid fa-coins"></i> تتر (USDT - TRC20) و ترون (TRX)</span>
                     </div>
-                </div>
-                <div class="pricing-fee-note">
-                    <i class="fa-solid fa-circle-info"></i>
-                    مبلغ کل شامل شارژ حساب به‌اضافه ۱۰٪ هزینه کارمزد مدیریت و اجرای کمپین است.
                 </div>
 
-                <div class="pricing-grid">
-                    <div class="pricing-card">
-                        <div>
-                            <div class="plan-title">پکیج استارتر</div>
-                            <div class="plan-price">$55</div>
-                            <div class="plan-fee-text">معادل ۵۰ دلار شارژ + ۵ دلار کارمزد</div>
-                            <div class="plan-duration">حداقل شارژ</div>
-                            <ul class="plan-features">
-                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> پرداخت سریع با کریپتو</li>
-                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به کمپین گوگل ادز</li>
-                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به کمپین متا ادز</li>
-                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به پنل تلگرام ادز</li>
-                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به فروشگاه</li>
-                            </ul>
+                <div class="service-pricing-grid">
+                    <article class="service-pricing-card google" aria-labelledby="google-service-price-title">
+                        <div class="service-pricing-heading">
+                            <span class="service-pricing-icon"><i class="fa-brands fa-google" aria-hidden="true"></i></span>
+                            <h3 id="google-service-price-title">کمپین تبلیغاتی گوگل</h3>
                         </div>
-                        <a href="dashboard.html" class="btn btn-secondary">ورود به پنل و شارژ</a>
-                    </div>
-                    <div class="pricing-card">
-                        <div>
-                            <div class="plan-title">پکیج رشد تجاری</div>
-                            <div class="plan-price">$275</div>
-                            <div class="plan-fee-text">معادل ۲۵۰ دلار شارژ + ۲۵ دلار کارمزد</div>
-                            <div class="plan-duration">حداقل ۶ ماه</div>
-                            <ul class="plan-features">
-                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> پرداخت سریع با کریپتو</li>
-                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به کمپین گوگل ادز</li>
-                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به کمپین متا ادز</li>
-                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به پنل تلگرام ادز</li>
-                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به فروشگاه</li>
-                            </ul>
+                        <div class="service-price-block">
+                            <span class="service-start-label">شروع کمپین از</span>
+                            <strong class="service-price">$150</strong>
+                            <span class="service-bonus">۲۰ دلار بونوس تبلیغاتی</span>
                         </div>
-                        <a href="dashboard.html" class="btn btn-secondary">ورود به پنل و شارژ</a>
-                    </div>
-                    <div class="pricing-card featured">
-                        <span class="popular-tag">پیشنهاد ویژه</span>
-                        <div>
-                            <div class="plan-title">پکیج حرفه‌ای</div>
-                            <div class="plan-price">$550</div>
-                            <div class="plan-fee-text">معادل ۵۰۰ دلار شارژ + ۵۰ دلار کارمزد</div>
-                            <div class="plan-duration">۶ تا ۱۰ ماه</div>
-                            <ul class="plan-features">
-                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> پرداخت سریع با کریپتو</li>
-                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به کمپین گوگل ادز</li>
-                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به کمپین متا ادز</li>
-                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به پنل تلگرام ادز</li>
-                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به فروشگاه</li>
-                                <li class="premium-feature"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> دسترسی به تیک آبی اینستاگرام</li>
-                            </ul>
+                        <ul class="service-pricing-features">
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>تبلیغات در نتایج جستجوی گوگل (Search Ads)</span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>تبلیغات بنری در سایت‌ها و اپلیکیشن‌های همکار گوگل (Display)</span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>تبلیغات ویدئویی در یوتیوب</span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>هدف‌گیری بر اساس کلمات کلیدی، موقعیت مکانی و زبان</span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>تخصیص بودجه و پایش عملکرد کمپین</span></li>
+                        </ul>
+                        <a href="dashboard.html" class="btn btn-primary service-pricing-action">ثبت سفارش در داشبورد</a>
+                    </article>
+
+                    <article class="service-pricing-card instagram" aria-labelledby="instagram-service-price-title">
+                        <div class="service-pricing-heading">
+                            <span class="service-pricing-icon"><i class="fa-brands fa-instagram" aria-hidden="true"></i></span>
+                            <h3 id="instagram-service-price-title">کمپین تبلیغاتی اینستاگرام</h3>
                         </div>
-                        <a href="dashboard.html" class="btn btn-primary">ورود به پنل و شارژ</a>
-                    </div>
-                    <div class="pricing-card">
-                        <div>
-                            <div class="plan-title">پکیج سازمانی VIP</div>
-                            <div class="plan-price">$1,100</div>
-                            <div class="plan-fee-text">معادل ۱۰۰۰ دلار شارژ + ۱۰۰ دلار کارمزد</div>
-                            <div class="plan-duration">۱ ساله</div>
-                            <ul class="plan-features">
-                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> پرداخت سریع با کریپتو</li>
-                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به کمپین گوگل ادز</li>
-                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به کمپین متا ادز</li>
-                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به پنل تلگرام ادز</li>
-                                <li class="included-feature"><i class="fa-solid fa-check" aria-hidden="true"></i> دسترسی به فروشگاه</li>
-                                <li class="premium-feature"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> دسترسی به تیک آبی اینستاگرام</li>
-                            </ul>
+                        <div class="service-price-block">
+                            <span class="service-start-label">شروع کمپین از</span>
+                            <strong class="service-price">$40</strong>
+                            <span class="service-bonus">۱۰ دلار بونوس تبلیغاتی</span>
+                            <p class="service-price-context">حداقل شروع مطابق داشبورد: ۲۰ دلار بودجه تبلیغاتی به‌علاوه ۲۰ دلار کارمزد مدیریت</p>
                         </div>
-                        <a href="dashboard.html" class="btn btn-secondary">ورود به پنل و شارژ</a>
-                    </div>
+                        <ul class="service-pricing-features">
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>پروموت و افزایش بازدید پست منتخب</span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>اجرای تبلیغات از طریق زیرساخت تبلیغاتی Meta</span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>انتشار پست همکاری با اکانت مورد تأیید</span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>تنظیم بازارها و کشورهای هدف برای نمایش تبلیغ</span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>تمرکز بر افزایش دیده‌شدن، بازدید و تعامل محتوا</span></li>
+                        </ul>
+                        <a href="dashboard.html" class="btn btn-primary service-pricing-action">ثبت سفارش در داشبورد</a>
+                    </article>
+
+                    <article class="service-pricing-card telegram" aria-labelledby="telegram-service-price-title">
+                        <div class="service-pricing-heading">
+                            <span class="service-pricing-icon"><i class="fa-brands fa-telegram" aria-hidden="true"></i></span>
+                            <h3 id="telegram-service-price-title">کمپین رسمی تبلیغات تلگرام</h3>
+                        </div>
+                        <div class="service-price-block">
+                            <span class="service-start-label">شروع کمپین از</span>
+                            <strong class="service-price">$10</strong>
+                        </div>
+                        <ul class="service-pricing-features">
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>انتخاب کانال‌های عمومی هدف برای نمایش پیام اسپانسری</span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>نمایش در کانال‌های واجد شرایط با بیش از ۱۰۰۰ عضو</span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>هدف‌گیری متناسب با زبان محتوای کانال و کشور یا منطقه هدف</span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>تناسب موضوع تبلیغ با موضوع کانال و مخاطبان هدف</span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>پیام اسپانسری کوتاه با دکمه هدایت به کانال یا ربات تلگرام</span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>تنظیم بودجه و CPM و مشاهده آمار بازدید و عملکرد کمپین</span></li>
+                        </ul>
+                        <a href="dashboard.html" class="btn btn-primary service-pricing-action">ثبت سفارش در داشبورد</a>
+                        <p class="service-pricing-footnote">متن آگهی رسمی حداکثر ۱۶۰ کاراکتر است و لینک مقصد باید به کانال یا ربات تلگرام هدایت شود. <a href="https://ads.telegram.org/guidelines" target="_blank" rel="noopener noreferrer">قوانین رسمی تبلیغات تلگرام</a></p>
+                    </article>
+
+                    <article class="service-pricing-card accounts" aria-labelledby="account-service-price-title">
+                        <div class="service-pricing-heading">
+                            <span class="service-pricing-icon"><i class="fa-solid fa-certificate" aria-hidden="true"></i></span>
+                            <h3 id="account-service-price-title">فروش اکانت و خدمات وریفای</h3>
+                        </div>
+                        <div class="service-price-block">
+                            <span class="service-start-label">قیمت محصولات و ثبت سفارش</span>
+                            <strong class="service-price" style="font-size:1.42rem;">داخل داشبورد</strong>
+                            <p class="service-price-context">قیمت نهایی هر سرویس در پنل کاربری نمایش داده می‌شود.</p>
+                        </div>
+                        <ul class="service-pricing-features">
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>اشتراک Gemini Pro <span class="service-item-price-note">قیمت داخل داشبورد</span></span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>اشتراک ChatGPT Plus ماهانه و سالانه <span class="service-item-price-note">قیمت داخل داشبورد</span></span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>تیک آبی و وریفای اینستاگرام <span class="service-item-price-note">قیمت داخل داشبورد</span></span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>اشتراک Telegram Premium سه، شش و دوازده‌ماهه <span class="service-item-price-note">قیمت داخل داشبورد</span></span></li>
+                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>اکانت X Premium به‌همراه Grok <span class="service-item-price-note">قیمت داخل داشبورد</span></span></li>
+                        </ul>
+                        <a href="dashboard.html" class="btn btn-primary service-pricing-action">مشاهده قیمت‌ها و خرید</a>
+                    </article>
                 </div>
             </div>
         </section>
@@ -957,16 +998,34 @@
           'خرید اشتراک Gemini Pro':'Buy a Gemini Pro Subscription','استفاده از قابلیت‌های پیشرفته هوش مصنوعی Gemini برای پژوهش، تولید محتوا و کارهای روزمره.':'Use advanced Gemini AI features for research, content creation, and everyday tasks.',
           'خرید اشتراک X':'Buy an X Subscription','تهیه اشتراک پریمیوم X و بهره‌مندی از امکانات ویژه این شبکه اجتماعی.':'Get an X Premium subscription and enjoy the platform’s enhanced features.',
           'خرید تیک آبی Instagram':'Buy an Instagram Verified Badge','دریافت نشان تأیید هویت اینستاگرام برای حساب‌های واجد شرایط.':'Get Instagram’s verification badge for eligible accounts.',
-          'نرخ و هزینه تبلیغات':'Advertising Rates & Pricing','شفاف‌ترین تعرفه‌ها با کمترین نرخ هزینه تبلیغات در فضای مجازی':'Transparent pricing and competitive rates for digital advertising',
-          'تضمین بهترین قیمت:':'Best Price Guarantee:','پایین‌ترین و اقتصادی‌ترین تعرفه اجرای کمپین‌ها.':'Competitive, cost-effective campaign management rates.',
-          'مبلغ کل شامل شارژ حساب به‌اضافه ۱۰٪ هزینه کارمزد مدیریت و اجرای کمپین است.':'The total includes your advertising budget plus a 10% fee for campaign management and execution.',
-          'پکیج استارتر':'Starter Package','معادل ۵۰ دلار شارژ + ۵ دلار کارمزد':'Includes $50 ad credit + $5 service fee','حداقل شارژ':'Minimum top-up',
-          'پکیج رشد تجاری':'Business Growth Package','معادل ۲۵۰ دلار شارژ + ۲۵ دلار کارمزد':'Includes $250 ad credit + $25 service fee','حداقل ۶ ماه':'Minimum 6 months',
-          'پکیج حرفه‌ای':'Professional Package','معادل ۵۰۰ دلار شارژ + ۵۰ دلار کارمزد':'Includes $500 ad credit + $50 service fee','۶ تا ۱۰ ماه':'6–10 months',
-          'پکیج سازمانی VIP':'VIP Corporate Package','معادل ۱۰۰۰ دلار شارژ + ۱۰۰ دلار کارمزد':'Includes $1,000 ad credit + $100 service fee','۱ ساله':'1 year',
-          'پرداخت سریع با کریپتو':'Fast crypto payments','دسترسی به کمپین گوگل ادز':'Access to Google Ads campaigns','دسترسی به کمپین متا ادز':'Access to Meta Ads campaigns',
-          'دسترسی به پنل تلگرام ادز':'Access to Telegram Ads','دسترسی به فروشگاه':'Access to the advertising store',
-          'پیشنهاد ویژه':'Special Offer','دسترسی به تیک آبی اینستاگرام':'Instagram verification badge access','ورود به پنل و شارژ':'Open Dashboard & Add Funds',
+          'هزینه خدمات':'Service Costs','تعرفه شروع کمپین‌های تبلیغاتی، بونوس‌های ویژه و خدمات فروش اکانت و وریفای':'Starting rates for advertising campaigns, special bonuses, account sales and verification services',
+          'پرداخت امن با رمزارز:':'Secure crypto payments:','امکان پرداخت با تتر و ترون از طریق شبکه TRON':'Pay with Tether and TRON on the TRON network','تتر (USDT - TRC20) و ترون (TRX)':'Tether (USDT - TRC20) and TRON (TRX)',
+          'کمپین تبلیغاتی گوگل':'Google Advertising Campaign','شروع کمپین از':'Campaigns starting at','$150':'$150','۲۰ دلار بونوس تبلیغاتی':'$20 advertising bonus',
+          'تبلیغات در نتایج جستجوی گوگل (Search Ads)':'Google Search Ads','تبلیغات بنری در سایت‌ها و اپلیکیشن‌های همکار گوگل (Display)':'Display ads across Google partner websites and apps',
+          'تبلیغات ویدئویی در یوتیوب':'YouTube video advertising','هدف‌گیری بر اساس کلمات کلیدی، موقعیت مکانی و زبان':'Targeting by keywords, location and language',
+          'تخصیص بودجه و پایش عملکرد کمپین':'Campaign budget allocation and performance monitoring','ثبت سفارش در داشبورد':'Place an order in the dashboard',
+          'کمپین تبلیغاتی اینستاگرام':'Instagram Advertising Campaign','$40':'$40','۱۰ دلار بونوس تبلیغاتی':'$10 advertising bonus',
+          'حداقل شروع مطابق داشبورد: ۲۰ دلار بودجه تبلیغاتی به‌علاوه ۲۰ دلار کارمزد مدیریت':'Dashboard minimum: $20 ad budget plus a $20 management fee',
+          'پروموت و افزایش بازدید پست منتخب':'Promote a selected post and increase its reach',
+          'اجرای تبلیغات از طریق زیرساخت تبلیغاتی Meta':'Campaign delivery through Meta advertising infrastructure',
+          'انتشار پست همکاری با اکانت مورد تأیید':'Publish a collaboration post through an approved account',
+          'تنظیم بازارها و کشورهای هدف برای نمایش تبلیغ':'Set target markets and countries for ad delivery',
+          'تمرکز بر افزایش دیده‌شدن، بازدید و تعامل محتوا':'Focus on visibility, views and content engagement',
+          'کمپین رسمی تبلیغات تلگرام':'Official Telegram Ads Campaign','$10':'$10',
+          'انتخاب کانال‌های عمومی هدف برای نمایش پیام اسپانسری':'Choose public target channels for sponsored messages',
+          'نمایش در کانال‌های واجد شرایط با بیش از ۱۰۰۰ عضو':'Placement in eligible public channels with 1,000+ subscribers',
+          'هدف‌گیری متناسب با زبان محتوای کانال و کشور یا منطقه هدف':'Targeting based on channel content language and target country or region',
+          'تناسب موضوع تبلیغ با موضوع کانال و مخاطبان هدف':'Ad relevance to channel topics and target audiences',
+          'پیام اسپانسری کوتاه با دکمه هدایت به کانال یا ربات تلگرام':'Short sponsored message with a button linking to a Telegram channel or bot',
+          'تنظیم بودجه و CPM و مشاهده آمار بازدید و عملکرد کمپین':'Set budget and CPM, and review views and campaign performance',
+          'متن آگهی رسمی حداکثر ۱۶۰ کاراکتر است و لینک مقصد باید به کانال یا ربات تلگرام هدایت شود.':'Official ad text is limited to 160 characters and its destination link must lead to a Telegram channel or bot.',
+          'قوانین رسمی تبلیغات تلگرام':'Official Telegram Ads Guidelines',
+          'فروش اکانت و خدمات وریفای':'Account Sales & Verification Services','قیمت محصولات و ثبت سفارش':'Product pricing and orders','داخل داشبورد':'In the dashboard',
+          'قیمت نهایی هر سرویس در پنل کاربری نمایش داده می‌شود.':'Final prices for each service are shown in the user dashboard.',
+          'اشتراک Gemini Pro':'Gemini Pro subscription','قیمت داخل داشبورد':'Price shown in dashboard',
+          'اشتراک ChatGPT Plus ماهانه و سالانه':'Monthly and annual ChatGPT Plus','تیک آبی و وریفای اینستاگرام':'Instagram verification badge',
+          'اشتراک Telegram Premium سه، شش و دوازده‌ماهه':'Telegram Premium subscriptions for 3, 6 and 12 months',
+          'اکانت X Premium به‌همراه Grok':'X Premium account with Grok','مشاهده قیمت‌ها و خرید':'View prices and purchase',
           'هویت و مأموریت شبکه تبلیغات ایران':'The Identity and Mission of Iran Ads Network',
           'شبکه تبلیغات ایران با هدف توسعه بازار برندهای ایرانی و ایجاد فرصت‌های جدید برای حضور مؤثر کسب‌وکارهای داخلی در عرصه بین‌المللی، راهکارهای جامع، یکپارچه و هوشمند بازاریابی و تبلیغات دیجیتال را در پلتفرم‌های بین‌المللی ارائه می‌کند. این مجموعه با بهره‌گیری از ظرفیت‌های گسترده تبلیغات آنلاین، ابزارهای نوین تحلیل داده و شناخت دقیق رفتار مخاطبان ایرانی، تلاش می‌کند ارتباطی مؤثر میان برندها، مشتریان بالقوه و بازارهای هدف ایجاد کند و مسیر تبدیل مخاطب به مشتری وفادار را هموار سازد.':'Iran Ads Network provides comprehensive, integrated, and intelligent digital marketing and advertising solutions on international platforms. Our mission is to help Iranian brands expand into global markets by combining the reach of online advertising with modern data analytics and a deep understanding of audience behavior. We connect brands with potential customers and target markets, helping turn audiences into loyal customers.',
           'مقر اصلی شبکه تبلیغات ایران در شهر دبی، امارات متحده عربی قرار دارد؛ شهری که به‌عنوان یکی از مهم‌ترین شاهراه‌های اقتصادی، تجاری و ارتباطی جهان، نقطه اتصال بازارهای خاورمیانه، آسیا، اروپا و آفریقا به شمار می‌رود. استقرار در این مرکز تجاری بین‌المللی، امکان بهره‌مندی از ظرفیت‌های اقتصادی، زیرساخت‌های ارتباطی و فرصت‌های همکاری فرامرزی را فراهم کرده و بستری مناسب برای توسعه خدمات تبلیغاتی در مقیاس بین‌المللی ایجاد می‌کند.':'Our headquarters are in Dubai, United Arab Emirates, a major global hub connecting the markets of the Middle East, Asia, Europe, and Africa. This international business location gives us access to strong commercial networks, communications infrastructure, and cross-border partnership opportunities, providing a solid base for delivering advertising services worldwide.',
@@ -996,7 +1055,7 @@
                 ? '<strong>Iran Ads Network</strong> provides comprehensive, integrated, and intelligent digital marketing and advertising solutions on international platforms. Our mission is to help Iranian brands expand into global markets by combining the reach of online advertising with modern data analytics and a deep understanding of audience behavior. We connect brands with potential customers and target markets, helping turn audiences into loyal customers.'
                 : '<strong>شبکه تبلیغات ایران</strong> با هدف توسعه بازار برندهای ایرانی و ایجاد فرصت‌های جدید برای حضور مؤثر کسب‌وکارهای داخلی در عرصه بین‌المللی، راهکارهای جامع، یکپارچه و هوشمند بازاریابی و تبلیغات دیجیتال را در پلتفرم‌های بین‌المللی ارائه می‌کند. این مجموعه با بهره‌گیری از ظرفیت‌های گسترده تبلیغات آنلاین، ابزارهای نوین تحلیل داده و شناخت دقیق رفتار مخاطبان ایرانی، تلاش می‌کند ارتباطی مؤثر میان برندها، مشتریان بالقوه و بازارهای هدف ایجاد کند و مسیر تبدیل مخاطب به مشتری وفادار را هموار سازد.';
             document.querySelectorAll('meta[property="og:title"], meta[name="twitter:title"]').forEach(m => m.content = currentLanguage === 'en' ? 'Iran Ads Network | International Digital Advertising' : 'شبکه تبلیغات ایران | تبلیغات بین‌المللی');
-            document.querySelectorAll('meta[property="og:description"], meta[name="twitter:description"]').forEach(m => m.content = currentLanguage === 'en' ? 'Targeted Google, Meta, and Telegram campaigns with transparent pricing and crypto payments.' : 'اجرای کمپین‌های هدفمند گوگل، متا و تلگرام با تعرفه شفاف و پرداخت رمزارزی.');
+            document.querySelectorAll('meta[property="og:description"], meta[name="twitter:description"]').forEach(m => m.content = currentLanguage === 'en' ? 'Pricing for Google, Instagram, and Telegram ad campaigns, advertising bonuses, account sales, verification services, and crypto payments.' : 'تعرفه کمپین‌های گوگل، اینستاگرام و تلگرام، بونوس تبلیغاتی، فروش اکانت و خدمات وریفای با پرداخت رمزارزی.');
             document.documentElement.lang = currentLanguage;
             document.documentElement.dir = currentLanguage === 'en' ? 'ltr' : 'rtl';
             document.getElementById('language-toggle').textContent = currentLanguage === 'en' ? 'فارسی' : 'English';
@@ -1004,7 +1063,7 @@
             document.getElementById('language-toggle').setAttribute('aria-label', currentLanguage === 'en' ? 'Switch to Persian' : 'Switch to English');
             document.title = currentLanguage === 'en' ? 'Iran Ads Network | International Digital Advertising' : 'شبکه تبلیغات ایران | تبلیغات بین‌المللی و کمپین‌های هدفمند';
             const description = document.querySelector('meta[name="description"]');
-            if (description) description.content = currentLanguage === 'en' ? 'Targeted international campaigns across Google Ads, Meta Ads, and Telegram Ads, with crypto payments, expert management, and transparent pricing.' : 'اجرای کمپین‌های تبلیغات دیجیتال در گوگل ادز، متا ادز و تلگرام ادز با پرداخت سریع رمزارزی، مدیریت تخصصی و تعرفه شفاف.';
+            if (description) description.content = currentLanguage === 'en' ? 'Pricing for Google, Instagram, and Telegram ad campaigns, advertising bonuses, account sales, verification services, and crypto payments.' : 'هزینه خدمات کمپین‌های تبلیغاتی گوگل، اینستاگرام و تلگرام، فروش اکانت و خدمات وریفای با پرداخت USDT و TRX.';
             document.querySelectorAll('meta[property="og:locale"]').forEach(m => m.content = currentLanguage === 'en' ? 'en_US' : 'fa_IR');
             document.getElementById('read-more-toggle')?.setAttribute('aria-label', currentLanguage === 'en' ? 'Read more about us' : 'مشاهده کامل متن');
             document.getElementById('map-frame')?.setAttribute('title', currentLanguage === 'en' ? 'Iran Ads Network headquarters in Dubai' : 'موقعیت دفتر مرکزی شبکه تبلیغات ایران در دبی');
