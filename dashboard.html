@@ -349,7 +349,7 @@
                                 <h3 style="font-size: 1rem; margin-bottom: 8px;"><i class="fa-brands fa-youtube" style="color: #FF0000;"></i> تبلیغات یوتیوب</h3>
                                 <label style="font-size: 0.78rem; color: #cbd5e1; display: block; margin-bottom: 6px;">بودجه (دلار - USD)</label>
                                 <input type="number" step="0.1" min="0" id="b-youtube" value="0" oninput="updateCampTotal()" class="form-input" dir="ltr">
-                                <div style="font-size: 0.7rem; color: #fbbf24; margin-top: 8px; line-height: 1.5;">در تیکت پشتیبانی باید تیزر سفارش داده شود یا فایل آماده ارسال گردد.</div>
+                                <div style="font-size: 0.7rem; color: #fbbf24; margin-top: 8px; line-height: 1.5;">درخواست‌های تیزر یوتیوب در فهرست جداگانه نمایش داده می‌شوند. پس از ثبت، از دکمه «ارسال یا سفارش ویدئو» برای ارسال لینک ویدئوی آماده یا سفارش ساخت استفاده کنید.</div>
                             </div>
                         </div>
 
@@ -360,8 +360,22 @@
                     </form>
                 </div>
                 <div class="glass-card">
-                    <h3 style="font-size: 1.15rem; margin-bottom: 14px;"><i class="fa-solid fa-list-check" style="color: var(--neon-cyan);"></i> لیست کمپین‌های گوگل شما</h3>
-                    <div class="table-responsive"><table><thead><tr><th>وب‌سایت</th><th>بودجه (S/G/Y)</th><th>کل بودجه</th><th>وضعیت</th></tr></thead><tbody id="campaigns-tbody"></tbody></table></div>
+                    <h3 style="font-size: 1.15rem; margin-bottom: 14px;"><i class="fa-solid fa-list-check" style="color: var(--neon-cyan);"></i> لیست تبلیغات جستجو و سایت‌های همکار</h3>
+                    <div class="table-responsive"><table><thead><tr><th>وب‌سایت مقصد</th><th>بودجه جستجو / سایت‌های همکار</th><th>مجموع این دو سرویس</th><th>وضعیت</th></tr></thead><tbody id="campaigns-tbody"></tbody></table></div>
+                </div>
+
+                <div class="glass-card">
+                    <h3 style="font-size: 1.15rem; margin-bottom: 14px;"><i class="fa-brands fa-youtube" style="color: #FF0000;"></i> درخواست‌های تیزر تبلیغاتی یوتیوب</h3>
+                    <div class="table-responsive"><table><thead><tr><th>وب‌سایت مقصد</th><th>بودجه تیزر یوتیوب</th><th>وضعیت</th><th>اقدام</th></tr></thead><tbody id="youtube-campaigns-tbody"></tbody></table></div>
+                </div>
+
+                <div class="glass-card" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:12px;">
+                    <a href="https://ads.google.com/aw/overview" target="_blank" rel="noopener noreferrer" class="btn" style="background:#fff; color:#202124; border:1px solid #dadce0; box-shadow:0 2px 5px rgba(0,0,0,.18);">
+                        <i class="fa-brands fa-google" style="color:#4285F4;"></i> ورود به داشبورد Google Ads
+                    </a>
+                    <a href="https://support.google.com/google-ads/?hl=fa" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+                        <i class="fa-solid fa-book-open"></i> مستندات Google Ads
+                    </a>
                 </div>
             </div>
 
@@ -595,13 +609,18 @@
 
             <!-- تب پشتیبانی (گفتگومحور) -->
             <div id="content-tickets" class="tab-section hidden">
-                <div class="glass-card">
+                <div class="glass-card" id="ticket-compose-card">
                     <div style="margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 14px;">
                         <h2 style="font-size: 1.25rem; font-weight: 800;"><i class="fa-solid fa-headset" style="color: #34d399;"></i> ثبت تیکت جدید</h2>
                     </div>
                     <form onsubmit="submitTicket(event)">
                         <div class="form-group"><label>موضوع تیکت</label><input type="text" id="ticket-subject" class="form-input" placeholder="مثلاً: ارسال اطلاعات فعال‌سازی تلگرام پریمیوم" required></div>
-                        <div class="form-group"><label>متن پیام شما</label><textarea id="ticket-message" rows="3" class="form-input" placeholder="پیام خود را بنویسید..." required></textarea></div>
+                        <div id="ticket-video-link-wrap" class="form-group hidden">
+                            <label>لینک ویدئوی آماده (در صورت وجود)</label>
+                            <input type="url" id="ticket-video-link" class="form-input" placeholder="https://drive.google.com/..." dir="ltr">
+                            <div style="font-size:.76rem;color:var(--text-muted);margin-top:6px;">ویدئو را در فضای ابری بارگذاری و لینک قابل مشاهده را وارد کنید. اگر ویدئوی آماده ندارید، سفارش ساخت تیزر را در متن پیام انتخاب کنید.</div>
+                        </div>
+                        <div class="form-group"><label>متن پیام شما</label><textarea id="ticket-message" rows="4" class="form-input" placeholder="پیام خود را بنویسید..." required></textarea></div>
                         <button type="submit" class="btn btn-primary" style="width: 100%; max-width: 250px;">ثبت و ایجاد تیکت</button>
                     </form>
                 </div>
@@ -616,6 +635,7 @@
 
     <script>
         let currentUser = JSON.parse(localStorage.getItem('iran_ad_user') || 'null');
+        let googleCampaignCache = [];
         let loginTurnstileToken = '';
         let loginTurnstileWidget = null;
 
@@ -803,6 +823,12 @@
             else { errBox.classList.add('hidden'); submitBtn.disabled = false; }
         }
 
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, char => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            })[char]);
+        }
+
         function renderCampaignStatus(status) {
             if (status === 'active' || status === 'approved') return `<span class="status-pill pill-approved">تایید شده (در حال اجرا)</span>`;
             if (status === 'rejected') return `<span class="status-pill pill-rejected">رد شده (عودت بودجه)</span>`;
@@ -832,11 +858,33 @@
             document.getElementById('wallet-usdt-addr').innerText = data.wallets.usdt || 'خالی';
             document.getElementById('wallet-trx-addr').innerText = data.wallets.trx || 'خالی';
 
-            // ۱. لیست گوگل
+            // ۱. تبلیغات جستجو و سایت‌های همکار در یک فهرست
             const gList = data.google_campaigns || [];
-            document.getElementById('campaigns-tbody').innerHTML = gList.length ? gList.map(c => `
-                <tr><td dir="ltr" style="font-family: monospace; color: var(--neon-blue); white-space: nowrap;">${c.website_url}</td><td style="white-space: nowrap;">$${c.budget_search} / $${c.budget_display} / $${c.budget_youtube}</td><td style="font-weight: 800; color: #34d399; white-space: nowrap;">$${c.total_budget}</td><td>${renderCampaignStatus(c.status)}</td></tr>
-            `).join('') : `<tr><td colspan="4" style="text-align: center;">هنوز کمپینی ثبت نشده است</td></tr>`;
+            googleCampaignCache = gList;
+            const searchDisplayList = gList.filter(c => Number(c.budget_search) > 0 || Number(c.budget_display) > 0);
+            document.getElementById('campaigns-tbody').innerHTML = searchDisplayList.length ? searchDisplayList.map(c => {
+                const searchBudget = Number(c.budget_search) || 0;
+                const displayBudget = Number(c.budget_display) || 0;
+                return `
+                    <tr>
+                        <td dir="ltr" style="font-family:monospace;color:var(--neon-blue);white-space:nowrap;">${escapeHtml(c.website_url)}</td>
+                        <td style="white-space:nowrap;">${searchBudget.toFixed(2)} / ${displayBudget.toFixed(2)}</td>
+                        <td style="font-weight:800;color:#34d399;white-space:nowrap;">${(searchBudget + displayBudget).toFixed(2)}</td>
+                        <td>${renderCampaignStatus(c.status)}</td>
+                    </tr>
+                `;
+            }).join('') : `<tr><td colspan="4" style="text-align:center;">هنوز درخواستی برای تبلیغات جستجو یا سایت‌های همکار ثبت نشده است</td></tr>`;
+
+            // ۲. درخواست‌های تیزر یوتیوب در فهرستی مستقل
+            const youtubeList = gList.filter(c => Number(c.budget_youtube) > 0);
+            document.getElementById('youtube-campaigns-tbody').innerHTML = youtubeList.length ? youtubeList.map(c => `
+                <tr>
+                    <td dir="ltr" style="font-family:monospace;color:var(--neon-blue);white-space:nowrap;">${escapeHtml(c.website_url)}</td>
+                    <td style="font-weight:800;color:#34d399;white-space:nowrap;">${(Number(c.budget_youtube) || 0).toFixed(2)}</td>
+                    <td>${renderCampaignStatus(c.status)}</td>
+                    <td><button type="button" class="btn btn-outline" style="padding:8px 12px;font-size:.8rem;" onclick="openYoutubeVideoTicket(${Number(c.id) || 0})"><i class="fa-solid fa-video"></i> ارسال یا سفارش ویدئو</button></td>
+                </tr>
+            `).join('') : `<tr><td colspan="4" style="text-align:center;">هنوز درخواستی برای تیزر یوتیوب ثبت نشده است</td></tr>`;
 
             // ۲. لیست تلگرام
             const tgList = data.telegram_campaigns || [];
@@ -1086,15 +1134,47 @@
             }
         }
 
+        function openYoutubeVideoTicket(campaignId) {
+            const campaign = googleCampaignCache.find(item => Number(item.id) === Number(campaignId));
+            if (!campaign) {
+                alert('اطلاعات درخواست تیزر پیدا نشد. لطفاً صفحه را تازه‌سازی کنید.');
+                return;
+            }
+
+            document.getElementById('ticket-subject').value = `ارسال یا سفارش ویدئوی تیزر یوتیوب - کمپین #${campaign.id}`;
+            document.getElementById('ticket-message').value = [
+                'سلام، این تیکت مربوط به درخواست تیزر تبلیغاتی یوتیوب من است.',
+                `وب‌سایت مقصد: ${campaign.website_url}`,
+                `بودجه اختصاص‌یافته به تیزر یوتیوب: ${(Number(campaign.budget_youtube) || 0).toFixed(2)}`,
+                '',
+                'لطفاً یکی از موارد زیر را برای این کمپین پیگیری کنید:',
+                '۱) ویدئوی آماده دارم و لینک آن را در فیلد مربوطه وارد می‌کنم.',
+                '۲) سفارش ساخت تیزر تبلیغاتی دارم؛ لطفاً شرایط، هزینه و مراحل سفارش را اعلام کنید.'
+            ].join('\n');
+            document.getElementById('ticket-video-link').value = '';
+            document.getElementById('ticket-video-link-wrap').classList.remove('hidden');
+
+            switchTab('tickets');
+            document.getElementById('ticket-compose-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.getElementById('ticket-subject').focus();
+        }
+
         async function submitTicket(e) {
             e.preventDefault();
+            const subject = document.getElementById('ticket-subject').value.trim();
+            const messageText = document.getElementById('ticket-message').value.trim();
+            const videoLink = document.getElementById('ticket-video-link').value.trim();
+            const message = [messageText, videoLink ? `لینک ویدئوی آماده: ${videoLink}` : ''].filter(Boolean).join('\n\n');
             const res = await fetch('/api/user/ticket', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ user_id: currentUser.id, subject: document.getElementById('ticket-subject').value, message: document.getElementById('ticket-message').value })
+                body: JSON.stringify({ user_id: currentUser.id, subject, message })
             });
             const data = await res.json();
-            if (!res.ok) { alert(data.error); return; }
-            alert('تیکت شما با موفقیت ثبت شد.'); e.target.reset(); loadDashboardData();
+            if (!res.ok) { alert(data.error || 'ثبت تیکت ناموفق بود.'); return; }
+            alert('تیکت شما با موفقیت ثبت شد.');
+            e.target.reset();
+            document.getElementById('ticket-video-link-wrap').classList.add('hidden');
+            loadDashboardData();
         }
 
         // تابع پاسخگویی کاربر به تیکت قبلی
