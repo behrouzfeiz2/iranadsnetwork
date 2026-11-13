@@ -143,6 +143,34 @@
 
         /* Hero */
         .hero { padding: 60px 0 50px; text-align: center; position: relative; }
+
+        .hero { isolation: isolate; overflow: hidden; background: radial-gradient(ellipse at 50% 20%, rgba(8, 30, 58, .35), transparent 72%); }
+        .hero-data-highway {
+            position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
+            opacity: .76; filter: blur(1.1px);
+            -webkit-mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.9) 65%, transparent 100%);
+            mask-image: linear-gradient(to bottom, #000 0%, rgba(0,0,0,.9) 65%, transparent 100%);
+        }
+        .hero-data-highway::after {
+            content: ""; position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(3,7,18,.28), rgba(3,7,18,.12) 45%, rgba(3,7,18,.7));
+        }
+        .hero-data-highway svg { width: 100%; height: 100%; min-height: 560px; display: block; }
+        .data-road { fill: none; stroke: rgba(70,100,140,.22); stroke-width: 34; stroke-linecap: round; }
+        .data-road-edge { fill: none; stroke: rgba(148,163,184,.16); stroke-width: 1.2; stroke-dasharray: 5 12; }
+        .data-flow { fill: none; stroke-width: 3.2; stroke-linecap: round; stroke-dasharray: 2 20; animation: dataTraffic 8s linear infinite; }
+        .data-flow.red { stroke: #fb344f; filter: drop-shadow(0 0 5px rgba(251,52,79,.9)); }
+        .data-flow.blue { stroke: #38bdf8; filter: drop-shadow(0 0 6px rgba(56,189,248,.95)); animation-duration: 6.5s; }
+        .data-flow.fast { stroke-width: 2; stroke-dasharray: 1 13; animation-duration: 4.5s; opacity: .85; }
+        @keyframes dataTraffic { to { stroke-dashoffset: -220; } }
+        .hero > .container { position: relative; z-index: 1; }
+        @media (max-width: 768px) {
+            .hero-data-highway { opacity: .62; filter: blur(1.5px); }
+            .hero-data-highway svg { min-height: 500px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .hero-data-highway .data-flow { animation: none !important; }
+        }
         .badge {
             display: inline-block; padding: 6px 18px; border-radius: 9999px;
             background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.3);
@@ -560,6 +588,31 @@
     <main>
         <!-- Hero & 3D Interactive Devices -->
         <section class="hero">
+            <div class="hero-data-highway" aria-hidden="true">
+                <svg viewBox="0 0 1600 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                    <g opacity=".8">
+                        <path class="data-road" d="M-80 150 C220 80 300 280 560 210 S940 40 1190 150 S1460 300 1680 190"/>
+                        <path class="data-road" d="M-80 510 C180 600 380 390 620 470 S980 650 1210 500 S1480 390 1680 500"/>
+                        <path class="data-road" d="M280 -60 C360 130 500 220 430 390 S300 570 390 760"/>
+                        <path class="data-road" d="M1110 -60 C1010 120 1150 270 1080 410 S970 590 1060 760"/>
+                        <path class="data-road-edge" d="M-80 150 C220 80 300 280 560 210 S940 40 1190 150 S1460 300 1680 190"/>
+                        <path class="data-road-edge" d="M-80 510 C180 600 380 390 620 470 S980 650 1210 500 S1480 390 1680 500"/>
+                        <path class="data-road-edge" d="M280 -60 C360 130 500 220 430 390 S300 570 390 760"/>
+                        <path class="data-road-edge" d="M1110 -60 C1010 120 1150 270 1080 410 S970 590 1060 760"/>
+                    </g>
+                    <g>
+                        <path class="data-flow red" d="M-80 150 C220 80 300 280 560 210 S940 40 1190 150 S1460 300 1680 190"/>
+                        <path class="data-flow red fast" d="M-80 510 C180 600 380 390 620 470 S980 650 1210 500 S1480 390 1680 500"/>
+                        <path class="data-flow red fast" d="M280 -60 C360 130 500 220 430 390 S300 570 390 760"/>
+                        <path class="data-flow blue" d="M1680 285 C1400 210 1300 390 1050 320 S700 150 450 300 S150 450 -80 350"/>
+                        <path class="data-flow blue fast" d="M1680 620 C1400 520 1270 690 1030 570 S690 360 470 520 S160 650 -80 560"/>
+                        <path class="data-flow blue fast" d="M1110 -60 C1010 120 1150 270 1080 410 S970 590 1060 760"/>
+                    </g>
+                    <g fill="#e2e8f0" opacity=".28">
+                        <circle cx="430" cy="390" r="4"/><circle cx="1080" cy="410" r="4"/><circle cx="620" cy="470" r="3"/><circle cx="1190" cy="150" r="3"/>
+                    </g>
+                </svg>
+            </div>
             <div class="container">
                 <span class="badge">نسل آینده تبلیغات دیجیتال</span>
                 <h1>شبکه تبلیغات ایران</h1>
