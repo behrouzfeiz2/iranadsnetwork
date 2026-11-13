@@ -361,6 +361,12 @@
         .service-pricing-features li { display: flex; align-items: flex-start; gap: 8px; color: #cbd5e1; font-size: .79rem; line-height: 1.8; margin-bottom: 9px; }
         .service-pricing-features li i { color: var(--service-accent); flex: 0 0 14px; margin-top: 5px; font-size: .7rem; }
         .service-item-price-note { display: block; color: #67e8f9; font-size: .68rem; margin-top: 1px; }
+        .account-live-pricing-list { display: grid; gap: 8px; padding-top: 13px; margin: 0 0 20px; border-top: 1px solid rgba(255,255,255,.09); }
+        .account-live-price-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 11px; border: 1px solid rgba(255,255,255,.07); border-radius: 10px; background: rgba(255,255,255,.025); }
+        .account-live-price-name { min-width: 0; color: #cbd5e1; font-size: .78rem; line-height: 1.7; }
+        .account-live-price-period { display: block; color: #94a3b8; font-size: .7rem; }
+        .account-live-price-value { flex: 0 0 auto; color: #6ee7b7; font-size: .9rem; font-weight: 900; direction: ltr; white-space: nowrap; }
+        .account-pricing-loading, .account-pricing-error { margin: 0; color: #94a3b8; font-size: .78rem; line-height: 1.8; text-align: center; }
         .service-pricing-action { width: 100%; margin-top: auto; padding: 10px 12px; font-size: .83rem; }
         .service-pricing-footnote { margin: 14px 0 0; color: var(--text-muted); font-size: .74rem; line-height: 1.8; text-align: center; }
         .service-pricing-footnote a { color: var(--neon-blue); text-decoration: underline; text-underline-offset: 3px; }
@@ -878,17 +884,12 @@
                             <h3 id="account-service-price-title">فروش اکانت و خدمات وریفای</h3>
                         </div>
                         <div class="service-price-block">
-                            <span class="service-start-label">قیمت محصولات و ثبت سفارش</span>
-                            <strong class="service-price" style="font-size:1.42rem;">داخل داشبورد</strong>
-                            <p class="service-price-context">قیمت نهایی هر سرویس در پنل کاربری نمایش داده می‌شود.</p>
+                            <span class="service-start-label">قیمت‌های به‌روز محصولات</span>
+                            <p class="service-price-context">فهرست زیر مستقیماً از محصولات قابل خرید در داشبورد خوانده می‌شود و با تغییر قیمت یا مدت اشتراک در داشبورد به‌روزرسانی خواهد شد.</p>
                         </div>
-                        <ul class="service-pricing-features">
-                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>اشتراک Gemini Pro <span class="service-item-price-note">قیمت داخل داشبورد</span></span></li>
-                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>اشتراک ChatGPT Plus ماهانه و سالانه <span class="service-item-price-note">قیمت داخل داشبورد</span></span></li>
-                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>تیک آبی و وریفای اینستاگرام <span class="service-item-price-note">قیمت داخل داشبورد</span></span></li>
-                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>اشتراک Telegram Premium سه، شش و دوازده‌ماهه <span class="service-item-price-note">قیمت داخل داشبورد</span></span></li>
-                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>اکانت X Premium به‌همراه Grok <span class="service-item-price-note">قیمت داخل داشبورد</span></span></li>
-                        </ul>
+                        <div id="account-live-pricing" class="account-live-pricing-list" aria-live="polite">
+                            <p class="account-pricing-loading">در حال دریافت قیمت‌های داشبورد...</p>
+                        </div>
                         <a href="dashboard.html" class="btn btn-primary service-pricing-action">مشاهده قیمت‌ها و خرید</a>
                     </article>
                 </div>
@@ -1047,6 +1048,66 @@
           'موقعیت دفتر مرکزی شبکه تبلیغات ایران در دبی':'Location of Iran Ads Network headquarters in Dubai',
           '© تمامی حقوق محفوظ است — شبکه تبلیغات ایران':'© All rights reserved — Iran Ads Network','طراحی و توسعه توسط':'Designed and developed by'
         };
+        async function loadAccountDashboardPrices() {
+            const target = document.getElementById('account-live-pricing');
+            if (!target) return;
+            try {
+                const response = await fetch('dashboard.html', { cache: 'no-store', headers: { 'Accept': 'text/html' } });
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                const dashboardDoc = new DOMParser().parseFromString(await response.text(), 'text/html');
+                const cards = Array.from(dashboardDoc.querySelectorAll('#content-verify .verify-card'));
+                const products = cards.map(card => {
+                    const title = card.querySelector('h3')?.textContent.trim() || '';
+                    const priceText = card.querySelector('.verify-price')?.textContent.trim() || '';
+                    const button = card.querySelector('button[onclick*="purchaseVerify"]');
+                    const purchase = button?.getAttribute('onclick')?.match(/purchaseVerify\(['"](.+?)['"]\s*,\s*([\d.]+)\)/);
+                    if (!title || !purchase) return null;
+                    const subtitle = Array.from(card.querySelectorAll('h3 ~ div'))
+                        .find(el => !el.classList.contains('verify-price') && !el.classList.contains('verify-note') && el.textContent.trim())
+                        ?.textContent.trim() || '';
+                    const price = Number(purchase[2]);
+                    if (!Number.isFinite(price)) return null;
+                    return { title, period: subtitle, price, priceText: priceText || '$' + price };
+                }).filter(Boolean);
+                if (!products.length) throw new Error('No account products found');
+                target.innerHTML = products.map(product => {
+                    const label = product.period && product.period !== product.title ? product.period : '';
+                    return '<div class="account-live-price-row"><span class="account-live-price-name">' +
+                        escapeAccountPriceText(product.title) +
+                        (label ? '<span class="account-live-price-period">' + escapeAccountPriceText(label) + '</span>' : '') +
+                        '</span><strong class="account-live-price-value">' + escapeAccountPriceText(product.priceText) + '</strong></div>';
+                }).join('');
+                if (currentLanguage === 'en') translateAccountPriceRows();
+            } catch (error) {
+                target.innerHTML = '<p class="account-pricing-error">قیمت‌ها فعلاً بارگذاری نشدند. برای مشاهده فهرست و قیمت‌های دقیق، وارد داشبورد شوید.</p>';
+            }
+        }
+
+        function escapeAccountPriceText(value) {
+            return String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+        }
+
+        function translateAccountPriceRows() {
+            const labels = [
+                ['اینستاگرام با تیک آبی', 'Instagram Verified Badge'],
+                ['تلگرام پریمیوم', 'Telegram Premium'],
+                ['اکانت X پریمیوم', 'X Premium Account'],
+                ['جمنای پرو (Gemini Pro)', 'Gemini Pro'],
+                ['اشتراک ChatGPT پلاس', 'ChatGPT Plus Subscription'],
+                ['بهمراه اشتراک یکماهه گراک', 'Includes 1-month Grok subscription'],
+                ['یک ماهه', '1 month'], ['یک ساله', '1 year'], ['۳ ماهه', '3 months'],
+                ['۶ ماهه', '6 months'], ['۱۲ ماهه', '12 months'], ['۱ ماهه', '1 month'],
+                ['۱ ساله', '1 year']
+            ];
+            const translate = value => labels.reduce((result, pair) => result.replaceAll(pair[0], pair[1]), value);
+            document.querySelectorAll('#account-live-pricing .account-live-price-name').forEach(node => {
+                const titleNode = Array.from(node.childNodes).find(child => child.nodeType === Node.TEXT_NODE);
+                if (titleNode) titleNode.nodeValue = translate(titleNode.nodeValue);
+                const period = node.querySelector('.account-live-price-period');
+                if (period) period.textContent = translate(period.textContent);
+            });
+        }
+
         function setLanguage(lang) {
             currentLanguage = lang === 'en' ? 'en' : 'fa';
             const reverse = Object.fromEntries(Object.entries(translations).map(([fa,en]) => [en,fa]));
