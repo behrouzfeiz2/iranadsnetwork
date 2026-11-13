@@ -246,48 +246,90 @@
         }
         .why-card-new:hover { border-color: var(--neon-blue); transform: translateY(-6px); box-shadow: 0 15px 40px -10px rgba(6, 182, 212, 0.25); }
 
-        /* پویانمایی ظریف گرافیک‌های بخش مزایای تبلیغات */
+        /* پویانمایی واضح‌تر و مستقل برای گرافیک‌های بخش مزایای تبلیغات */
         @keyframes whyMockupFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
+            0%, 100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+            50% { transform: translate3d(0, -8px, 0) rotate(-.45deg); }
         }
         @keyframes whySearchSweep {
-            0%, 100% { background-position: 100% 0; }
-            50% { background-position: 0 0; }
+            0%, 100% { background-position: 220% 0; }
+            50% { background-position: -220% 0; }
         }
         @keyframes whyIconPulse {
-            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 rgba(239,68,68,0)); }
-            50% { transform: scale(1.13); filter: drop-shadow(0 0 9px rgba(239,68,68,.55)); }
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 1px rgba(239,68,68,.15)); }
+            50% { transform: scale(1.18); filter: drop-shadow(0 0 11px rgba(239,68,68,.8)); }
         }
         @keyframes whyBannerGlow {
-            0%, 100% { box-shadow: 0 0 0 rgba(6,182,212,0); }
-            50% { box-shadow: 0 0 13px rgba(6,182,212,.5); }
+            0%, 100% { box-shadow: 0 0 2px rgba(6,182,212,.12); filter: brightness(1); }
+            50% { box-shadow: 0 0 18px rgba(6,182,212,.72); filter: brightness(1.22); }
         }
-        @keyframes whyPhoneMedia {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
+        @keyframes whyBannerSweep {
+            0%, 15% { transform: translateX(-170%) skewX(-24deg); opacity: 0; }
+            35% { opacity: .8; }
+            65%, 100% { transform: translateX(190%) skewX(-24deg); opacity: 0; }
         }
-        .why-card-new:nth-child(1) .mini-browser,
-        .why-card-new:nth-child(3) .mini-browser { animation: whyMockupFloat 5.2s ease-in-out infinite; }
-        .why-card-new:nth-child(2) .mini-browser { animation: whyMockupFloat 4.7s ease-in-out .6s infinite; }
-        .why-card-new:nth-child(4) .mini-phone { animation: whyMockupFloat 4.9s ease-in-out .3s infinite; }
-        .why-card-new:nth-child(1) .mockup-line-title,
-        .why-card-new:nth-child(1) .mockup-line-badge,
-        .why-card-new:nth-child(1) .mockup-line-text {
-            background-image: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.32) 48%, transparent 100%);
+        @keyframes whyInstagramMedia {
+            0%, 100% { transform: translateY(0) scale(1); filter: saturate(1); }
+            50% { transform: translateY(-4px) scale(1.045); filter: saturate(1.25) brightness(1.08); }
+        }
+        @keyframes whyOrbPulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(56,189,248,0), 0 0 14px rgba(6,182,212,.12); }
+            50% { box-shadow: 0 0 0 8px rgba(56,189,248,.08), 0 0 26px rgba(6,182,212,.48); }
+        }
+
+        .why-ads-section .why-google-mockup,
+        .why-ads-section .why-display-mockup { animation: whyMockupFloat 4.2s ease-in-out infinite; will-change: transform; }
+        .why-ads-section .why-youtube-mockup { animation: whyMockupFloat 4.6s ease-in-out .65s infinite; will-change: transform; }
+        .why-ads-section .why-instagram-phone { animation: whyMockupFloat 4.4s ease-in-out .3s infinite; will-change: transform; }
+        .why-ads-section .why-google-mockup .mockup-line-title,
+        .why-ads-section .why-google-mockup .mockup-line-badge,
+        .why-ads-section .why-google-mockup .mockup-line-text {
+            background-image: linear-gradient(90deg, transparent 0%, rgba(255,255,255,.48) 48%, transparent 100%);
             background-size: 220% 100%;
-            animation: whySearchSweep 3.8s ease-in-out infinite;
+            animation: whySearchSweep 3.1s ease-in-out infinite;
         }
-        .why-card-new:nth-child(2) .mockup-yt-body i { animation: whyIconPulse 2.8s ease-in-out infinite; }
-        .why-card-new:nth-child(3) .mockup-display-banner { animation: whyBannerGlow 3.2s ease-in-out infinite; }
-        .why-card-new:nth-child(4) .mini-phone-body > div:nth-child(2) { animation: whyPhoneMedia 3.4s ease-in-out infinite; }
-        .stats-orb { animation: whyMockupFloat 5.5s ease-in-out infinite; }
+        .why-ads-section .why-youtube-icon {
+            transform-origin: center;
+            animation: whyIconPulse 2.35s ease-in-out infinite;
+        }
+        .why-ads-section .why-display-banner {
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            animation: whyBannerGlow 2.8s ease-in-out infinite;
+        }
+        .why-ads-section .why-display-banner::after {
+            content: "";
+            position: absolute;
+            z-index: 1;
+            top: -25%;
+            bottom: -25%;
+            left: 0;
+            width: 45%;
+            pointer-events: none;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.7), transparent);
+            animation: whyBannerSweep 3.1s ease-in-out infinite;
+        }
+        .why-ads-section .why-instagram-media {
+            background-size: 150% 150% !important;
+            animation: whyInstagramMedia 3.2s ease-in-out infinite;
+        }
+        .why-ads-section .stats-orb {
+            animation: whyMockupFloat 5s ease-in-out infinite, whyOrbPulse 3.2s ease-in-out infinite;
+            will-change: transform, box-shadow;
+        }
 
         @media (prefers-reduced-motion: reduce) {
-            .why-ads-section .why-card-new *,
+            .why-ads-section .why-google-mockup,
+            .why-ads-section .why-youtube-mockup,
+            .why-ads-section .why-display-mockup,
+            .why-ads-section .why-instagram-phone,
+            .why-ads-section .why-instagram-media,
+            .why-ads-section .why-youtube-icon,
+            .why-ads-section .why-display-banner,
             .why-ads-section .stats-orb {
                 animation: none !important;
-                transition: none !important;
+                will-change: auto;
             }
         }
 
@@ -712,7 +754,7 @@
                 <div class="why-ads-grid">
                     <div class="why-card-new" style="border-top-color: #38bdf8;">
                         <div class="mockup-container">
-                            <div class="mini-browser">
+                            <div class="mini-browser why-google-mockup">
                                 <div class="mini-browser-header"><div class="mini-dot" style="background:#ef4444;"></div><div class="mini-dot" style="background:#f59e0b;"></div><div class="mini-dot" style="background:#10b981;"></div></div>
                                 <div class="mockup-search-body"><div class="mockup-line-title"></div><div class="mockup-line-badge"></div><div class="mockup-line-text" style="margin-top: 4px;"></div><div class="mockup-line-text" style="width: 60%;"></div></div>
                             </div>
@@ -723,9 +765,9 @@
 
                     <div class="why-card-new" style="border-top-color: #ef4444;">
                         <div class="mockup-container">
-                            <div class="mini-browser">
+                            <div class="mini-browser why-youtube-mockup">
                                 <div class="mini-browser-header"><div class="mini-dot"></div><div class="mini-dot"></div><div class="mini-dot"></div></div>
-                                <div class="mockup-yt-body"><i class="fa-brands fa-youtube" style="color:#ef4444; font-size:2rem; z-index:2;"></i></div>
+                                <div class="mockup-yt-body"><i class="fa-brands fa-youtube why-youtube-icon" style="color:#ef4444; font-size:2rem; z-index:2;"></i></div>
                             </div>
                         </div>
                         <h3>بازاریابی و تبلیغات ویدئویی در یوتیوب</h3>
@@ -734,9 +776,9 @@
 
                     <div class="why-card-new" style="border-top-color: #c084fc;">
                         <div class="mockup-container">
-                            <div class="mini-browser">
+                            <div class="mini-browser why-display-mockup">
                                 <div class="mini-browser-header"><div class="mini-dot"></div><div class="mini-dot"></div><div class="mini-dot"></div></div>
-                                <div class="mockup-display-body"><div class="mockup-display-content"><div style="width:100%; height:20px; background:#1e293b; border-radius:4px;"></div><div style="width:100%; height:4px; background:#475569; border-radius:2px; margin-top:2px;"></div><div style="width:80%; height:4px; background:#475569; border-radius:2px;"></div></div><div class="mockup-display-banner"><span>AD</span></div></div>
+                                <div class="mockup-display-body"><div class="mockup-display-content"><div style="width:100%; height:20px; background:#1e293b; border-radius:4px;"></div><div style="width:100%; height:4px; background:#475569; border-radius:2px; margin-top:2px;"></div><div style="width:80%; height:4px; background:#475569; border-radius:2px;"></div></div><div class="mockup-display-banner why-display-banner"><span>AD</span></div></div>
                             </div>
                         </div>
                         <h3>تبلیغات در وب‌سایت‌های همکار گوگل</h3>
@@ -745,7 +787,7 @@
 
                     <div class="why-card-new" style="border-top-color: #ec4899;">
                         <div class="mockup-container">
-                            <div class="mini-phone"><div class="mini-notch"></div><div class="mini-phone-body"><div style="display:flex; gap:4px; align-items:center; margin-bottom:4px;"><div style="width:8px; height:8px; border-radius:50%; background:#ec4899;"></div><div style="width:24px; height:4px; background:#475569; border-radius:2px;"></div></div><div style="width:100%; height:45px; background:linear-gradient(45deg, #f59e0b, #ec4899); border-radius:4px;"></div><div style="width:100%; height:8px; background:#0ea5e9; border-radius:2px; margin-top:4px;"></div></div></div>
+                            <div class="mini-phone why-instagram-phone"><div class="mini-notch"></div><div class="mini-phone-body"><div style="display:flex; gap:4px; align-items:center; margin-bottom:4px;"><div style="width:8px; height:8px; border-radius:50%; background:#ec4899;"></div><div style="width:24px; height:4px; background:#475569; border-radius:2px;"></div></div><div class="why-instagram-media" style="width:100%; height:45px; background:linear-gradient(45deg, #f59e0b, #ec4899); border-radius:4px;"></div><div style="width:100%; height:8px; background:#0ea5e9; border-radius:2px; margin-top:4px;"></div></div></div>
                         </div>
                         <h3>تبلیغ و پروموت محتوا در اینستاگرام</h3>
                         <p>پیام برند خود را فراتر از دنبال‌کنندگان فعلی منتشر کرده و بازار هدف خود را با ابزارهای دقیق توسعه دهید.</p>
