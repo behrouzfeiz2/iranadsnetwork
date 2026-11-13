@@ -148,7 +148,7 @@
             background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.3);
             color: var(--neon-blue); font-size: 0.85rem; font-weight: 600; margin-bottom: 16px;
         }
-        .hero h1 { font-size: 2.6rem; font-weight: 900; margin-bottom: 12px; background: linear-gradient(135deg, #ffffff 30%, var(--neon-cyan) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero h1 { font-size: clamp(2.75rem, 4.5vw, 3.3rem); font-weight: 900; margin-bottom: 12px; background: linear-gradient(135deg, #ffffff 30%, var(--neon-cyan) 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .hero p { max-width: 680px; margin: 0 auto 28px; color: var(--text-muted); font-size: 1.1rem; }
 
         /* Hero 3D Devices */
@@ -188,7 +188,14 @@
 
         section { padding: 60px 0; }
         .section-header { text-align: center; margin-bottom: 45px; }
-        .section-header h2 { font-size: 1.8rem; font-weight: 800; margin-bottom: 10px; }
+        .section-header h2 { font-size: 2rem; font-weight: 900; margin-bottom: 10px; line-height: 1.45; }
+        .section-header h2, .partner-content h2, .contact-card h2 {
+            background: linear-gradient(135deg, #ffffff 30%, var(--neon-cyan) 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+        }
         .section-header p { color: var(--text-muted); font-size: 0.95rem; }
         .services-order-note { max-width: 900px; margin: 18px auto 0; padding: 13px 18px; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; border: 1px solid rgba(56, 189, 248, 0.28); border-radius: 12px; background: rgba(56, 189, 248, 0.07); color: #cbd5e1; font-size: 0.9rem; line-height: 1.9; }
         .services-order-note > i { color: var(--neon-cyan); }
@@ -251,7 +258,7 @@
         }
         .partner-container { display: flex; align-items: center; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
         .partner-content { flex: 1; min-width: 300px; }
-        .partner-content h2 { font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 16px; line-height: 1.4; }
+        .partner-content h2 { font-size: 2rem; margin-bottom: 16px; line-height: 1.45; }
         .partner-content p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.9; text-align: justify; }
 
         .partner-badge-wrapper { flex: 1; min-width: 300px; display: flex; justify-content: center; align-items: center; perspective: 1000px; }
@@ -381,6 +388,7 @@
         .read-more-btn:hover { background: rgba(6, 182, 212, 0.15); }
 
         .contact-card { background: linear-gradient(135deg, rgba(10, 22, 44, 0.95), rgba(3, 7, 18, 0.95)); border: 1.5px solid var(--neon-cyan); border-radius: 24px; padding: 42px; text-align: center; }
+        .contact-card h2 { font-size: 2rem; line-height: 1.45; }
         .contact-channels { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-top: 30px; }
         .contact-item { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 18px 22px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: #fff; transition: 0.3s; }
         .contact-item:hover { border-color: var(--neon-blue); background: rgba(56, 189, 248, 0.08); }
@@ -404,7 +412,8 @@
             .hero { padding: 18px 0 16px; }
             .hero .container { padding-inline: 14px; }
             .hero .badge { padding: 4px 12px; margin-bottom: 7px; font-size: .74rem; }
-            .hero h1 { font-size: clamp(1.45rem, 5.8vw, 1.85rem); margin-bottom: 6px; }
+            .hero h1 { font-size: clamp(1.7rem, 6.8vw, 2.2rem); margin-bottom: 6px; }
+            .section-header h2, .partner-content h2, .contact-card h2 { font-size: clamp(1.5rem, 5vw, 1.75rem); }
             .hero p { max-width: 610px; margin: 0 auto 7px; font-size: .86rem; line-height: 1.65; }
             .scene-outer-wrapper { margin: 0 auto 9px; }
             .cta-group { margin-top: 0; gap: 10px; }
