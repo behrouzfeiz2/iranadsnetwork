@@ -336,22 +336,32 @@
                     </div>
                 </div>
 
-                <!-- گوگل -->
+                <!-- کمپین‌های گوگل: تفکیک سرچ/نمایشی و یوتیوب -->
                 <div class="glass-card">
-                    <h2 style="font-size: 1.15rem; margin-bottom: 16px;"><i class="fa-brands fa-google" style="color: #4285F4;"></i> کمپین‌های گوگل ادز</h2>
+                    <h2 style="font-size: 1.15rem; margin-bottom: 10px;"><i class="fa-brands fa-google" style="color: #4285F4;"></i> کمپین‌های جستجو و سایت‌های همکار</h2>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px;">بودجه سرچ و تبلیغات نمایشی در این فهرست جداگانه دیده می‌شود. مبلغ جمع، فقط مجموع همین دو بخش است.</p>
                     <div class="table-responsive">
                         <table>
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>کاربر</th>
-                                    <th>وب‌سایت و کلمات کلیدی</th>
-                                    <th>تفکیک بودجه</th>
-                                    <th>وضعیت</th>
-                                    <th>عملیات</th>
+                                    <th>#</th><th>کاربر</th><th>وب‌سایت، محصول و کلمات کلیدی</th>
+                                    <th>بودجه سرچ</th><th>بودجه نمایشی</th><th>جمع سرچ و نمایشی</th><th>وضعیت</th><th>عملیات</th>
                                 </tr>
                             </thead>
-                            <tbody id="admin-google-tbody"></tbody>
+                            <tbody id="admin-google-search-display-tbody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2 style="font-size: 1.15rem; margin-bottom: 10px;"><i class="fa-brands fa-youtube" style="color: #ef4444;"></i> درخواست‌های تیزر تبلیغاتی یوتیوب</h2>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px;">درخواست‌های دارای بودجه یوتیوب در این بخش نمایش داده می‌شوند. اگر یک سفارش هم‌زمان بودجه سرچ/نمایشی هم داشته باشد، عملیات تایید یا رد آن فقط از جدول بالایی انجام می‌شود؛ رد سفارش کل مبلغ را عودت می‌دهد.</p>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr><th>#</th><th>کاربر</th><th>وب‌سایت و محصول</th><th>بودجه یوتیوب</th><th>وضعیت</th><th>عملیات</th></tr>
+                            </thead>
+                            <tbody id="admin-google-youtube-tbody"></tbody>
                         </table>
                     </div>
                 </div>
@@ -380,8 +390,13 @@
             <!-- تب ۴: تیکت‌های پشتیبانی (چت‌محور) -->
             <div id="content-tickets" class="tab-section hidden">
                 <div class="glass-card">
-                    <h2 style="font-size: 1.15rem; margin-bottom: 16px;"><i class="fa-solid fa-comments" style="color: #a855f7;"></i> گفتگوها و پشتیبانی کاربران</h2>
-                    <div id="admin-tickets-container"></div>
+                    <h2 style="font-size: 1.15rem; margin-bottom: 10px;"><i class="fa-brands fa-youtube" style="color: #ef4444;"></i> تیکت‌های ویدئوی یوتیوب</h2>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px;">درخواست ارسال ویدئوی آماده یا سفارش ساخت تیزر در این بخش قرار می‌گیرد. لینک دانلود ارسالی کاربر به‌صورت مستقیم قابل بازکردن است و فایل ویدئو در سامانه ذخیره نمی‌شود.</p>
+                    <div id="admin-youtube-tickets-container"></div>
+                </div>
+                <div class="glass-card">
+                    <h2 style="font-size: 1.15rem; margin-bottom: 16px;"><i class="fa-solid fa-comments" style="color: #a855f7;"></i> سایر گفتگوها و تیکت‌های پشتیبانی</h2>
+                    <div id="admin-general-tickets-container"></div>
                 </div>
             </div>
 
@@ -498,6 +513,98 @@
             return `<span class="status-badge st-pending">در انتظار بررسی</span>`;
         }
 
+        function escapeHtml(value) {
+            return String(value ?? '').replace(/[&<>"']/g, char => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            })[char]);
+        }
+
+        function renderAdminTicketMessage(message) {
+            const rawText = String(message || '');
+            const linkLabel = 'لینک دانلود ویدئو:';
+            const labelIndex = rawText.indexOf(linkLabel);
+            if (labelIndex < 0) {
+                return `<div style="white-space:pre-wrap;overflow-wrap:anywhere;">${escapeHtml(rawText)}</div>`;
+            }
+
+            const urlStart = labelIndex + linkLabel.length;
+            const rawUrl = rawText.slice(urlStart).trim().split(/\\s/)[0] || '';
+            const videoUrl = rawUrl.replace(/[),،.]+$/, '');
+            if (!videoUrl.startsWith('https://') && !videoUrl.startsWith('http://')) {
+                return `<div style="white-space:pre-wrap;overflow-wrap:anywhere;">${escapeHtml(rawText)}</div>`;
+            }
+
+            let parsedUrl;
+            try { parsedUrl = new URL(videoUrl); } catch (error) {
+                return `<div style="white-space:pre-wrap;overflow-wrap:anywhere;">${escapeHtml(rawText)}</div>`;
+            }
+            if (parsedUrl.protocol !== 'https:' && parsedUrl.protocol !== 'http:') {
+                return `<div style="white-space:pre-wrap;overflow-wrap:anywhere;">${escapeHtml(rawText)}</div>`;
+            }
+
+            const rawUrlIndex = rawText.indexOf(rawUrl, urlStart);
+            const safeHref = escapeHtml(parsedUrl.href);
+            return `
+                <div style="white-space:pre-wrap;overflow-wrap:anywhere;">${escapeHtml(rawText.slice(0, rawUrlIndex))}<a href="${safeHref}" target="_blank" rel="noopener noreferrer" style="color:#7dd3fc;text-decoration:underline;direction:ltr;unicode-bidi:plaintext;">${escapeHtml(videoUrl)}</a>${escapeHtml(rawText.slice(rawUrlIndex + rawUrl.length))}</div>
+                <div style="margin-top:8px;">
+                    <a href="${safeHref}" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding:6px 12px;font-size:0.78rem;text-decoration:none;"><i class="fa-solid fa-download"></i> مشاهده / دانلود ویدئو</a>
+                    <div style="font-size:0.7rem;color:var(--text-muted);margin-top:5px;">این فقط لینک ارسالی کاربر است؛ فایل ویدئو در سامانه ذخیره نشده است.</div>
+                </div>`;
+        }
+
+        function getTicketConversation(ticket) {
+            try {
+                const parsed = JSON.parse(ticket.conversation || '[]');
+                return Array.isArray(parsed) ? parsed : [];
+            } catch (error) {
+                return [];
+            }
+        }
+
+        function isYoutubeVideoTicket(ticket) {
+            const messages = getTicketConversation(ticket).map(message => message.text || '').join(' ').toLowerCase();
+            const ticketText = `${ticket.subject || ''} ${messages}`.toLowerCase();
+            return ticketText.includes('یوتیوب') || ticketText.includes('youtube') || ticketText.includes('تیزر ویدئو') || ticketText.includes('تیزر ویدیو');
+        }
+
+        function renderAdminTicketList(ticketList) {
+            if (!ticketList.length) {
+                return `<div style="text-align:center;color:var(--text-muted);padding:20px;">هیچ تیکتی در این بخش وجود ندارد</div>`;
+            }
+
+            return ticketList.map(ticket => {
+                const conversation = getTicketConversation(ticket);
+                const statusBadge = ticket.status === 'answered'
+                    ? `<span class="status-badge st-active">پاسخ داده شده</span>`
+                    : `<span class="status-badge st-pending">در انتظار پاسخ</span>`;
+
+                const messagesHtml = conversation.map(message => {
+                    const time = escapeHtml(formatDate(message.date));
+                    const messageHtml = renderAdminTicketMessage(message.text);
+                    if (message.sender === 'admin') {
+                        return `<div class="chat-bubble chat-admin"><div class="chat-meta"><i class="fa-solid fa-headset"></i> شما (ادمین) — ${time}</div>${messageHtml}</div>`;
+                    }
+                    return `<div class="chat-bubble chat-user"><div class="chat-meta"><i class="fa-solid fa-user"></i> کاربر — ${time}</div>${messageHtml}</div>`;
+                }).join('');
+
+                return `
+                    <div class="ticket-item">
+                        <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.05);padding-bottom:8px;margin-bottom:12px;gap:10px;">
+                            <div>
+                                <strong style="color:#fff;font-size:1.05rem;">#${Number(ticket.id)} - ${escapeHtml(ticket.subject || '')}</strong>
+                                <div style="font-size:0.8rem;color:var(--neon-blue);">کاربر: ${escapeHtml(ticket.username || '')} (${escapeHtml(ticket.email || '')})</div>
+                            </div>
+                            ${statusBadge}
+                        </div>
+                        <div class="ticket-chat-box">${messagesHtml}</div>
+                        <div style="display:flex;gap:8px;margin-top:16px;border-top:1px solid rgba(255,255,255,0.05);padding-top:12px;">
+                            <input type="text" id="reply-admin-${Number(ticket.id)}" class="form-input" placeholder="پاسخ ادمین به این کاربر..." style="padding:10px;font-size:0.85rem;">
+                            <button onclick="sendTicketReply(${Number(ticket.id)})" class="btn btn-primary" style="padding:10px 18px;font-size:0.85rem;">ارسال پیام</button>
+                        </div>
+                    </div>`;
+            }).join('');
+        }
+
         function formatDate(isoString) {
             try { return new Date(isoString).toLocaleString('fa-IR'); } 
             catch(e) { return isoString; }
@@ -568,18 +675,50 @@
                 return `<tr><td>#${i.id}</td><td style="color: var(--neon-blue); font-weight: 700;">${i.username}</td><td dir="ltr" style="font-family: monospace; font-size:0.8rem; max-width: 150px; overflow: hidden; text-overflow: ellipsis;">${i.post_link}</td><td>$${i.budget}</td><td style="font-weight: 800; color: #f472b6;">$${i.total_cost}</td><td>${formatStatusBadge(i.status)}</td><td>${btns}</td></tr>`;
             }).join('') : `<tr><td colspan="7" style="text-align:center;">موردی یافت نشد</td></tr>`;
 
-            // ۵. گوگل
+            // ۵. کمپین‌های گوگل؛ یک سفارش می‌تواند در هر دو فهرست دیده شود
             const gList = data.google_campaigns || [];
-            document.getElementById('admin-google-tbody').innerHTML = gList.length ? gList.map(c => {
+            const searchDisplayList = gList.filter(c => (Number(c.budget_search) || 0) > 0 || (Number(c.budget_display) || 0) > 0);
+            document.getElementById('admin-google-search-display-tbody').innerHTML = searchDisplayList.length ? searchDisplayList.map(c => {
+                const searchBudget = Number(c.budget_search) || 0;
+                const displayBudget = Number(c.budget_display) || 0;
                 let btns = '-';
                 if (c.status === 'pending') {
-                    btns = `<div style="display: flex; gap: 6px;"><button onclick="VerifyCampaign('google', ${c.id}, 'approve')" class="btn btn-success" style="padding: 5px; font-size: 0.7rem;">تایید</button><button onclick="VerifyCampaign('google', ${c.id}, 'reject')" class="btn btn-danger" style="padding: 5px; font-size: 0.7rem;">رد و عودت</button></div>`;
+                    btns = `<div style="display:flex;gap:6px;flex-wrap:wrap;"><button onclick="VerifyCampaign('google', ${Number(c.id)}, 'approve')" class="btn btn-success" style="padding:5px 8px;font-size:0.7rem;">تأیید کل سفارش</button><button onclick="VerifyCampaign('google', ${Number(c.id)}, 'reject')" class="btn btn-danger" style="padding:5px 8px;font-size:0.7rem;">رد و عودت کل سفارش</button></div>`;
                 }
-                return `<tr><td>#${c.id}</td><td style="color: var(--neon-blue); font-weight: 700;">${c.username}</td>
-                <td style="font-size: 0.75rem;"><div dir="ltr">${c.website_url}</div><div><strong>محصول:</strong> ${c.product_info}</div><div style="color:#cbd5e1;"><strong>کلمات:</strong> ${c.keywords}</div></td>
-                <td dir="ltr" style="white-space: nowrap; font-size:0.8rem;">$${c.budget_search}/$${c.budget_display}/$${c.budget_youtube}</td>
-                <td style="font-weight: 800; color: #34d399;">$${c.total_budget}</td><td>${formatStatusBadge(c.status)}</td><td>${btns}</td></tr>`;
-            }).join('') : `<tr><td colspan="8" style="text-align:center;">موردی یافت نشد</td></tr>`;
+                return `<tr>
+                    <td>#${Number(c.id)}</td>
+                    <td style="color:var(--neon-blue);font-weight:700;">${escapeHtml(c.username || '')}</td>
+                    <td style="font-size:0.75rem;">
+                        <div dir="ltr">${escapeHtml(c.website_url || '')}</div>
+                        <div><strong>محصول:</strong> ${escapeHtml(c.product_info || '-')}</div>
+                        <div style="color:#cbd5e1;"><strong>کلمات:</strong> ${escapeHtml(c.keywords || '-')}</div>
+                    </td>
+                    <td dir="ltr" style="white-space:nowrap;">$${searchBudget.toFixed(2)}</td>
+                    <td dir="ltr" style="white-space:nowrap;">$${displayBudget.toFixed(2)}</td>
+                    <td dir="ltr" style="font-weight:800;color:#34d399;white-space:nowrap;">$${(searchBudget + displayBudget).toFixed(2)}</td>
+                    <td>${formatStatusBadge(c.status)}</td>
+                    <td>${btns}</td>
+                </tr>`;
+            }).join('') : `<tr><td colspan="8" style="text-align:center;">درخواستی برای تبلیغات جستجو یا سایت‌های همکار ثبت نشده است</td></tr>`;
+
+            const youtubeCampaigns = gList.filter(c => (Number(c.budget_youtube) || 0) > 0);
+            document.getElementById('admin-google-youtube-tbody').innerHTML = youtubeCampaigns.length ? youtubeCampaigns.map(c => {
+                const searchDisplayBudget = (Number(c.budget_search) || 0) + (Number(c.budget_display) || 0);
+                let btns = '-';
+                if (c.status === 'pending') {
+                    btns = searchDisplayBudget > 0
+                        ? `<span style="font-size:0.75rem;color:var(--text-muted);">اقدام از جدول سرچ و نمایشی</span>`
+                        : `<div style="display:flex;gap:6px;flex-wrap:wrap;"><button onclick="VerifyCampaign('google', ${Number(c.id)}, 'approve')" class="btn btn-success" style="padding:5px 8px;font-size:0.7rem;">تأیید سفارش</button><button onclick="VerifyCampaign('google', ${Number(c.id)}, 'reject')" class="btn btn-danger" style="padding:5px 8px;font-size:0.7rem;">رد و عودت</button></div>`;
+                }
+                return `<tr>
+                    <td>#${Number(c.id)}</td>
+                    <td style="color:var(--neon-blue);font-weight:700;">${escapeHtml(c.username || '')}</td>
+                    <td style="font-size:0.78rem;"><div dir="ltr">${escapeHtml(c.website_url || '')}</div><div><strong>محصول:</strong> ${escapeHtml(c.product_info || '-')}</div></td>
+                    <td dir="ltr" style="font-weight:800;color:#34d399;white-space:nowrap;">$${(Number(c.budget_youtube) || 0).toFixed(2)}</td>
+                    <td>${formatStatusBadge(c.status)}</td>
+                    <td>${btns}</td>
+                </tr>`;
+            }).join('') : `<tr><td colspan="6" style="text-align:center;">درخواستی برای تیزر یوتیوب ثبت نشده است</td></tr>`;
 
             // ۶. تلگرام
             const tgList = data.telegram_campaigns || [];
@@ -593,43 +732,12 @@
                 <td style="font-weight: 800; color: #34d399;">$${t.budget}</td><td>${formatStatusBadge(t.status)}</td><td>${btns}</td></tr>`;
             }).join('') : `<tr><td colspan="7" style="text-align:center;">موردی یافت نشد</td></tr>`;
 
-            // ۷. تیکت‌های گفتگومحور
-            const tkContainer = document.getElementById('admin-tickets-container');
+            // ۷. تیکت‌ها؛ درخواست‌های ویدئوی یوتیوب از سایر پشتیبانی‌ها جدا هستند
             const tkList = data.tickets || [];
-            tkContainer.innerHTML = tkList.length ? tkList.map(tk => {
-                const stBadge = tk.status === 'answered' ? `<span class="status-badge st-active">پاسخ داده شده</span>` : `<span class="status-badge st-pending">در انتظار پاسخ</span>`;
-                
-                let convArr = [];
-                try { convArr = JSON.parse(tk.conversation || '[]'); } catch(e){}
-                
-                let messagesHtml = convArr.map(m => {
-                    let time = formatDate(m.date);
-                    if (m.sender === 'admin') {
-                        return `<div class="chat-bubble chat-admin"><div class="chat-meta"><i class="fa-solid fa-headset"></i> شما (ادمین) — ${time}</div>${m.text}</div>`;
-                    } else {
-                        return `<div class="chat-bubble chat-user"><div class="chat-meta"><i class="fa-solid fa-user"></i> کاربر — ${time}</div>${m.text}</div>`;
-                    }
-                }).join('');
-
-                return `
-                    <div class="ticket-item">
-                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; margin-bottom: 12px;">
-                            <div>
-                                <strong style="color: #fff; font-size: 1.05rem;">#${tk.id} - ${tk.subject}</strong>
-                                <div style="font-size: 0.8rem; color: var(--neon-blue);">کلاینت: ${tk.username} (${tk.email})</div>
-                            </div>
-                            ${stBadge}
-                        </div>
-                        <div class="ticket-chat-box">
-                            ${messagesHtml}
-                        </div>
-                        <div style="display: flex; gap: 8px; margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 12px;">
-                            <input type="text" id="reply-admin-${tk.id}" class="form-input" placeholder="پاسخ ادمین به این کاربر..." style="padding: 10px; font-size: 0.85rem;">
-                            <button onclick="sendTicketReply(${tk.id})" class="btn btn-primary" style="padding: 10px 18px; font-size: 0.85rem;">ارسال پیام</button>
-                        </div>
-                    </div>
-                `;
-            }).join('') : `<div style="text-align: center; color: var(--text-muted); padding: 20px;">هیچ گفتگویی وجود ندارد</div>`;
+            const youtubeTickets = tkList.filter(isYoutubeVideoTicket);
+            const generalTickets = tkList.filter(ticket => !isYoutubeVideoTicket(ticket));
+            document.getElementById('admin-youtube-tickets-container').innerHTML = renderAdminTicketList(youtubeTickets);
+            document.getElementById('admin-general-tickets-container').innerHTML = renderAdminTicketList(generalTickets);
         }
 
         async function saveWallets(e) {
