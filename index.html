@@ -1054,8 +1054,7 @@
             try {
                 const response = await fetch('dashboard.html', { cache: 'no-store', headers: { 'Accept': 'text/html' } });
                 if (!response.ok) throw new Error('HTTP ' + response.status);
-                const dashboardHtml = await response.text();
-                const dashboardDoc = new DOMParser().parseFromString(dashboardHtml, 'text/html');
+                const dashboardDoc = new DOMParser().parseFromString(await response.text(), 'text/html');
                 const cards = Array.from(dashboardDoc.querySelectorAll('#content-verify .verify-card'));
                 const products = cards.map(card => {
                     const title = card.querySelector('h3')?.textContent.trim() || '';
@@ -1063,140 +1062,12 @@
                     const button = card.querySelector('button[onclick*="purchaseVerify"]');
                     const purchase = button?.getAttribute('onclick')?.match(/purchaseVerify\(['"](.+?)['"]\s*,\s*([\d.]+)\)/);
                     if (!title || !purchase) return null;
-                    const subtitle = Array.from(card.querySelectorAll('div'))
-                        .find(el => el.parentElement === card.querySelector('.verify-card > div') && !el.classList.contains('verify-price') && !el.classList.contains('verify-note') && el.textContent.trim() && !el.querySelector('h3'))
+                    const subtitle = Array.from(card.querySelectorAll('h3 ~ div'))
+                        .find(el => !el.classList.contains('verify-price') && !el.classList.contains('verify-note') && el.textContent.trim())
                         ?.textContent.trim() || '';
                     const price = Number(purchase[2]);
                     if (!Number.isFinite(price)) return null;
-                    const period = purchase[1].replace(title, '').replace(/^اشتراک\s*/,'').trim() || subtitle;
-                    return { title, period, price, priceText: priceText || '
-            currentLanguage = lang === 'en' ? 'en' : 'fa';
-            const reverse = Object.fromEntries(Object.entries(translations).map(([fa,en]) => [en,fa]));
-            const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-            let node;
-            while ((node = walker.nextNode())) {
-                const value = node.nodeValue;
-                const trimmed = value.trim();
-                if (!trimmed) continue;
-                const translated = currentLanguage === 'en' ? translations[trimmed] : reverse[trimmed];
-                if (translated) node.nodeValue = value.replace(trimmed, translated);
-            }
-            const aboutIntro = document.querySelector('#about .about-box > p');
-            if (aboutIntro) aboutIntro.innerHTML = currentLanguage === 'en'
-                ? '<strong>Iran Ads Network</strong> provides comprehensive, integrated, and intelligent digital marketing and advertising solutions on international platforms. Our mission is to help Iranian brands expand into global markets by combining the reach of online advertising with modern data analytics and a deep understanding of audience behavior. We connect brands with potential customers and target markets, helping turn audiences into loyal customers.'
-                : '<strong>شبکه تبلیغات ایران</strong> با هدف توسعه بازار برندهای ایرانی و ایجاد فرصت‌های جدید برای حضور مؤثر کسب‌وکارهای داخلی در عرصه بین‌المللی، راهکارهای جامع، یکپارچه و هوشمند بازاریابی و تبلیغات دیجیتال را در پلتفرم‌های بین‌المللی ارائه می‌کند. این مجموعه با بهره‌گیری از ظرفیت‌های گسترده تبلیغات آنلاین، ابزارهای نوین تحلیل داده و شناخت دقیق رفتار مخاطبان ایرانی، تلاش می‌کند ارتباطی مؤثر میان برندها، مشتریان بالقوه و بازارهای هدف ایجاد کند و مسیر تبدیل مخاطب به مشتری وفادار را هموار سازد.';
-            document.querySelectorAll('meta[property="og:title"], meta[name="twitter:title"]').forEach(m => m.content = currentLanguage === 'en' ? 'Iran Ads Network | International Digital Advertising' : 'شبکه تبلیغات ایران | تبلیغات بین‌المللی');
-            document.querySelectorAll('meta[property="og:description"], meta[name="twitter:description"]').forEach(m => m.content = currentLanguage === 'en' ? 'Pricing for Google, Instagram, and Telegram ad campaigns, advertising bonuses, account sales, verification services, and crypto payments.' : 'تعرفه کمپین‌های گوگل، اینستاگرام و تلگرام، بونوس تبلیغاتی، فروش اکانت و خدمات وریفای با پرداخت رمزارزی.');
-            document.documentElement.lang = currentLanguage;
-            document.documentElement.dir = currentLanguage === 'en' ? 'ltr' : 'rtl';
-            document.getElementById('language-toggle').textContent = currentLanguage === 'en' ? 'فارسی' : 'English';
-            document.getElementById('language-toggle').setAttribute('data-mobile-label', currentLanguage === 'en' ? 'FA' : 'EN');
-            document.getElementById('language-toggle').setAttribute('aria-label', currentLanguage === 'en' ? 'Switch to Persian' : 'Switch to English');
-            document.title = currentLanguage === 'en' ? 'Iran Ads Network | International Digital Advertising' : 'شبکه تبلیغات ایران | تبلیغات بین‌المللی و کمپین‌های هدفمند';
-            const description = document.querySelector('meta[name="description"]');
-            if (description) description.content = currentLanguage === 'en' ? 'Pricing for Google, Instagram, and Telegram ad campaigns, advertising bonuses, account sales, verification services, and crypto payments.' : 'هزینه خدمات کمپین‌های تبلیغاتی گوگل، اینستاگرام و تلگرام، فروش اکانت و خدمات وریفای با پرداخت USDT و TRX.';
-            document.querySelectorAll('meta[property="og:locale"]').forEach(m => m.content = currentLanguage === 'en' ? 'en_US' : 'fa_IR');
-            document.getElementById('read-more-toggle')?.setAttribute('aria-label', currentLanguage === 'en' ? 'Read more about us' : 'مشاهده کامل متن');
-            document.getElementById('map-frame')?.setAttribute('title', currentLanguage === 'en' ? 'Iran Ads Network headquarters in Dubai' : 'موقعیت دفتر مرکزی شبکه تبلیغات ایران در دبی');
-            if (document.getElementById('about-more')?.classList.contains('expanded')) {
-                const btnText = document.querySelector('#read-more-toggle span');
-                if (btnText) btnText.textContent = currentLanguage === 'en' ? 'Show Less' : 'بستن متن';
-            }
-            try { localStorage.setItem('iranads-language', currentLanguage); } catch(e) {}
-        }
-        try {
-            const preferredLanguage = localStorage.getItem('iranads-language');
-            if (preferredLanguage === 'en') setLanguage('en');
-        } catch(e) {}
-
-        const sceneOuter = document.getElementById('scene-outer');
-        const sceneStage = document.getElementById('scene-stage');
-        const group = document.getElementById('device-group');
-
-        function updateSceneScale() {
-            if (!sceneOuter || !sceneStage) return;
-            const availableWidth = sceneOuter.clientWidth;
-            const baseWidth = 640;
-            const baseHeight = 430;
-            const mobileScaleCap = window.innerWidth <= 480 ? 0.44 : window.innerWidth <= 768 ? 0.68 : 1;
-            const scale = Math.min(1, availableWidth / baseWidth, mobileScaleCap);
-            sceneStage.style.transform = `scale(${scale})`;
-            sceneOuter.style.height = `${Math.round(baseHeight * scale)}px`;
-        }
-
-        window.addEventListener('resize', updateSceneScale);
-        window.addEventListener('DOMContentLoaded', updateSceneScale);
-        updateSceneScale();
-
-        if (sceneOuter && group) {
-            sceneOuter.addEventListener('mousemove', (e) => {
-                const rect = sceneOuter.getBoundingClientRect();
-                const x = e.clientX - rect.left - rect.width / 2;
-                const y = e.clientY - rect.top - rect.height / 2;
-                group.style.transform = `rotateY(${x / 22}deg) rotateX(${-y / 22}deg)`;
-            });
-            sceneOuter.addEventListener('mouseleave', () => {
-                group.style.transition = 'transform 0.5s ease';
-                group.style.transform = `rotateY(0deg) rotateX(0deg)`;
-            });
-            sceneOuter.addEventListener('mouseenter', () => {
-                group.style.transition = 'transform 0.1s ease-out';
-            });
-        }
-
-        loadAccountDashboardPrices();\n\n        function toggleAboutText() {
-            const moreContent = document.getElementById('about-more');
-            const btnText = document.querySelector('#read-more-toggle span');
-            const btnIcon = document.getElementById('read-more-icon');
-
-            moreContent.classList.toggle('expanded');
-            document.getElementById('read-more-toggle').setAttribute('aria-expanded', moreContent.classList.contains('expanded') ? 'true' : 'false');
-            if (moreContent.classList.contains('expanded')) {
-                btnText.innerText = currentLanguage === 'en' ? 'Show Less' : 'بستن متن';
-                btnIcon.className = 'fa-solid fa-chevron-up';
-            } else {
-                btnText.innerText = currentLanguage === 'en' ? 'Read More' : 'مشاهده کامل متن';
-                btnIcon.className = 'fa-solid fa-chevron-down';
-            }
-        }
-
-        const toggle = document.querySelector('.menu-toggle');
-        const menu = document.getElementById('mobile-menu');
-        const menuBackdrop = document.getElementById('mobile-menu-backdrop');
-        if (toggle && menu && menuBackdrop) {
-            const closeMobileMenu = () => {
-                menu.classList.remove('is-open');
-                menuBackdrop.classList.remove('is-open');
-                toggle.setAttribute('aria-expanded', 'false');
-                menu.setAttribute('aria-hidden', 'true');
-                document.body.style.overflow = '';
-            };
-            const openMobileMenu = () => {
-                menu.classList.add('is-open');
-                menuBackdrop.classList.add('is-open');
-                toggle.setAttribute('aria-expanded', 'true');
-                menu.setAttribute('aria-hidden', 'false');
-                document.body.style.overflow = 'hidden';
-            };
-
-            toggle.addEventListener('click', () => {
-                if (menu.classList.contains('is-open')) closeMobileMenu();
-                else openMobileMenu();
-            });
-            menuBackdrop.addEventListener('click', closeMobileMenu);
-            menu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMobileMenu));
-            document.addEventListener('keydown', event => {
-                if (event.key === 'Escape' && menu.classList.contains('is-open')) closeMobileMenu();
-            });
-        }
-    </script>
-
-    <!-- Removed opaque eval-based hostname redirect; canonical URL is declared in metadata. -->
-
-
-</body>
-</html>
- + price };
+                    return { title, period: subtitle, price, priceText: priceText || '$' + price };
                 }).filter(Boolean);
                 if (!products.length) throw new Error('No account products found');
                 target.innerHTML = products.map(product => {
@@ -1223,21 +1094,17 @@
                 ['اکانت X پریمیوم', 'X Premium Account'],
                 ['جمنای پرو (Gemini Pro)', 'Gemini Pro'],
                 ['اشتراک ChatGPT پلاس', 'ChatGPT Plus Subscription'],
+                ['بهمراه اشتراک یکماهه گراک', 'Includes 1-month Grok subscription'],
                 ['یک ماهه', '1 month'], ['یک ساله', '1 year'], ['۳ ماهه', '3 months'],
                 ['۶ ماهه', '6 months'], ['۱۲ ماهه', '12 months'], ['۱ ماهه', '1 month'],
-                ['۱ ساله', '1 year'], ['+ گراک', '+ Grok']
+                ['۱ ساله', '1 year']
             ];
+            const translate = value => labels.reduce((result, pair) => result.replaceAll(pair[0], pair[1]), value);
             document.querySelectorAll('#account-live-pricing .account-live-price-name').forEach(node => {
-                let value = node.textContent;
-                labels.forEach(([fa, en]) => { value = value.replaceAll(fa, en); });
+                const titleNode = Array.from(node.childNodes).find(child => child.nodeType === Node.TEXT_NODE);
+                if (titleNode) titleNode.nodeValue = translate(titleNode.nodeValue);
                 const period = node.querySelector('.account-live-price-period');
-                if (period) {
-                    let periodText = period.textContent;
-                    labels.forEach(([fa, en]) => { periodText = periodText.replaceAll(fa, en); });
-                    period.textContent = periodText;
-                    value = node.childNodes[0]?.textContent || value;
-                }
-                if (node.childNodes[0]?.nodeType === Node.TEXT_NODE) node.childNodes[0].nodeValue = value;
+                if (period) period.textContent = translate(period.textContent);
             });
         }
 
