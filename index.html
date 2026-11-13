@@ -86,8 +86,12 @@
 
         .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
 
-        .brand-logo { font-size: 1.25rem; font-weight: 800; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 10px; }
-        .brand-logo img { width: 32px; height: 32px; filter: drop-shadow(0 0 8px var(--neon-cyan)); }
+        .brand-logo { font-size: 1.25rem; font-weight: 800; color: #fff; text-decoration: none; display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .brand-logo img { width: 32px; height: 32px; flex-shrink: 0; filter: drop-shadow(0 0 8px var(--neon-cyan)); }
+        .brand-copy { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.4; }
+        .brand-name { white-space: nowrap; }
+        .brand-tagline { display: block; margin-top: 2px; color: var(--text-muted); font-size: .68rem; font-weight: 500; line-height: 1.35; white-space: nowrap; }
+        .header-actions { display: flex; align-items: center; gap: 8px; flex: 0 0 auto; }
 
         .nav-links { display: flex; list-style: none; gap: 24px; align-items: center; }
         .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; font-weight: 500; transition: color 0.3s ease; }
@@ -98,11 +102,10 @@
             padding: 6px 14px; border-radius: 8px; color: var(--neon-cyan) !important; font-weight: 600 !important;
         }
 
-        .language-toggle { border: 1px solid rgba(56,189,248,.35); background: rgba(56,189,248,.08); color: var(--neon-blue); border-radius: 9px; padding: 8px 13px; font: 700 .85rem Arial,sans-serif; cursor: pointer; margin-inline-start: 12px; }
+        .language-toggle { border: 1px solid rgba(56,189,248,.35); background: rgba(56,189,248,.08); color: var(--neon-blue); border-radius: 9px; padding: 8px 13px; font: 700 .85rem Arial,sans-serif; cursor: pointer; margin: 0; }
         html[lang="en"] body { font-family: Arial, Helvetica, sans-serif; direction: ltr; }
         html[lang="en"] .monitor-screen, html[lang="en"] .iphone-screen { text-align: left; }
         html[lang="en"] .partner-content p, html[lang="en"] .why-card-new p, html[lang="en"] .stats-content p { text-align: left; }
-        @media (max-width: 768px) { .language-toggle { margin-inline-start: auto; margin-inline-end: 8px; } }
 
         .menu-toggle {
             display: none; width: 40px; height: 40px; border: 1px solid rgba(56, 189, 248, 0.28);
@@ -116,9 +119,16 @@
             background: rgba(0, 0, 0, 0.62); backdrop-filter: blur(3px);
         }
         .mobile-menu { display: none; padding: 8px 0 18px; }
+        .mobile-menu-inner { min-height: 100%; display: flex; flex-direction: column; }
         .mobile-menu ul { list-style: none; display: grid; gap: 6px; }
         .mobile-menu a { display: block; padding: 12px 16px; border-radius: 8px; color: var(--text-muted); text-decoration: none; }
         .mobile-menu a:hover { background: rgba(56,189,248,.09); color: var(--text-main); }
+        .mobile-menu-access-note { margin: 22px 4px 8px; color: #cbd5e1; font-size: .84rem; line-height: 1.9; text-align: right; }
+        .mobile-menu .mobile-menu-dashboard-link { margin-top: 0; }
+        .mobile-menu-brand { margin-top: auto; padding: 22px 8px 4px !important; text-align: center; color: var(--text-muted) !important; font-size: .72rem; line-height: 1.9; border-top: 1px solid rgba(56,189,248,.14); }
+        .mobile-menu-brand strong, .mobile-menu-brand span { display: block; }
+        .mobile-menu-brand strong { color: #dbeafe; font-size: .78rem; font-weight: 800; }
+        .mobile-menu-brand span { color: var(--text-muted); }
         .mobile-menu .mobile-menu-dashboard-link {
             display: flex; align-items: center; justify-content: center; gap: 10px;
             margin-top: 12px; padding: 13px 16px; border: 1px solid rgba(56,189,248,.5);
@@ -353,17 +363,24 @@
         }
 
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
+            header { padding: 10px 12px; }
+            header .nav-wrapper { gap: 10px; }
+            header .nav-wrapper.container { padding: 0 6px; }
+            .brand-logo { flex: 1 1 auto; min-width: 0; gap: 7px; font-size: 1rem; }
+            .brand-logo img { width: 28px; height: 28px; }
+            .brand-name { font-size: clamp(.86rem, 4vw, 1rem); }
+            .brand-tagline { font-size: .62rem; }
+            .header-actions { gap: 7px; }
             .nav-links { display: none; }
-            .menu-toggle { display: inline-flex; position: relative; z-index: 1001; }
-            .language-toggle { font-size: 0; min-width: 40px; min-height: 40px; padding: 8px 10px; }
+            .menu-toggle { display: inline-flex; position: relative; z-index: 1001; flex: 0 0 40px; }
+            .language-toggle { font-size: 0; min-width: 40px; min-height: 40px; padding: 8px 10px; flex: 0 0 40px; }
             .language-toggle::after { content: attr(data-mobile-label); font: 700 .85rem Arial,sans-serif; }
             .mobile-menu-backdrop.is-open { display: block; }
             .mobile-menu {
                 display: block; position: fixed; inset: 0 auto 0 0;
                 width: min(82vw, 320px); max-width: calc(100vw - 24px); z-index: 1000;
                 box-sizing: border-box; overflow-y: auto; overscroll-behavior: contain;
-                -webkit-overflow-scrolling: touch; padding: 86px 16px 24px; margin: 0;
+                -webkit-overflow-scrolling: touch; padding: 18px 16px 20px; margin: 0;
                 background: #071225; border: 0; border-right: 1px solid rgba(56,189,248,.22);
                 box-shadow: 18px 0 50px rgba(0,0,0,.38);
                 transform: translate3d(-100%, 0, 0); visibility: hidden; pointer-events: none;
@@ -375,6 +392,18 @@
             }
             .mobile-menu ul { gap: 8px; }
             .mobile-menu a { padding: 13px 16px; }
+            .mobile-menu-access-note { margin-top: 20px; }
+            .mobile-menu-brand { padding-top: 18px !important; }
+            @media (max-width: 360px) {
+                header { padding-inline: 8px; }
+                header .nav-wrapper.container { padding-inline: 2px; }
+                .brand-logo { gap: 5px; }
+                .brand-logo img { width: 25px; height: 25px; }
+                .brand-name { font-size: .84rem; }
+                .brand-tagline { font-size: .58rem; }
+                .header-actions { gap: 5px; }
+                .language-toggle, .menu-toggle { min-width: 36px; width: 36px; flex-basis: 36px; height: 36px; min-height: 36px; }
+            }
             .why-ads-grid { grid-template-columns: 1fr; }
             .stats-banner-card { flex-direction: column; text-align: center; padding: 24px 20px; }
             .partner-container { flex-direction: column; text-align: center; }
@@ -388,9 +417,12 @@
     <!-- Header -->
     <header>
         <div class="container nav-wrapper">
-            <a href="#" class="brand-logo">
+            <a href="#" class="brand-logo" aria-label="شبکه تبلیغات ایران؛ مسیر رشد فردی و کسب‌وکار">
                 <img src="favicon.png" alt="شبکه تبلیغات ایران" onerror="this.style.display='none'">
-                شبکه تبلیغات ایران
+                <span class="brand-copy">
+                    <span class="brand-name">شبکه تبلیغات ایران</span>
+                    <span class="brand-tagline">مسیر رشد فردی و کسب‌وکار</span>
+                </span>
             </a>
             <ul class="nav-links">
                 <li><a href="#services">خدمات ما</a></li>
@@ -399,21 +431,30 @@
                 <li><a href="#contact">تماس با ما</a></li>
                 <li><a href="dashboard.html" class="nav-dashboard-btn"><i class="fa-solid fa-gauge"></i> ورود به پنل</a></li>
             </ul>
-            <button id="language-toggle" class="language-toggle" data-mobile-label="EN" type="button" onclick="setLanguage(currentLanguage === 'fa' ? 'en' : 'fa')" aria-label="Switch language">English</button>
-            <button class="menu-toggle" type="button" aria-label="منو" aria-controls="mobile-menu" aria-expanded="false">
-                <i class="fa-solid fa-bars"></i>
-            </button>
+            <div class="header-actions">
+                <button id="language-toggle" class="language-toggle" data-mobile-label="EN" type="button" onclick="setLanguage(currentLanguage === 'fa' ? 'en' : 'fa')" aria-label="Switch language">English</button>
+                <button class="menu-toggle" type="button" aria-label="منو" aria-controls="mobile-menu" aria-expanded="false">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
         </div>
     </header>
     <button class="mobile-menu-backdrop" id="mobile-menu-backdrop" type="button" aria-label="بستن منو" tabindex="-1"></button>
-    <nav class="container mobile-menu" id="mobile-menu" aria-hidden="true">
-        <ul>
-            <li><a href="#services">خدمات ما</a></li>
-            <li><a href="#pricing">تعرفه‌ها</a></li>
-            <li><a href="#about">درباره ما</a></li>
-            <li><a href="#contact">تماس با ما</a></li>
-            <li><a href="dashboard.html" class="mobile-menu-dashboard-link"><i class="fa-solid fa-gauge"></i> ورود به پنل</a></li>
-        </ul>
+    <nav class="container mobile-menu" id="mobile-menu" aria-hidden="true" aria-label="منوی اصلی">
+        <div class="mobile-menu-inner">
+            <ul>
+                <li><a href="#services">خدمات ما</a></li>
+                <li><a href="#pricing">تعرفه‌ها</a></li>
+                <li><a href="#about">درباره ما</a></li>
+                <li><a href="#contact">تماس با ما</a></li>
+            </ul>
+            <p class="mobile-menu-access-note">برای انجام و دریافت خدمات حتما ابتدا ثبت‌نام و ورود به پنل انجام دهید.</p>
+            <a href="dashboard.html" class="mobile-menu-dashboard-link"><i class="fa-solid fa-gauge"></i> ورود به پنل</a>
+            <a href="#" class="mobile-menu-brand">
+                <strong>شبکه تبلیغات ایران</strong>
+                <span>مسیر رشد فردی و کسب‌وکار</span>
+            </a>
+        </div>
     </nav>
 
     <main>
@@ -874,6 +915,8 @@
         let currentLanguage = 'fa';
         const translations = {
           'شبکه تبلیغات ایران':'Iran Ads Network',
+          'مسیر رشد فردی و کسب‌وکار':'A path to personal and business growth',
+          'برای انجام و دریافت خدمات حتما ابتدا ثبت‌نام و ورود به پنل انجام دهید.':'To access our services, please register and sign in to your dashboard first.',
           'خدمات ما':'Our Services','تعرفه‌ها':'Pricing','درباره ما':'About Us','تماس با ما':'Contact Us','ورود به پنل':'Client Dashboard','منو':'Menu',
           'نسل آینده تبلیغات دیجیتال':'The Next Generation of Digital Advertising',
           'انجام تبلیغات هدفمند در شبکه های اجتماعی برای برندهای ایرانی با به‌کارگیری دقیق‌ترین ابزارهای بازاریابی داده‌محور و هدف‌گیری مخاطبان بالقوه.':'Targeted social media advertising for Iranian brands, powered by data-driven marketing tools and precise audience targeting.',
