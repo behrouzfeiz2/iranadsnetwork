@@ -616,9 +616,9 @@
                     <form onsubmit="submitTicket(event)">
                         <div class="form-group"><label>موضوع تیکت</label><input type="text" id="ticket-subject" class="form-input" placeholder="مثلاً: ارسال اطلاعات فعال‌سازی تلگرام پریمیوم" required></div>
                         <div id="ticket-video-link-wrap" class="form-group hidden">
-                            <label>لینک ویدئوی آماده (در صورت وجود)</label>
-                            <input type="url" id="ticket-video-link" class="form-input" placeholder="https://drive.google.com/..." dir="ltr">
-                            <div style="font-size:.76rem;color:var(--text-muted);margin-top:6px;">ویدئو را در فضای ابری بارگذاری و لینک قابل مشاهده را وارد کنید. اگر ویدئوی آماده ندارید، سفارش ساخت تیزر را در متن پیام انتخاب کنید.</div>
+                            <label>لینک دانلود ویدئوی آماده (در صورت وجود)</label>
+                            <input type="url" id="ticket-video-link" class="form-input" placeholder="https://example.com/video.mp4" dir="ltr">
+                            <div style="font-size:.76rem;color:var(--text-muted);margin-top:6px;">لینک دانلود ویدئو را ارسال کنید؛ فایل ویدئو در این سامانه بارگذاری یا ذخیره نمی‌شود. اگر ویدئوی آماده ندارید، سفارش ساخت تیزر را در متن پیام ثبت کنید.</div>
                         </div>
                         <div class="form-group"><label>متن پیام شما</label><textarea id="ticket-message" rows="4" class="form-input" placeholder="پیام خود را بنویسید..." required></textarea></div>
                         <button type="submit" class="btn btn-primary" style="width: 100%; max-width: 250px;">ثبت و ایجاد تیکت</button>
@@ -1148,7 +1148,7 @@
                 `بودجه اختصاص‌یافته به تیزر یوتیوب: ${(Number(campaign.budget_youtube) || 0).toFixed(2)}`,
                 '',
                 'لطفاً یکی از موارد زیر را برای این کمپین پیگیری کنید:',
-                '۱) ویدئوی آماده دارم و لینک آن را در فیلد مربوطه وارد می‌کنم.',
+                '۱) ویدئوی آماده دارم و لینک دانلود آن را در فیلد مربوطه وارد می‌کنم.',
                 '۲) سفارش ساخت تیزر تبلیغاتی دارم؛ لطفاً شرایط، هزینه و مراحل سفارش را اعلام کنید.'
             ].join('\n');
             document.getElementById('ticket-video-link').value = '';
@@ -1164,7 +1164,7 @@
             const subject = document.getElementById('ticket-subject').value.trim();
             const messageText = document.getElementById('ticket-message').value.trim();
             const videoLink = document.getElementById('ticket-video-link').value.trim();
-            const message = [messageText, videoLink ? `لینک ویدئوی آماده: ${videoLink}` : ''].filter(Boolean).join('\n\n');
+            const message = [messageText, videoLink ? `لینک دانلود ویدئو: ${videoLink}` : ''].filter(Boolean).join('\n\n');
             const res = await fetch('/api/user/ticket', {
                 method: 'POST', headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ user_id: currentUser.id, subject, message })
