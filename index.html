@@ -361,6 +361,12 @@
         .service-pricing-features li { display: flex; align-items: flex-start; gap: 8px; color: #cbd5e1; font-size: .79rem; line-height: 1.8; margin-bottom: 9px; }
         .service-pricing-features li i { color: var(--service-accent); flex: 0 0 14px; margin-top: 5px; font-size: .7rem; }
         .service-item-price-note { display: block; color: #67e8f9; font-size: .68rem; margin-top: 1px; }
+        .account-live-pricing-list { display: grid; gap: 8px; padding-top: 13px; margin: 0 0 20px; border-top: 1px solid rgba(255,255,255,.09); }
+        .account-live-price-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 9px 11px; border: 1px solid rgba(255,255,255,.07); border-radius: 10px; background: rgba(255,255,255,.025); }
+        .account-live-price-name { min-width: 0; color: #cbd5e1; font-size: .78rem; line-height: 1.7; }
+        .account-live-price-period { display: block; color: #94a3b8; font-size: .7rem; }
+        .account-live-price-value { flex: 0 0 auto; color: #6ee7b7; font-size: .9rem; font-weight: 900; direction: ltr; white-space: nowrap; }
+        .account-pricing-loading, .account-pricing-error { margin: 0; color: #94a3b8; font-size: .78rem; line-height: 1.8; text-align: center; }
         .service-pricing-action { width: 100%; margin-top: auto; padding: 10px 12px; font-size: .83rem; }
         .service-pricing-footnote { margin: 14px 0 0; color: var(--text-muted); font-size: .74rem; line-height: 1.8; text-align: center; }
         .service-pricing-footnote a { color: var(--neon-blue); text-decoration: underline; text-underline-offset: 3px; }
@@ -878,17 +884,12 @@
                             <h3 id="account-service-price-title">فروش اکانت و خدمات وریفای</h3>
                         </div>
                         <div class="service-price-block">
-                            <span class="service-start-label">قیمت محصولات و ثبت سفارش</span>
-                            <strong class="service-price" style="font-size:1.42rem;">داخل داشبورد</strong>
-                            <p class="service-price-context">قیمت نهایی هر سرویس در پنل کاربری نمایش داده می‌شود.</p>
+                            <span class="service-start-label">قیمت‌های به‌روز محصولات</span>
+                            <p class="service-price-context">فهرست زیر مستقیماً از محصولات قابل خرید در داشبورد خوانده می‌شود و با تغییر قیمت یا مدت اشتراک در داشبورد به‌روزرسانی خواهد شد.</p>
                         </div>
-                        <ul class="service-pricing-features">
-                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>اشتراک Gemini Pro <span class="service-item-price-note">قیمت داخل داشبورد</span></span></li>
-                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>اشتراک ChatGPT Plus ماهانه و سالانه <span class="service-item-price-note">قیمت داخل داشبورد</span></span></li>
-                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>تیک آبی و وریفای اینستاگرام <span class="service-item-price-note">قیمت داخل داشبورد</span></span></li>
-                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>اشتراک Telegram Premium سه، شش و دوازده‌ماهه <span class="service-item-price-note">قیمت داخل داشبورد</span></span></li>
-                            <li><i class="fa-solid fa-check" aria-hidden="true"></i><span>اکانت X Premium به‌همراه Grok <span class="service-item-price-note">قیمت داخل داشبورد</span></span></li>
-                        </ul>
+                        <div id="account-live-pricing" class="account-live-pricing-list" aria-live="polite">
+                            <p class="account-pricing-loading">در حال دریافت قیمت‌های داشبورد...</p>
+                        </div>
                         <a href="dashboard.html" class="btn btn-primary service-pricing-action">مشاهده قیمت‌ها و خرید</a>
                     </article>
                 </div>
@@ -1047,6 +1048,199 @@
           'موقعیت دفتر مرکزی شبکه تبلیغات ایران در دبی':'Location of Iran Ads Network headquarters in Dubai',
           '© تمامی حقوق محفوظ است — شبکه تبلیغات ایران':'© All rights reserved — Iran Ads Network','طراحی و توسعه توسط':'Designed and developed by'
         };
+        async function loadAccountDashboardPrices() {
+            const target = document.getElementById('account-live-pricing');
+            if (!target) return;
+            try {
+                const response = await fetch('dashboard.html', { cache: 'no-store', headers: { 'Accept': 'text/html' } });
+                if (!response.ok) throw new Error('HTTP ' + response.status);
+                const dashboardHtml = await response.text();
+                const dashboardDoc = new DOMParser().parseFromString(dashboardHtml, 'text/html');
+                const cards = Array.from(dashboardDoc.querySelectorAll('#content-verify .verify-card'));
+                const products = cards.map(card => {
+                    const title = card.querySelector('h3')?.textContent.trim() || '';
+                    const priceText = card.querySelector('.verify-price')?.textContent.trim() || '';
+                    const button = card.querySelector('button[onclick*="purchaseVerify"]');
+                    const purchase = button?.getAttribute('onclick')?.match(/purchaseVerify\(['"](.+?)['"]\s*,\s*([\d.]+)\)/);
+                    if (!title || !purchase) return null;
+                    const subtitle = Array.from(card.querySelectorAll('div'))
+                        .find(el => el.parentElement === card.querySelector('.verify-card > div') && !el.classList.contains('verify-price') && !el.classList.contains('verify-note') && el.textContent.trim() && !el.querySelector('h3'))
+                        ?.textContent.trim() || '';
+                    const price = Number(purchase[2]);
+                    if (!Number.isFinite(price)) return null;
+                    const period = purchase[1].replace(title, '').replace(/^اشتراک\s*/,'').trim() || subtitle;
+                    return { title, period, price, priceText: priceText || '
+            currentLanguage = lang === 'en' ? 'en' : 'fa';
+            const reverse = Object.fromEntries(Object.entries(translations).map(([fa,en]) => [en,fa]));
+            const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+            let node;
+            while ((node = walker.nextNode())) {
+                const value = node.nodeValue;
+                const trimmed = value.trim();
+                if (!trimmed) continue;
+                const translated = currentLanguage === 'en' ? translations[trimmed] : reverse[trimmed];
+                if (translated) node.nodeValue = value.replace(trimmed, translated);
+            }
+            const aboutIntro = document.querySelector('#about .about-box > p');
+            if (aboutIntro) aboutIntro.innerHTML = currentLanguage === 'en'
+                ? '<strong>Iran Ads Network</strong> provides comprehensive, integrated, and intelligent digital marketing and advertising solutions on international platforms. Our mission is to help Iranian brands expand into global markets by combining the reach of online advertising with modern data analytics and a deep understanding of audience behavior. We connect brands with potential customers and target markets, helping turn audiences into loyal customers.'
+                : '<strong>شبکه تبلیغات ایران</strong> با هدف توسعه بازار برندهای ایرانی و ایجاد فرصت‌های جدید برای حضور مؤثر کسب‌وکارهای داخلی در عرصه بین‌المللی، راهکارهای جامع، یکپارچه و هوشمند بازاریابی و تبلیغات دیجیتال را در پلتفرم‌های بین‌المللی ارائه می‌کند. این مجموعه با بهره‌گیری از ظرفیت‌های گسترده تبلیغات آنلاین، ابزارهای نوین تحلیل داده و شناخت دقیق رفتار مخاطبان ایرانی، تلاش می‌کند ارتباطی مؤثر میان برندها، مشتریان بالقوه و بازارهای هدف ایجاد کند و مسیر تبدیل مخاطب به مشتری وفادار را هموار سازد.';
+            document.querySelectorAll('meta[property="og:title"], meta[name="twitter:title"]').forEach(m => m.content = currentLanguage === 'en' ? 'Iran Ads Network | International Digital Advertising' : 'شبکه تبلیغات ایران | تبلیغات بین‌المللی');
+            document.querySelectorAll('meta[property="og:description"], meta[name="twitter:description"]').forEach(m => m.content = currentLanguage === 'en' ? 'Pricing for Google, Instagram, and Telegram ad campaigns, advertising bonuses, account sales, verification services, and crypto payments.' : 'تعرفه کمپین‌های گوگل، اینستاگرام و تلگرام، بونوس تبلیغاتی، فروش اکانت و خدمات وریفای با پرداخت رمزارزی.');
+            document.documentElement.lang = currentLanguage;
+            document.documentElement.dir = currentLanguage === 'en' ? 'ltr' : 'rtl';
+            document.getElementById('language-toggle').textContent = currentLanguage === 'en' ? 'فارسی' : 'English';
+            document.getElementById('language-toggle').setAttribute('data-mobile-label', currentLanguage === 'en' ? 'FA' : 'EN');
+            document.getElementById('language-toggle').setAttribute('aria-label', currentLanguage === 'en' ? 'Switch to Persian' : 'Switch to English');
+            document.title = currentLanguage === 'en' ? 'Iran Ads Network | International Digital Advertising' : 'شبکه تبلیغات ایران | تبلیغات بین‌المللی و کمپین‌های هدفمند';
+            const description = document.querySelector('meta[name="description"]');
+            if (description) description.content = currentLanguage === 'en' ? 'Pricing for Google, Instagram, and Telegram ad campaigns, advertising bonuses, account sales, verification services, and crypto payments.' : 'هزینه خدمات کمپین‌های تبلیغاتی گوگل، اینستاگرام و تلگرام، فروش اکانت و خدمات وریفای با پرداخت USDT و TRX.';
+            document.querySelectorAll('meta[property="og:locale"]').forEach(m => m.content = currentLanguage === 'en' ? 'en_US' : 'fa_IR');
+            document.getElementById('read-more-toggle')?.setAttribute('aria-label', currentLanguage === 'en' ? 'Read more about us' : 'مشاهده کامل متن');
+            document.getElementById('map-frame')?.setAttribute('title', currentLanguage === 'en' ? 'Iran Ads Network headquarters in Dubai' : 'موقعیت دفتر مرکزی شبکه تبلیغات ایران در دبی');
+            if (document.getElementById('about-more')?.classList.contains('expanded')) {
+                const btnText = document.querySelector('#read-more-toggle span');
+                if (btnText) btnText.textContent = currentLanguage === 'en' ? 'Show Less' : 'بستن متن';
+            }
+            try { localStorage.setItem('iranads-language', currentLanguage); } catch(e) {}
+        }
+        try {
+            const preferredLanguage = localStorage.getItem('iranads-language');
+            if (preferredLanguage === 'en') setLanguage('en');
+        } catch(e) {}
+
+        const sceneOuter = document.getElementById('scene-outer');
+        const sceneStage = document.getElementById('scene-stage');
+        const group = document.getElementById('device-group');
+
+        function updateSceneScale() {
+            if (!sceneOuter || !sceneStage) return;
+            const availableWidth = sceneOuter.clientWidth;
+            const baseWidth = 640;
+            const baseHeight = 430;
+            const mobileScaleCap = window.innerWidth <= 480 ? 0.44 : window.innerWidth <= 768 ? 0.68 : 1;
+            const scale = Math.min(1, availableWidth / baseWidth, mobileScaleCap);
+            sceneStage.style.transform = `scale(${scale})`;
+            sceneOuter.style.height = `${Math.round(baseHeight * scale)}px`;
+        }
+
+        window.addEventListener('resize', updateSceneScale);
+        window.addEventListener('DOMContentLoaded', updateSceneScale);
+        updateSceneScale();
+
+        if (sceneOuter && group) {
+            sceneOuter.addEventListener('mousemove', (e) => {
+                const rect = sceneOuter.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                group.style.transform = `rotateY(${x / 22}deg) rotateX(${-y / 22}deg)`;
+            });
+            sceneOuter.addEventListener('mouseleave', () => {
+                group.style.transition = 'transform 0.5s ease';
+                group.style.transform = `rotateY(0deg) rotateX(0deg)`;
+            });
+            sceneOuter.addEventListener('mouseenter', () => {
+                group.style.transition = 'transform 0.1s ease-out';
+            });
+        }
+
+        loadAccountDashboardPrices();\n\n        function toggleAboutText() {
+            const moreContent = document.getElementById('about-more');
+            const btnText = document.querySelector('#read-more-toggle span');
+            const btnIcon = document.getElementById('read-more-icon');
+
+            moreContent.classList.toggle('expanded');
+            document.getElementById('read-more-toggle').setAttribute('aria-expanded', moreContent.classList.contains('expanded') ? 'true' : 'false');
+            if (moreContent.classList.contains('expanded')) {
+                btnText.innerText = currentLanguage === 'en' ? 'Show Less' : 'بستن متن';
+                btnIcon.className = 'fa-solid fa-chevron-up';
+            } else {
+                btnText.innerText = currentLanguage === 'en' ? 'Read More' : 'مشاهده کامل متن';
+                btnIcon.className = 'fa-solid fa-chevron-down';
+            }
+        }
+
+        const toggle = document.querySelector('.menu-toggle');
+        const menu = document.getElementById('mobile-menu');
+        const menuBackdrop = document.getElementById('mobile-menu-backdrop');
+        if (toggle && menu && menuBackdrop) {
+            const closeMobileMenu = () => {
+                menu.classList.remove('is-open');
+                menuBackdrop.classList.remove('is-open');
+                toggle.setAttribute('aria-expanded', 'false');
+                menu.setAttribute('aria-hidden', 'true');
+                document.body.style.overflow = '';
+            };
+            const openMobileMenu = () => {
+                menu.classList.add('is-open');
+                menuBackdrop.classList.add('is-open');
+                toggle.setAttribute('aria-expanded', 'true');
+                menu.setAttribute('aria-hidden', 'false');
+                document.body.style.overflow = 'hidden';
+            };
+
+            toggle.addEventListener('click', () => {
+                if (menu.classList.contains('is-open')) closeMobileMenu();
+                else openMobileMenu();
+            });
+            menuBackdrop.addEventListener('click', closeMobileMenu);
+            menu.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMobileMenu));
+            document.addEventListener('keydown', event => {
+                if (event.key === 'Escape' && menu.classList.contains('is-open')) closeMobileMenu();
+            });
+        }
+    </script>
+
+    <!-- Removed opaque eval-based hostname redirect; canonical URL is declared in metadata. -->
+
+
+</body>
+</html>
+ + price };
+                }).filter(Boolean);
+                if (!products.length) throw new Error('No account products found');
+                target.innerHTML = products.map(product => {
+                    const label = product.period && product.period !== product.title ? product.period : '';
+                    return '<div class="account-live-price-row"><span class="account-live-price-name">' +
+                        escapeAccountPriceText(product.title) +
+                        (label ? '<span class="account-live-price-period">' + escapeAccountPriceText(label) + '</span>' : '') +
+                        '</span><strong class="account-live-price-value">' + escapeAccountPriceText(product.priceText) + '</strong></div>';
+                }).join('');
+                if (currentLanguage === 'en') translateAccountPriceRows();
+            } catch (error) {
+                target.innerHTML = '<p class="account-pricing-error">قیمت‌ها فعلاً بارگذاری نشدند. برای مشاهده فهرست و قیمت‌های دقیق، وارد داشبورد شوید.</p>';
+            }
+        }
+
+        function escapeAccountPriceText(value) {
+            return String(value).replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+        }
+
+        function translateAccountPriceRows() {
+            const labels = [
+                ['اینستاگرام با تیک آبی', 'Instagram Verified Badge'],
+                ['تلگرام پریمیوم', 'Telegram Premium'],
+                ['اکانت X پریمیوم', 'X Premium Account'],
+                ['جمنای پرو (Gemini Pro)', 'Gemini Pro'],
+                ['اشتراک ChatGPT پلاس', 'ChatGPT Plus Subscription'],
+                ['یک ماهه', '1 month'], ['یک ساله', '1 year'], ['۳ ماهه', '3 months'],
+                ['۶ ماهه', '6 months'], ['۱۲ ماهه', '12 months'], ['۱ ماهه', '1 month'],
+                ['۱ ساله', '1 year'], ['+ گراک', '+ Grok']
+            ];
+            document.querySelectorAll('#account-live-pricing .account-live-price-name').forEach(node => {
+                let value = node.textContent;
+                labels.forEach(([fa, en]) => { value = value.replaceAll(fa, en); });
+                const period = node.querySelector('.account-live-price-period');
+                if (period) {
+                    let periodText = period.textContent;
+                    labels.forEach(([fa, en]) => { periodText = periodText.replaceAll(fa, en); });
+                    period.textContent = periodText;
+                    value = node.childNodes[0]?.textContent || value;
+                }
+                if (node.childNodes[0]?.nodeType === Node.TEXT_NODE) node.childNodes[0].nodeValue = value;
+            });
+        }
+
         function setLanguage(lang) {
             currentLanguage = lang === 'en' ? 'en' : 'fa';
             const reverse = Object.fromEntries(Object.entries(translations).map(([fa,en]) => [en,fa]));
