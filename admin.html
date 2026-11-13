@@ -528,7 +528,7 @@
             }
 
             const urlStart = labelIndex + linkLabel.length;
-            const rawUrl = rawText.slice(urlStart).trim().split(/\\s/)[0] || '';
+            const rawUrl = rawText.slice(urlStart).trim().split(/\s/)[0] || '';
             const videoUrl = rawUrl.replace(/[),،.]+$/, '');
             if (!videoUrl.startsWith('https://') && !videoUrl.startsWith('http://')) {
                 return `<div style="white-space:pre-wrap;overflow-wrap:anywhere;">${escapeHtml(rawText)}</div>`;
