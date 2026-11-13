@@ -141,10 +141,22 @@
             color: #fff;
         }
 
-        /* Hero */
-        .hero { padding: 60px 0 50px; text-align: center; position: relative; }
+        /* Hero: fill the visible area below the sticky header on every screen size */
+        .hero {
+            min-height: calc(100vh - 76px);
+            min-height: calc(100svh - 76px);
+            padding: clamp(24px, 4vh, 60px) 0;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            isolation: isolate;
+            overflow: hidden;
+            background: radial-gradient(ellipse at 50% 20%, rgba(8, 30, 58, .35), transparent 72%);
+        }
+        .hero > .container { width: 100%; }
 
-        .hero { isolation: isolate; overflow: hidden; background: radial-gradient(ellipse at 50% 20%, rgba(8, 30, 58, .35), transparent 72%); }
+
         .hero-data-highway {
             position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden;
             opacity: .76; filter: blur(1.1px);
@@ -523,8 +535,12 @@
         }
 
         @media (max-width: 768px) {
-            /* Keep the hero actions visible in the initial mobile viewport. */
-            .hero { padding: 18px 0 16px; }
+            /* Mobile header is shorter; fill the remaining viewport without clipping hero content. */
+            .hero {
+                min-height: calc(100vh - 62px);
+                min-height: calc(100svh - 62px);
+                padding: 18px 0 16px;
+            }
             .hero .container { padding-inline: 14px; }
             .hero .badge { padding: 4px 12px; margin-bottom: 7px; font-size: .74rem; }
             .hero h1 { font-size: clamp(1.7rem, 6.8vw, 2.2rem); margin-bottom: 6px; }
