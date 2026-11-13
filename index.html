@@ -110,8 +110,9 @@
             cursor: pointer; font-size: 1.2rem; align-items: center; justify-content: center;
         }
 
+        /* Mobile navigation is portaled to body so fixed positioning is viewport-relative. */
         .mobile-menu-backdrop {
-            display: none; position: fixed; inset: 0; z-index: 998;
+            display: none; position: fixed; inset: 0; z-index: 999;
             background: rgba(0, 0, 0, 0.62); backdrop-filter: blur(3px);
         }
         .mobile-menu { display: none; padding: 8px 0 18px; }
@@ -348,16 +349,19 @@
             .language-toggle::after { content: attr(data-mobile-label); font: 700 .85rem Arial,sans-serif; }
             .mobile-menu-backdrop.is-open { display: block; }
             .mobile-menu {
-                display: block; position: fixed; top: 0; bottom: 0; left: 0; right: auto;
-                width: min(82vw, 320px); height: 100vh; height: 100dvh; z-index: 999;
-                overflow-y: auto; padding: 86px 16px 24px; margin: 0;
+                display: block; position: fixed; inset: 0 auto 0 0;
+                width: min(82vw, 320px); max-width: calc(100vw - 24px); z-index: 1000;
+                box-sizing: border-box; overflow-y: auto; overscroll-behavior: contain;
+                -webkit-overflow-scrolling: touch; padding: 86px 16px 24px; margin: 0;
                 background: #071225; border: 0; border-right: 1px solid rgba(56,189,248,.22);
                 box-shadow: 18px 0 50px rgba(0,0,0,.38);
-                transform: translateX(-105%); visibility: hidden;
-                transition: transform .28s ease, visibility .28s ease;
+                transform: translate3d(-100%, 0, 0); visibility: hidden; pointer-events: none;
+                transition: transform .28s ease, visibility 0s linear .28s;
             }
-            .mobile-menu.is-open { transform: translateX(0); visibility: visible; }
-            html[dir="rtl"] .mobile-menu { left: 0; right: auto; }
+            .mobile-menu.is-open {
+                transform: translate3d(0, 0, 0); visibility: visible; pointer-events: auto;
+                transition: transform .28s ease, visibility 0s;
+            }
             .mobile-menu ul { gap: 8px; }
             .mobile-menu a { padding: 13px 16px; }
             .why-ads-grid { grid-template-columns: 1fr; }
@@ -389,17 +393,17 @@
                 <i class="fa-solid fa-bars"></i>
             </button>
         </div>
-        <button class="mobile-menu-backdrop" id="mobile-menu-backdrop" type="button" aria-label="بستن منو" tabindex="-1"></button>
-        <nav class="container mobile-menu" id="mobile-menu" aria-hidden="true">
-            <ul>
-                <li><a href="#services">خدمات ما</a></li>
-                <li><a href="#pricing">تعرفه‌ها</a></li>
-                <li><a href="#about">درباره ما</a></li>
-                <li><a href="#contact">تماس با ما</a></li>
-                <li><a href="dashboard.html" style="color: var(--neon-cyan);"><i class="fa-solid fa-gauge"></i> ورود به پنل</a></li>
-            </ul>
-        </nav>
     </header>
+    <button class="mobile-menu-backdrop" id="mobile-menu-backdrop" type="button" aria-label="بستن منو" tabindex="-1"></button>
+    <nav class="container mobile-menu" id="mobile-menu" aria-hidden="true">
+        <ul>
+            <li><a href="#services">خدمات ما</a></li>
+            <li><a href="#pricing">تعرفه‌ها</a></li>
+            <li><a href="#about">درباره ما</a></li>
+            <li><a href="#contact">تماس با ما</a></li>
+            <li><a href="dashboard.html" style="color: var(--neon-cyan);"><i class="fa-solid fa-gauge"></i> ورود به پنل</a></li>
+        </ul>
+    </nav>
 
     <main>
         <!-- Hero & 3D Interactive Devices -->
