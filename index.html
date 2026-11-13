@@ -394,6 +394,15 @@
         }
 
         @media (max-width: 768px) {
+            /* Keep the hero actions visible in the initial mobile viewport. */
+            .hero { padding: 18px 0 16px; }
+            .hero .container { padding-inline: 14px; }
+            .hero .badge { padding: 4px 12px; margin-bottom: 7px; font-size: .74rem; }
+            .hero h1 { font-size: clamp(1.45rem, 5.8vw, 1.85rem); margin-bottom: 6px; }
+            .hero p { max-width: 610px; margin: 0 auto 7px; font-size: .86rem; line-height: 1.65; }
+            .scene-outer-wrapper { margin: 0 auto 9px; }
+            .cta-group { margin-top: 0; gap: 10px; }
+            .cta-group .btn { padding: 10px 18px; font-size: .86rem; }
             header { padding: 10px 12px; }
             header .nav-wrapper { gap: 10px; }
             header .nav-wrapper.container { padding: 0 6px; }
@@ -573,7 +582,7 @@
                 </div>
 
                 <div class="cta-group">
-                    <a href="#contact" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> شروع همکاری</a>
+                    <a href="dashboard.html" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> شروع همکاری</a>
                     <a href="#pricing" class="btn btn-secondary">مشاهده تعرفه‌ها</a>
                 </div>
             </div>
@@ -1087,7 +1096,8 @@
             const availableWidth = sceneOuter.clientWidth;
             const baseWidth = 640;
             const baseHeight = 430;
-            const scale = Math.min(1, availableWidth / baseWidth);
+            const mobileScaleCap = window.innerWidth <= 480 ? 0.44 : window.innerWidth <= 768 ? 0.68 : 1;
+            const scale = Math.min(1, availableWidth / baseWidth, mobileScaleCap);
             sceneStage.style.transform = `scale(${scale})`;
             sceneOuter.style.height = `${Math.round(baseHeight * scale)}px`;
         }
