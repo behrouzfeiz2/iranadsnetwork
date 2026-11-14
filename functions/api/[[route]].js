@@ -103,7 +103,7 @@ export async function onRequest(context) {
     });
 
     // Password storage: PBKDF2-SHA256 with a unique random salt.
-    const PASSWORD_ITERATIONS = 310000;
+    const PASSWORD_ITERATIONS = 10000;
     const bytesToBase64 = bytes => btoa(String.fromCharCode(...new Uint8Array(bytes)));
     const base64ToBytes = value => Uint8Array.from(atob(value), char => char.charCodeAt(0));
 
@@ -128,7 +128,7 @@ export async function onRequest(context) {
             const parts = value.split('$');
             if (parts.length !== 4 || parts[0] !== 'pbkdf2_sha256') return { valid: false, needsUpgrade: false };
             const iterations = Number(parts[1]);
-            if (!Number.isInteger(iterations) || iterations < 100000 || iterations > 1000000) return { valid: false, needsUpgrade: false };
+            if (!Number.isInteger(iterations) || iterations < 10000 || iterations > 100000) return { valid: false, needsUpgrade: false };
             const salt = base64ToBytes(parts[2]);
             const expected = base64ToBytes(parts[3]);
             const key = await crypto.subtle.importKey(
